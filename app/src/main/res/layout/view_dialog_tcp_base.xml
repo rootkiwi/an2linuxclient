@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        style="@style/DialogTextView"
+        android:text="@string/dialog_title_address" />
+
+    <EditText
+        android:id="@+id/ipOrHostname"
+        style="@style/DialogEditText"
+        android:hint="@string/dialog_ip_or_hostname_hint" />
+
+    <TextView
+        style="@style/DialogTextView"
+        android:text="@string/dialog_title_port" />
+
+    <EditText
+        android:id="@+id/portNumber"
+        style="@style/DialogEditText"
+        android:hint="@string/dialog_port_hint"
+        android:inputType="number" />
+
+</merge>

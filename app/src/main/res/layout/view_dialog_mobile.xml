@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/view_dialog_tcp_base" />
+
+            <TextView
+                style="@style/DialogTextView"
+                android:text="@string/dialog_title_roaming" />
+
+            <CheckBox
+                android:id="@+id/checkBoxRoaming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:checked="false"
+                android:fontFamily="monospace"
+                android:text="@string/dialog_allow_roaming"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <include layout="@layout/view_dialog_pairing" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/view_dialog_bottom_buttons" />
+
+</LinearLayout>

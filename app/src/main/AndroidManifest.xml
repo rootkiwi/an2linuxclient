@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kiwi.root.an2linuxclient">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+        <service
+            android:name=".utils.NotificationService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".activities.MainSettingsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activities.EnabledApplicationsActivity"
+            android:label="@string/activity_label_enabled_applications"
+            android:parentActivityName=".activities.MainSettingsActivity" />
+
+        <activity
+            android:name=".activities.ServerConfigurationActivity"
+            android:label="@string/activity_label_server_configuration"
+            android:parentActivityName=".activities.MainSettingsActivity" />
+
+        <activity
+            android:name=".activities.ClientCertificateActivity"
+            android:label="@string/activity_label_client_certificate"
+            android:parentActivityName=".activities.MainSettingsActivity" />
+
+    </application>
+
+</manifest>

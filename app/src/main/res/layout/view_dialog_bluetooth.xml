@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/DialogTextView"
+                android:text="@string/dialog_title_bt_name" />
+
+            <TextView
+                style="@style/DialogTextView"
+                android:text="@string/dialog_bt_title_name_hint"
+                android:textColor="@color/gray" />
+
+            <EditText
+                android:id="@+id/btNameEditText"
+                style="@style/DialogEditText" />
+
+            <TextView
+                style="@style/DialogTextView"
+                android:text="@string/dialog_title_bt_mac" />
+
+            <TextView
+                android:id="@+id/btMacTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="monospace"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <include layout="@layout/view_dialog_pairing" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/view_dialog_bottom_buttons" />
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        style="@style/DialogTextView"
+        android:paddingBottom="6dp"
+        android:text="@string/dialog_title_pairing" />
+
+    <Spinner
+        android:id="@+id/certificateSpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:id="@+id/pairingInfoTextView"
+        style="@style/DialogTextView"
+        android:paddingBottom="6dp"
+        android:text="@string/dialog_pairing_info_text"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/initiatePairingButton"
+        style="@style/DialogButton"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/dialog_pairing_button_text" />
+
+</merge>
