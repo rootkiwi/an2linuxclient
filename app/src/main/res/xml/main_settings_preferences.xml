@@ -15,7 +15,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetClass="kiwi.root.an2linuxclient.activities.EnabledApplicationsActivity"
-                android:targetPackage="kiwi.root.an2linuxclient" />
+                android:targetPackage="@string/packagename" />
         </Preference>
 
         <Preference
@@ -24,7 +24,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetClass="kiwi.root.an2linuxclient.activities.ServerConfigurationActivity"
-                android:targetPackage="kiwi.root.an2linuxclient" />
+                android:targetPackage="@string/packagename" />
         </Preference>
 
         <Preference
@@ -41,7 +41,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetClass="kiwi.root.an2linuxclient.activities.ClientCertificateActivity"
-                android:targetPackage="kiwi.root.an2linuxclient" />
+                android:targetPackage="@string/packagename" />
         </Preference>
 
         <CheckBoxPreference
