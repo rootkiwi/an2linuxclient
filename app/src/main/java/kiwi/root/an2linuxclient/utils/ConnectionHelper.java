@@ -44,10 +44,10 @@ public class ConnectionHelper {
         }
         WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifiManager.getConnectionInfo();
-        String connetedToSsid = info.getSSID();
+        String connectedToSsid = info.getSSID();
 
         for(String ssid : ssidWhitelist.split(",")){
-            if(connetedToSsid.equals("\""+ssid.trim()+"\"")){
+            if(connectedToSsid.equals("\""+ssid.trim()+"\"")){
                 return true;
             }
         }
