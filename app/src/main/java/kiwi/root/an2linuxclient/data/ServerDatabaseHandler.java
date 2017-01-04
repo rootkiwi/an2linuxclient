@@ -15,8 +15,8 @@ Five tables:
 -----------------------
 certificates
 servers
-wifi_and_mobile_servers
 wifi_servers
+mobile_servers
 bluetooth_servers
 -----------------------
 
