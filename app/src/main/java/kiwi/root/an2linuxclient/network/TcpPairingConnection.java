@@ -9,6 +9,7 @@
 package kiwi.root.an2linuxclient.network;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import java.io.IOException;
@@ -87,11 +88,15 @@ public class TcpPairingConnection extends PairingConnection {
 
             mOut.write(INITIATE_PAIRING);
 
-            SSLSocket tlsSocket = (SSLSocket) TlsHelper.getPairingTlsContext(c).getSocketFactory()
+            SSLSocket tlsSocket = (SSLSocket) TlsHelper.getPairingTlsContext().getSocketFactory()
                     .createSocket(s, serverAddress, serverPort, true);
             tlsSocket.setUseClientMode(true);
             tlsSocket.setEnabledProtocols(TlsHelper.TLS_VERSIONS);
-            tlsSocket.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
+                tlsSocket.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS);
+            } else {
+                tlsSocket.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS_COMPAT);
+            }
 
             final byte[] clientCertBytes = TlsHelper.getCertificateBytes(c);
             tlsSocket.addHandshakeCompletedListener(new HandshakeCompletedListener() {

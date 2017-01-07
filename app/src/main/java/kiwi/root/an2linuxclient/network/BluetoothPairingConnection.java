@@ -11,6 +11,7 @@ package kiwi.root.an2linuxclient.network;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -67,10 +68,15 @@ public class BluetoothPairingConnection extends PairingConnection {
     }
 
     private void createTlsEngine(){
-        tlsEngine = TlsHelper.getPairingTlsContext(c).createSSLEngine();
+        tlsEngine = TlsHelper.getPairingTlsContext().createSSLEngine();
         tlsEngine.setUseClientMode(true);
-        tlsEngine.setEnabledProtocols(TlsHelper.TLS_VERSIONS);
-        tlsEngine.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
+            tlsEngine.setEnabledProtocols(TlsHelper.TLS_VERSIONS);
+            tlsEngine.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS);
+        } else {
+            tlsEngine.setEnabledProtocols(TlsHelper.TLS_VERSIONS_COMPAT_BT);
+            tlsEngine.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS_COMPAT_BT);
+        }
     }
 
     private void createBuffers(){

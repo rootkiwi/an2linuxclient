@@ -10,6 +10,7 @@ package kiwi.root.an2linuxclient.crypto;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 
@@ -52,14 +53,22 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class TlsHelper {
 
+    // TLSv1.2 -> API_16+ but with SSLEngine it's API_20+
     public static final String[] TLS_VERSIONS = new String[]{"TLSv1.2"};
+
+    // TLSv1 -> API_1+ used with SSLEngine on Android 4.4 (API_19)
+    public static final String[] TLS_VERSIONS_COMPAT_BT = new String[]{"TLSv1"};
+
     // TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 -> API_20+
-    // TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA -> API_11+
-    public static final String[] TLS_CIPHERS = new String[]{"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
-            "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"};
+    public static final String[] TLS_CIPHERS = new String[]{"TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"};
+
+    // TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA -> API_11+ but with SSLEngine it's API_20+
+    public static final String[] TLS_CIPHERS_COMPAT = new String[]{"TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"};
+
+    // TLS_DHE_RSA_WITH_AES_256_CBC_SHA -> API_9+ used with SSLEngine on Android 4.4 (API_19)
+    public static final String[] TLS_CIPHERS_COMPAT_BT = new String[]{"TLS_DHE_RSA_WITH_AES_256_CBC_SHA"};
 
     static void initialiseCertificate(SharedPreferences deviceKeyPref, KeyPair keyPair){
-
         X509Certificate certificate;
 
         Calendar calendar = Calendar.getInstance();
@@ -98,7 +107,7 @@ public class TlsHelper {
 
     }
 
-    public static X509Certificate getCertificate(Context c){
+    private static X509Certificate getCertificate(Context c){
         SharedPreferences deviceKeyPref = c.getSharedPreferences("device_key_and_cert", MODE_PRIVATE);
         try {
             byte[] certificateBytes = Base64.decode(deviceKeyPref.getString("certificate", ""), Base64.DEFAULT);
@@ -126,7 +135,7 @@ public class TlsHelper {
         }
     }
 
-    public static SSLContext getPairingTlsContext(Context c){
+    public static SSLContext getPairingTlsContext(){
         try {
             SSLContext tlsContext = SSLContext.getInstance(TLS_VERSIONS[0]);
 
@@ -182,7 +191,15 @@ public class TlsHelper {
                                                               OutputStream out,
                                                               InputStream in){
         try {
-            ByteBuffer empty = ByteBuffer.allocate(0);
+            ByteBuffer empty;
+            /*Apparently on Android 4.4 (API_19) SSLEngine whines about BUFFER_OVERFLOW for this
+            buffer even though nothing ever gets written to it*/
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
+                empty = ByteBuffer.allocate(0);
+            } else {
+                empty = ByteBuffer.allocate(tlsEngine.getSession().getApplicationBufferSize());
+            }
+
             // ClientHello -> netDataBuf
             tlsEngine.wrap(empty, netDataBuf);
             netDataBuf.flip();
@@ -197,11 +214,22 @@ public class TlsHelper {
             netDataBuf.clear();
             netDataBuf.put(serverHello);
             netDataBuf.flip();
-            tlsEngine.unwrap(netDataBuf, empty);
+            SSLEngineResult result = tlsEngine.unwrap(netDataBuf, empty);
+            while (result.getHandshakeStatus() == SSLEngineResult.HandshakeStatus.NEED_UNWRAP){
+                result = tlsEngine.unwrap(netDataBuf, empty);
+            }
+            Runnable task = tlsEngine.getDelegatedTask();
+            while (task != null){
+                task.run();
+                task = tlsEngine.getDelegatedTask();
+            }
 
             // [client]Certificate*..ClientKeyExchange..Finished -> netDataBuf
             netDataBuf.clear();
-            tlsEngine.wrap(empty, netDataBuf);
+            result = tlsEngine.wrap(empty, netDataBuf);
+            while (result.getHandshakeStatus() == SSLEngineResult.HandshakeStatus.NEED_WRAP){
+                result = tlsEngine.wrap(empty, netDataBuf);
+            }
             netDataBuf.flip();
             byte[] clientKeyExchange = new byte[netDataBuf.limit()];
             netDataBuf.get(clientKeyExchange);
@@ -214,7 +242,25 @@ public class TlsHelper {
             netDataBuf.clear();
             netDataBuf.put(serverChangeCipherSpec);
             netDataBuf.flip();
-            return tlsEngine.unwrap(netDataBuf, empty).getHandshakeStatus();
+            result = tlsEngine.unwrap(netDataBuf, empty);
+            while (result.getHandshakeStatus() == SSLEngineResult.HandshakeStatus.NEED_UNWRAP){
+                result = tlsEngine.unwrap(netDataBuf, empty);
+            }
+
+            /*Apparently on Android 4.4 (API_19) with SSLEngine the latest call tlsEngine.unwrap(..)
+            that finishes the handshake returns NOT_HANDSHAKING instead of FINISHED as the result*/
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
+                return result.getHandshakeStatus();
+            } else {
+                if (result.getHandshakeStatus() == SSLEngineResult.HandshakeStatus.NOT_HANDSHAKING){
+                    return SSLEngineResult.HandshakeStatus.FINISHED;
+                } else if (result.getHandshakeStatus() == SSLEngineResult.HandshakeStatus.FINISHED) {
+                    // just in case
+                    return result.getHandshakeStatus();
+                } else {
+                    return null;
+                }
+            }
         } catch (IOException e){
             return null;
         }
@@ -250,7 +296,10 @@ public class TlsHelper {
             netDataBuf.clear();
             netDataBuf.put(netData);
             netDataBuf.flip();
-            tlsEngine.unwrap(netDataBuf, appDataBuf);
+            int consumed = tlsEngine.unwrap(netDataBuf, appDataBuf).bytesConsumed();
+            while (consumed < netData.length){
+                consumed += tlsEngine.unwrap(netDataBuf, appDataBuf).bytesConsumed();
+            }
             appDataBuf.flip();
             byte[] appData = new byte[appDataBuf.limit()];
             appDataBuf.get(appData);

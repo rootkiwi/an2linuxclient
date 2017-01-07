@@ -10,6 +10,7 @@ package kiwi.root.an2linuxclient.network;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -52,7 +53,11 @@ class TcpNotificationConnection extends NotificationConnection {
                     .createSocket(s, serverAddress, serverPort, true);
             tlsSocket.setUseClientMode(true);
             tlsSocket.setEnabledProtocols(TlsHelper.TLS_VERSIONS);
-            tlsSocket.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
+                tlsSocket.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS);
+            } else {
+                tlsSocket.setEnabledCipherSuites(TlsHelper.TLS_CIPHERS_COMPAT);
+            }
 
             try {
                 tlsSocket.startHandshake();
