@@ -24,6 +24,8 @@
     <string name="main_block_foreground">Block running service notifications</string>
     <string name="main_block_group">Block group summary notifications</string>
     <string name="main_block_group_summary">This is different for every app, you have to tinker with this setting\nWith gmail it\'s notifications of type:\n\"2 new messages\"</string>
+    <string name="main_block_local">Block local notifications</string>
+    <string name="main_block_local_summary">You need to tinker with this as well\nIt\'s probably best not to block but this is what android reference says:\n\"notification is relevant to the current device only and it is not recommended that it bridge to other devices\"\nFor example Google Now Reminders is flagged as this</string>
     <string name="main_license">License</string>
     <string name="main_license_summary">GNU General Public License 3</string>
     <string name="main_source_code_client">Source code this app</string>

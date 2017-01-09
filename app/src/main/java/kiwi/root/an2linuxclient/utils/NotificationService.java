@@ -44,11 +44,12 @@ public class NotificationService extends NotificationListenerService {
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
-                if ((flags & Notification.FLAG_LOCAL_ONLY) != 0){
-                    return;
-                }
                 boolean blockGroup = sharedPrefsDefault.getBoolean("preference_block_group", true);
                 if (blockGroup && (flags & Notification.FLAG_GROUP_SUMMARY) != 0){
+                    return;
+                }
+                boolean blockLocal = sharedPrefsDefault.getBoolean("preference_block_local", false);
+                if (blockLocal && (flags & Notification.FLAG_LOCAL_ONLY) != 0){
                     return;
                 }
             }

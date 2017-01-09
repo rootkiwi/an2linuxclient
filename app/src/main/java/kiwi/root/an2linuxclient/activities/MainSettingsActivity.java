@@ -207,6 +207,12 @@ public class MainSettingsActivity extends AppCompatActivity {
                 c.setTitle(getString(R.string.main_block_group));
                 c.setSummary(getString(R.string.main_block_group_summary));
                 g.addPreference(c);
+                c = new CheckBoxPreference(getPreferenceScreen().getContext());
+                c.setDefaultValue(false);
+                c.setKey("preference_block_local");
+                c.setTitle(getString(R.string.main_block_local));
+                c.setSummary(getString(R.string.main_block_local_summary));
+                g.addPreference(c);
             }
 
         }
