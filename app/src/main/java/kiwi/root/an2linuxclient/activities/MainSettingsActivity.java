@@ -38,6 +38,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import kiwi.root.an2linuxclient.R;
+import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
 import kiwi.root.an2linuxclient.crypto.RsaHelper;
 import kiwi.root.an2linuxclient.data.MobileServer;
 import kiwi.root.an2linuxclient.data.ServerDatabaseHandler;
@@ -219,13 +220,10 @@ public class MainSettingsActivity extends AppCompatActivity {
 
         private void generateKeyIfNotExists(){
             final SharedPreferences deviceKeyPref = getActivity().getSharedPreferences("device_key_and_cert", MODE_PRIVATE);
-            if (!deviceKeyPref.contains("privatekey") || !deviceKeyPref.contains("certificate")){
-                new Thread() {
-                    @Override
-                    public void run(){
-                        RsaHelper.initialiseRsaKeyAndCert(deviceKeyPref);
-                    }
-                }.start();
+            if ((!deviceKeyPref.contains("privatekey") || !deviceKeyPref.contains("certificate"))
+                    && !KeyGeneratorService.currentlyGenerating){
+                KeyGeneratorService.currentlyGenerating = true;
+                getActivity().startService(new Intent(getActivity(), KeyGeneratorService.class));
             }
         }
 

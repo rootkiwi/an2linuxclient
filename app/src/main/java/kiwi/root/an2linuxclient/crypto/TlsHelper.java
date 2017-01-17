@@ -69,8 +69,6 @@ public class TlsHelper {
     public static final String[] TLS_CIPHERS_COMPAT_BT = new String[]{"TLS_DHE_RSA_WITH_AES_256_CBC_SHA"};
 
     static void initialiseCertificate(SharedPreferences deviceKeyPref, KeyPair keyPair){
-        X509Certificate certificate;
-
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         Date notBefore = calendar.getTime();
@@ -88,23 +86,17 @@ public class TlsHelper {
                 nameBuilder.build(),
                 keyPair.getPublic()
         );
-
         try {
             ContentSigner contentSigner = new JcaContentSignerBuilder("SHA256WithRSAEncryption").setProvider("BC").build(keyPair.getPrivate());
-            certificate = new JcaX509CertificateConverter().setProvider("BC").getCertificate(certificateBuilder.build(contentSigner));
+            X509Certificate certificate = new JcaX509CertificateConverter().setProvider("BC").getCertificate(certificateBuilder.build(contentSigner));
 
-            SharedPreferences.Editor edit = deviceKeyPref.edit();
-            edit.putString("certificate", Base64.encodeToString(certificate.getEncoded(), Base64.NO_WRAP));
-            edit.putBoolean("currently_generating", false);
-            edit.apply();
-
+            deviceKeyPref.edit().putString("certificate",
+                    Base64.encodeToString(certificate.getEncoded(), Base64.NO_WRAP)).apply();
             Log.d("TlsHelper", "Generated new certificate successfully");
         } catch (Exception e){
             Log.e("TlsHelper", "initialiseCertificate");
             Log.e("StackTrace", Log.getStackTraceString(e));
-            return;
         }
-
     }
 
     private static X509Certificate getCertificate(Context c){

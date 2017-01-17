@@ -8,64 +8,29 @@
 
 package kiwi.root.an2linuxclient.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.SharedPreferences;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import kiwi.root.an2linuxclient.R;
-import kiwi.root.an2linuxclient.crypto.RsaHelper;
+import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
 import kiwi.root.an2linuxclient.crypto.Sha1Helper;
 import kiwi.root.an2linuxclient.crypto.TlsHelper;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class ClientCertificateFragment extends Fragment implements Observer {
+public class ClientCertificateFragment extends Fragment {
 
     private TextView fingerprintTextView;
     private Button generateNewButton;
-    private KeyGenerator generator;
-    private Poller poller;
-    private Thread pollThread;
-    private SharedPreferences deviceKeyPref;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (generator != null){
-            generator.addObserver(this);
-        }
-        if (poller != null){
-            poller.addObserver(this);
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (generator != null){
-            generator.deleteObservers();
-        }
-        if (poller != null){
-            poller.deleteObservers();
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (pollThread != null){
-            pollThread.interrupt();
-        }
-    }
+    private GeneratorBroadcastReceiver receiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,43 +39,36 @@ public class ClientCertificateFragment extends Fragment implements Observer {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (KeyGeneratorService.currentlyGenerating){
+            registerReceiver();
+        } else {
+            setFingerprintText();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (receiver != null){
+            unregisterReceiver();
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_client_certificate, container, false);
         fingerprintTextView = (TextView) v.findViewById(R.id.fingerprintTextView);
         generateNewButton = (Button) v.findViewById(R.id.generateNewButton);
-        deviceKeyPref = getActivity().getSharedPreferences("device_key_and_cert", MODE_PRIVATE);
-
         generateNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generator = new KeyGenerator();
-                generator.addObserver(ClientCertificateFragment.this);
-                new Thread(generator).start();
-                generateNewButton.setEnabled(false);
-                fingerprintTextView.setText(R.string.generate_key_working);
+                registerReceiver();
+                KeyGeneratorService.currentlyGenerating = true;
+                getActivity().startService(new Intent(getActivity(), KeyGeneratorService.class));
             }
         });
-
-        boolean currentlyGenerating = deviceKeyPref.getBoolean("currently_generating", false);
-
-        if (currentlyGenerating){
-            generateNewButton.setEnabled(false);
-            fingerprintTextView.setText(R.string.generate_key_working);
-            if (generator == null){
-                /*this means it's either the first run that is running or the user have pressed
-                generate button and then exited the activity and returned before the generator
-                finished, which means no callback*/
-                if (poller == null){
-                    poller = new Poller();
-                    poller.addObserver(this);
-                    pollThread = new Thread(poller);
-                    pollThread.start();
-                }
-            }
-        } else {
-            setFingerprintText();
-        }
-
         return v;
     }
 
@@ -120,38 +78,26 @@ public class ClientCertificateFragment extends Fragment implements Observer {
         fingerprintTextView.setText(Sha1Helper.getTwoLineHexString(sha1));
     }
 
-    @Override
-    public void update(Observable observable, Object data) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                generateNewButton.setEnabled(true);
-                setFingerprintText();
-            }
-        });
-    }
-
-    private class KeyGenerator extends Observable implements Runnable {
-        @Override
-        public void run() {
-            RsaHelper.initialiseRsaKeyAndCert(deviceKeyPref);
-            setChanged();
-            notifyObservers();
+    private void registerReceiver(){
+        if (receiver == null){
+            receiver = new GeneratorBroadcastReceiver();
         }
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver,
+                new IntentFilter(KeyGeneratorService.BROADCAST_ACTION));
+        generateNewButton.setEnabled(false);
+        fingerprintTextView.setText(R.string.generate_key_working);
     }
 
-    private class Poller extends Observable implements Runnable {
+    private void unregisterReceiver(){
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
+    }
+
+    private class GeneratorBroadcastReceiver extends BroadcastReceiver {
         @Override
-        public void run() {
-            try {
-                boolean currentlyGenerating = deviceKeyPref.getBoolean("currently_generating", false);
-                while (currentlyGenerating){
-                    Thread.sleep(1000);
-                    currentlyGenerating = deviceKeyPref.getBoolean("currently_generating", false);
-                }
-                setChanged();
-                notifyObservers();
-            } catch (InterruptedException e){}
+        public void onReceive(Context context, Intent intent) {
+            generateNewButton.setEnabled(true);
+            setFingerprintText();
+            unregisterReceiver();
         }
     }
 

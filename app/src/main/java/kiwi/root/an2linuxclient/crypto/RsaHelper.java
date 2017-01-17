@@ -23,24 +23,19 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class RsaHelper {
 
-    public static void initialiseRsaKeyAndCert(SharedPreferences deviceKeyPref){
-        deviceKeyPref.edit().putBoolean("currently_generating", true).apply();
-        KeyPair keyPair;
+    static void initialiseRsaKeyAndCert(SharedPreferences deviceKeyPref){
         try {
             KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
             kpg.initialize(4096);
-            keyPair = kpg.generateKeyPair();
+            KeyPair keyPair = kpg.generateKeyPair();
+            deviceKeyPref.edit().putString("privatekey",
+                    Base64.encodeToString(keyPair.getPrivate().getEncoded(), Base64.NO_WRAP)).apply();
             Log.d("RsaHelper", "Generated new keypair successfully");
+            TlsHelper.initialiseCertificate(deviceKeyPref, keyPair);
         } catch (Exception e){
             Log.e("RsaHelper", "initialiseRsaKeyAndCert");
             Log.e("StackTrace", Log.getStackTraceString(e));
-            deviceKeyPref.edit().putBoolean("currently_generating", false).apply();
-            return;
         }
-        deviceKeyPref.edit().putString("privatekey",
-                Base64.encodeToString(keyPair.getPrivate().getEncoded(), Base64.NO_WRAP)).apply();
-
-        TlsHelper.initialiseCertificate(deviceKeyPref, keyPair);
     }
 
     static PrivateKey getPrivateKey(Context c){
