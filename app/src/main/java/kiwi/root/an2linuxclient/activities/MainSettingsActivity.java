@@ -39,7 +39,6 @@ import java.util.List;
 
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
-import kiwi.root.an2linuxclient.crypto.RsaHelper;
 import kiwi.root.an2linuxclient.data.MobileServer;
 import kiwi.root.an2linuxclient.data.ServerDatabaseHandler;
 import kiwi.root.an2linuxclient.data.WifiServer;
