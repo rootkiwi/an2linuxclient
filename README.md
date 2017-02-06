@@ -1,5 +1,5 @@
 # AN2Linux - client (android app)
-Sync android notifications encrypted to a linux desktop with tcp or bluetooth.
+Sync Android notifications encrypted using TLS to a Linux desktop over WiFi, Mobile data or Bluetooth.
 
 This is the client part of AN2Linux.
 
