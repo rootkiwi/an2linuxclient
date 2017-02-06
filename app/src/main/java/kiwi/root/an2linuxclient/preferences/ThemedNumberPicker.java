@@ -6,7 +6,7 @@
  * See LICENSE for more details.
  */
 
-package kiwi.root.an2linuxclient.data;
+package kiwi.root.an2linuxclient.preferences;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -16,7 +16,7 @@
         android:textColor="@color/black"
         android:textSize="18sp" />
 
-    <kiwi.root.an2linuxclient.data.ThemedNumberPicker
+    <kiwi.root.an2linuxclient.preferences.ThemedNumberPicker
         android:id="@+id/number_picker"
         style="@style/NumberPickerStyle"
         android:layout_width="wrap_content"
