@@ -12,6 +12,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import kiwi.root.an2linuxclient.preferences.MaxMessageSizePreference;
+import kiwi.root.an2linuxclient.preferences.MaxTitleSizePreference;
+
 public class NotificationSettings {
 
     private boolean prefIncludeTitle;
@@ -38,12 +41,12 @@ public class NotificationSettings {
             final byte FLAG_INCLUDE_TITLE = 1;
             notificationFlags |= FLAG_INCLUDE_TITLE;
             prefForceTitle = sharedPrefs.getBoolean("preference_force_title", false);
-            prefMaxTitleSize = sharedPrefs.getInt("preference_title_max_size", 20);
+            prefMaxTitleSize = sharedPrefs.getInt("preference_title_max_size", MaxTitleSizePreference.DEFAULT_VALUE);
         }
         if (prefIncludeMessage){
             final byte FLAG_INCLUDE_MESSAGE = 2;
             notificationFlags |= FLAG_INCLUDE_MESSAGE;
-            prefMaxMessageSize = sharedPrefs.getInt("preference_message_max_size", 120);
+            prefMaxMessageSize = sharedPrefs.getInt("preference_message_max_size", MaxMessageSizePreference.DEFAULT_VALUE);
         }
         if (prefIncludeIcon) {
             notificationFlags |= FLAG_INCLUDE_ICON;

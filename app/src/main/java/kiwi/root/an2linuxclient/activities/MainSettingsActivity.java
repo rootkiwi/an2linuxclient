@@ -39,6 +39,8 @@ import java.util.List;
 
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
+import kiwi.root.an2linuxclient.preferences.MaxMessageSizePreference;
+import kiwi.root.an2linuxclient.preferences.MaxTitleSizePreference;
 import kiwi.root.an2linuxclient.data.MobileServer;
 import kiwi.root.an2linuxclient.data.ServerDatabaseHandler;
 import kiwi.root.an2linuxclient.data.WifiServer;
@@ -188,9 +190,9 @@ public class MainSettingsActivity extends AppCompatActivity {
                 }
             });
             findPreference("preference_title_max_size").setSummary(
-                    String.valueOf(sharedPrefsDefault.getInt("preference_title_max_size", 20)));
+                    String.valueOf(sharedPrefsDefault.getInt("preference_title_max_size", MaxTitleSizePreference.DEFAULT_VALUE)));
             findPreference("preference_message_max_size").setSummary(
-                    String.valueOf(sharedPrefsDefault.getInt("preference_message_max_size", 120)));
+                    String.valueOf(sharedPrefsDefault.getInt("preference_message_max_size", MaxMessageSizePreference.DEFAULT_VALUE)));
             findPreference("license").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {

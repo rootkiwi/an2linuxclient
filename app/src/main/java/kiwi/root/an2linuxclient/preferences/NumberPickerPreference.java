@@ -23,14 +23,20 @@ import android.widget.TextView;
 
 import kiwi.root.an2linuxclient.R;
 
-public class NumberPickerPreference extends DialogPreference {
+abstract class NumberPickerPreference extends DialogPreference {
 
     private NumberPicker mNumberPicker;
-    private int mValue;
-    private final int DEFAULT_VALUE = 20;
+    int mValue;
+    private int minValue;
+    private int maxValue;
+    private int defaultValue;
 
-    public NumberPickerPreference(Context context, AttributeSet attrs) {
+    NumberPickerPreference(Context context, AttributeSet attrs,
+                           int minValue, int maxValue, int defaultValue) {
         super(context, attrs);
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.defaultValue = defaultValue;
         setDialogLayoutResource(R.layout.numberpicker_dialog);
         setPositiveButtonText(android.R.string.ok);
         setNegativeButtonText(android.R.string.cancel);
@@ -55,8 +61,8 @@ public class NumberPickerPreference extends DialogPreference {
         TextView dialogMessageText = (TextView) view.findViewById(R.id.text_dialog_message);
         dialogMessageText.setText(getDialogMessage());
         mNumberPicker = (NumberPicker) view.findViewById(R.id.number_picker);
-        mNumberPicker.setMinValue(1);
-        mNumberPicker.setMaxValue(999);
+        mNumberPicker.setMinValue(minValue);
+        mNumberPicker.setMaxValue(maxValue);
         mNumberPicker.setValue(mValue);
         mNumberPicker.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
     }
@@ -75,7 +81,7 @@ public class NumberPickerPreference extends DialogPreference {
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         if (restorePersistedValue) {
             // Restore existing state
-            mValue = getPersistedInt(DEFAULT_VALUE);
+            mValue = getPersistedInt(this.defaultValue);
         } else {
             // Set default state from the XML attribute
             mValue = (Integer) defaultValue;
@@ -85,7 +91,7 @@ public class NumberPickerPreference extends DialogPreference {
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getInteger(index, DEFAULT_VALUE);
+        return a.getInteger(index, defaultValue);
     }
 
 }
