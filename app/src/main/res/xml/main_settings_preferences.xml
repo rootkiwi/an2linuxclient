@@ -79,6 +79,13 @@
             android:key="preference_include_notification_icon"
             android:title="@string/main_include_icon" />
 
+        <kiwi.root.an2linuxclient.preferences.IconSizePreference
+            android:defaultValue="64"
+            android:dependency="preference_include_notification_icon"
+            android:dialogMessage="@string/main_icon_size_dialog_message"
+            android:key="preference_icon_size"
+            android:title="@string/main_icon_size" />
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="preference_block_ongoing"

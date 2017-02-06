@@ -90,7 +90,8 @@ public class Notification {
 
         if (ns.includeIcon()){
             try {
-                icon = Bitmap.createScaledBitmap(drawableToBitmap(pm.getApplicationIcon(packageName)), 64, 64, true);
+                int iconSize = ns.getIconSize();
+                icon = Bitmap.createScaledBitmap(drawableToBitmap(pm.getApplicationIcon(packageName)), iconSize, iconSize, true);
             } catch (PackageManager.NameNotFoundException e){
                 ns.removeIconFlag();
             }

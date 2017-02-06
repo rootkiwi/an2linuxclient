@@ -72,9 +72,13 @@ abstract class NumberPickerPreference extends DialogPreference {
         // When the user selects "OK", persist the new value
         if (positiveResult) {
             mValue = mNumberPicker.getValue();
-            findPreferenceInHierarchy(getKey()).setSummary(String.valueOf(mValue));
+            findPreferenceInHierarchy(getKey()).setSummary(getSummaryString());
             persistInt(mValue);
         }
+    }
+
+    String getSummaryString(){
+        return String.valueOf(mValue);
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import kiwi.root.an2linuxclient.preferences.IconSizePreference;
 import kiwi.root.an2linuxclient.preferences.MaxMessageSizePreference;
 import kiwi.root.an2linuxclient.preferences.MaxTitleSizePreference;
 
@@ -23,6 +24,7 @@ public class NotificationSettings {
     private boolean prefIncludeIcon;
     private int prefMaxTitleSize;
     private int prefMaxMessageSize;
+    private int prefIconSize;
     private byte notificationFlags;
 
     private final byte FLAG_INCLUDE_ICON = 4;
@@ -50,6 +52,7 @@ public class NotificationSettings {
         }
         if (prefIncludeIcon) {
             notificationFlags |= FLAG_INCLUDE_ICON;
+            prefIconSize = sharedPrefs.getInt("preference_icon_size", IconSizePreference.DEFAULT_VALUE);
         }
     }
 
@@ -75,6 +78,10 @@ public class NotificationSettings {
 
     public boolean includeIcon(){
         return prefIncludeIcon;
+    }
+
+    int getIconSize(){
+        return prefIconSize;
     }
 
     public byte getNotificationFlags(){

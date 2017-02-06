@@ -14,6 +14,9 @@
     <string name="main_include_title">Include notification title</string>
     <string name="main_include_message">Include notification message</string>
     <string name="main_include_icon">Include notification icon</string>
+    <string name="main_icon_size">Icon size</string>
+    <string name="main_icon_size_summary">%d pixels\nMost notification daemons will scale the image to a specific size, just so you know</string>
+    <string name="main_icon_size_dialog_message">Select icon size:</string>
     <string name="main_force_title">Force notification title to be app name</string>
     <string name="main_max_title">Maximum chars to include from title</string>
     <string name="main_max_title_dialog_message">Select max title size:</string>

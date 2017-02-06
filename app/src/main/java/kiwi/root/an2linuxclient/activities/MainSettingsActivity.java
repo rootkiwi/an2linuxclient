@@ -39,6 +39,7 @@ import java.util.List;
 
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
+import kiwi.root.an2linuxclient.preferences.IconSizePreference;
 import kiwi.root.an2linuxclient.preferences.MaxMessageSizePreference;
 import kiwi.root.an2linuxclient.preferences.MaxTitleSizePreference;
 import kiwi.root.an2linuxclient.data.MobileServer;
@@ -193,6 +194,8 @@ public class MainSettingsActivity extends AppCompatActivity {
                     String.valueOf(sharedPrefsDefault.getInt("preference_title_max_size", MaxTitleSizePreference.DEFAULT_VALUE)));
             findPreference("preference_message_max_size").setSummary(
                     String.valueOf(sharedPrefsDefault.getInt("preference_message_max_size", MaxMessageSizePreference.DEFAULT_VALUE)));
+            findPreference("preference_icon_size").setSummary(getString(R.string.main_icon_size_summary,
+                    sharedPrefsDefault.getInt("preference_icon_size", IconSizePreference.DEFAULT_VALUE)));
             findPreference("license").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
