@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import kiwi.root.an2linuxclient.R;
@@ -104,12 +105,11 @@ public class EnabledApplicationsActivity extends AppCompatActivity implements En
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
             View view = inflater.inflate(R.layout.view_progressbar, container);
-
-            ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-            progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
-
+            getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            ((ProgressBar) view.findViewById(R.id.progressBar))
+                    .getIndeterminateDrawable()
+                    .setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
             return view;
         }
 
