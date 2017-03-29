@@ -35,7 +35,6 @@ public class EnabledApplicationsPreferenceFragment extends PreferenceFragment {
     public interface TaskCallbacks {
         void onPreExecute();
         void onPostExecute();
-        void onCancelled();
     }
 
     @Override
@@ -126,13 +125,6 @@ public class EnabledApplicationsPreferenceFragment extends PreferenceFragment {
                 }
                 if (taskCallbacks != null) {
                     taskCallbacks.onPostExecute();
-                }
-            }
-
-            @Override
-            protected void onCancelled() {
-                if (taskCallbacks != null) {
-                    taskCallbacks.onCancelled();
                 }
             }
 

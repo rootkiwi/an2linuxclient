@@ -94,13 +94,6 @@ public class EnabledApplicationsActivity extends AppCompatActivity implements En
         applicationListTaskIsDone = true;
     }
 
-    @Override
-    public void onCancelled(){
-        if (progressDialog != null){
-            progressDialog.dismiss();
-        }
-    }
-
     public static class CustomProgressDialog extends DialogFragment {
 
         @Override
