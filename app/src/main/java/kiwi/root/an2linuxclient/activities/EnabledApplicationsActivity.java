@@ -24,45 +24,32 @@ import kiwi.root.an2linuxclient.fragments.EnabledApplicationsPreferenceFragment;
 
 public class EnabledApplicationsActivity extends AppCompatActivity implements EnabledApplicationsPreferenceFragment.TaskCallbacks {
 
-
     final String STATE_IS_TASK_DONE = "applicationListTaskIsDone";
     private boolean applicationListTaskIsDone;
-
-    CustomProgressDialog progressDialog;
+    private CustomProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        final String TAG_TASK_FRAGMENT = "EnabledApplicationsPreferenceFragment";
-
+        final String TAG = "EnabledApplicationsPreferenceFragment";
         FragmentManager fm = getFragmentManager();
-        EnabledApplicationsPreferenceFragment taskFragment = (EnabledApplicationsPreferenceFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
-
-        // If the Fragment is non-null, then it is currently being
-        // retained across a configuration change.
-        if (taskFragment == null) {
-            taskFragment = new EnabledApplicationsPreferenceFragment();
-            fm.beginTransaction().replace(android.R.id.content, taskFragment, TAG_TASK_FRAGMENT).commit();
+        EnabledApplicationsPreferenceFragment fragment = (EnabledApplicationsPreferenceFragment) fm.findFragmentByTag(TAG);
+        if (fragment == null) {
+            fragment = new EnabledApplicationsPreferenceFragment();
+            fm.beginTransaction().replace(android.R.id.content, fragment, TAG).commit();
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(STATE_IS_TASK_DONE, applicationListTaskIsDone);
-
-        // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
         super.onRestoreInstanceState(savedInstanceState);
-
-        // Restore state members from saved instance
         applicationListTaskIsDone = savedInstanceState.getBoolean(STATE_IS_TASK_DONE);
-
         if (!applicationListTaskIsDone){
             displayProgressDialog();
         }
