@@ -36,15 +36,9 @@
 
         <Button
             android:id="@+id/generateNewButton"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="40dp"
-            android:fontFamily="monospace"
-            android:text="@string/client_certificate_button_text"
-            android:textColor="@color/black" />
+            style="@style/ButtonStyle"
+            android:text="@string/client_certificate_button_text" />
+
     </LinearLayout>
 
 </ScrollView>
