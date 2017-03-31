@@ -24,31 +24,37 @@ public class NotificationService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         //logDebug(sbn);
-        SharedPreferences sharedPrefsDefault = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences sharedPrefsEnabledApplications = getSharedPreferences("enabled_applications", MODE_PRIVATE);
-
-        boolean globalEnabled = sharedPrefsDefault.getBoolean("preference_enable_an2linux", false);
-        boolean appEnabled = sharedPrefsEnabledApplications.getBoolean(sbn.getPackageName(), false);
+        boolean globalEnabled = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("preference_enable_an2linux", false);
+        boolean appEnabled = getSharedPreferences("enabled_applications", MODE_PRIVATE).getBoolean(sbn.getPackageName(), false);
 
         if (globalEnabled && appEnabled) {
-            int flags = sbn.getNotification().flags;
+            SharedPreferences sharedPrefs = getSharedPreferences("notification_settings_custom", MODE_PRIVATE);
+            boolean usingCustomSettings = sharedPrefs.getBoolean(sbn.getPackageName() + "_preference_use_custom_settings", false);
+            if (!usingCustomSettings) {
+                sharedPrefs = getSharedPreferences("notification_settings_global", MODE_PRIVATE);
+            }
 
-            boolean blockOngoing = sharedPrefsDefault.getBoolean("preference_block_ongoing", false);
+            int flags = sbn.getNotification().flags;
+            boolean blockOngoing = sharedPrefs.getBoolean(getCorrectPrefKey(
+                    "preference_block_ongoing", sbn.getPackageName(), usingCustomSettings), false);
             if (blockOngoing && (flags & Notification.FLAG_ONGOING_EVENT) != 0){
                 return;
             }
 
-            boolean blockForeground = sharedPrefsDefault.getBoolean("preference_block_foreground", true);
+            boolean blockForeground = sharedPrefs.getBoolean(getCorrectPrefKey(
+                    "preference_block_foreground", sbn.getPackageName(), usingCustomSettings), false);
             if (blockForeground && (flags & Notification.FLAG_FOREGROUND_SERVICE) != 0){
                 return;
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
-                boolean blockGroup = sharedPrefsDefault.getBoolean("preference_block_group", true);
+                boolean blockGroup = sharedPrefs.getBoolean(getCorrectPrefKey(
+                        "preference_block_group", sbn.getPackageName(), usingCustomSettings), false);
                 if (blockGroup && (flags & Notification.FLAG_GROUP_SUMMARY) != 0){
                     return;
                 }
-                boolean blockLocal = sharedPrefsDefault.getBoolean("preference_block_local", false);
+                boolean blockLocal = sharedPrefs.getBoolean(getCorrectPrefKey(
+                        "preference_block_local", sbn.getPackageName(), usingCustomSettings), false);
                 if (blockLocal && (flags & Notification.FLAG_LOCAL_ONLY) != 0){
                     return;
                 }
@@ -56,6 +62,10 @@ public class NotificationService extends NotificationListenerService {
 
             NotificationHandler.handleStatusBarNotification(sbn, getApplicationContext());
         }
+    }
+
+    private String getCorrectPrefKey(String key, String packageName, boolean usingCustomSettings) {
+        return usingCustomSettings ? packageName + "_" + key : key;
     }
 
     @Override

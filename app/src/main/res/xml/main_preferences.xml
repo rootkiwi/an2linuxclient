@@ -44,58 +44,13 @@
                 android:targetPackage="@string/packagename" />
         </Preference>
 
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="preference_include_notification_title"
-            android:title="@string/main_include_title" />
-
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:dependency="preference_include_notification_title"
-            android:key="preference_force_title"
-            android:title="@string/main_force_title" />
-
-        <kiwi.root.an2linuxclient.preferences.MaxTitleSizePreference
-            android:defaultValue="20"
-            android:dependency="preference_include_notification_title"
-            android:dialogMessage="@string/main_max_title_dialog_message"
-            android:key="preference_title_max_size"
-            android:title="@string/main_max_title" />
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="preference_include_notification_message"
-            android:title="@string/main_include_message" />
-
-        <kiwi.root.an2linuxclient.preferences.MaxMessageSizePreference
-            android:defaultValue="120"
-            android:dependency="preference_include_notification_message"
-            android:dialogMessage="@string/main_max_message_dialog_message"
-            android:key="preference_message_max_size"
-            android:title="@string/main_max_message" />
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="preference_include_notification_icon"
-            android:title="@string/main_include_icon" />
-
-        <kiwi.root.an2linuxclient.preferences.IconSizePreference
-            android:defaultValue="64"
-            android:dependency="preference_include_notification_icon"
-            android:dialogMessage="@string/main_icon_size_dialog_message"
-            android:key="preference_icon_size"
-            android:title="@string/main_icon_size" />
-
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="preference_block_ongoing"
-            android:summary="@string/main_block_ongoing_summary"
-            android:title="@string/main_block_ongoing" />
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="preference_block_foreground"
-            android:title="@string/main_block_foreground" />
+        <Preference
+            android:title="@string/activity_label_notification_settings">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="kiwi.root.an2linuxclient.activities.NotificationSettingsActivity"
+                android:targetPackage="@string/packagename" />
+        </Preference>
 
     </PreferenceCategory>
 

@@ -40,6 +40,21 @@
             android:parentActivityName=".activities.MainSettingsActivity" />
 
         <activity
+            android:name=".activities.NotificationSettingsActivity"
+            android:label="@string/activity_label_notification_settings"
+            android:parentActivityName=".activities.MainSettingsActivity" />
+
+        <activity
+            android:name=".activities.CustomNotificationSettingsActivity"
+            android:label="@string/activity_label_custom_notification_settings"
+            android:parentActivityName=".activities.NotificationSettingsActivity" />
+
+        <activity
+            android:name=".activities.AppNotificationSettingsActivity"
+            android:label="@string/activity_label_custom_notification_settings"
+            android:parentActivityName=".activities.CustomNotificationSettingsActivity" />
+
+        <activity
             android:name=".activities.ServerConfigurationActivity"
             android:label="@string/activity_label_server_configuration"
             android:parentActivityName=".activities.MainSettingsActivity" />

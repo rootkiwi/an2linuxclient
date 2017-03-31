@@ -21,11 +21,8 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -42,9 +39,6 @@ import java.util.List;
 
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
-import kiwi.root.an2linuxclient.preferences.IconSizePreference;
-import kiwi.root.an2linuxclient.preferences.MaxMessageSizePreference;
-import kiwi.root.an2linuxclient.preferences.MaxTitleSizePreference;
 import kiwi.root.an2linuxclient.data.MobileServer;
 import kiwi.root.an2linuxclient.data.ServerDatabaseHandler;
 import kiwi.root.an2linuxclient.data.WifiServer;
@@ -55,9 +49,7 @@ public class MainSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferenceManager.setDefaultValues(this, R.xml.main_settings_preferences, false);
-
-        // Display the fragment as the main content.
+        PreferenceManager.setDefaultValues(this, R.xml.main_preferences, false);
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
@@ -69,15 +61,13 @@ public class MainSettingsActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = super.onCreateView(inflater, container, savedInstanceState);
             view.setBackgroundColor(getResources().getColor(R.color.gray_dark));
-
             return view;
         }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.main_settings_preferences);
+            addPreferencesFromResource(R.xml.main_preferences);
             getActivity().setTheme(R.style.PreferenceFragmentTheme);
 
             generateKeyIfNotExists();
@@ -194,12 +184,7 @@ public class MainSettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
-            findPreference("preference_title_max_size").setSummary(
-                    String.valueOf(sharedPrefsDefault.getInt("preference_title_max_size", MaxTitleSizePreference.DEFAULT_VALUE)));
-            findPreference("preference_message_max_size").setSummary(
-                    String.valueOf(sharedPrefsDefault.getInt("preference_message_max_size", MaxMessageSizePreference.DEFAULT_VALUE)));
-            findPreference("preference_icon_size").setSummary(getString(R.string.main_icon_size_summary,
-                    sharedPrefsDefault.getInt("preference_icon_size", IconSizePreference.DEFAULT_VALUE)));
+
             findPreference("license").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -215,21 +200,6 @@ public class MainSettingsActivity extends AppCompatActivity {
                 }
             });
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
-                PreferenceGroup g = (PreferenceGroup) findPreference("main_settings");
-                CheckBoxPreference c = new CheckBoxPreference(getPreferenceScreen().getContext());
-                c.setDefaultValue(true);
-                c.setKey("preference_block_group");
-                c.setTitle(getString(R.string.main_block_group));
-                c.setSummary(getString(R.string.main_block_group_summary));
-                g.addPreference(c);
-                c = new CheckBoxPreference(getPreferenceScreen().getContext());
-                c.setDefaultValue(false);
-                c.setKey("preference_block_local");
-                c.setTitle(getString(R.string.main_block_local));
-                c.setSummary(getString(R.string.main_block_local_summary));
-                g.addPreference(c);
-            }
             try {
                 PackageInfo packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
                 findPreference("changelog").setSummary(String.format("%s (%d)", packageInfo.versionName, packageInfo.versionCode));

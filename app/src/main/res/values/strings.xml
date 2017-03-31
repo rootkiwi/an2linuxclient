@@ -2,6 +2,8 @@
     <string name="app_name">AN2Linux</string>
     <string name="packagename">kiwi.root.an2linuxclient</string>
     <string name="activity_label_enabled_applications">Enabled applications</string>
+    <string name="activity_label_notification_settings">Notification settings</string>
+    <string name="activity_label_custom_notification_settings">Custom settings</string>
     <string name="activity_label_server_configuration">Server configuration</string>
     <string name="activity_label_client_certificate">Device certificate and key</string>
     <string name="main_setup_category_title">Setup</string>
@@ -103,6 +105,16 @@
     <string name="generate_key_working">Working hard…</string>
     <string name="generate_key_working_notification">Generating a 4096 bit RSA key…</string>
     <string name="general_public_license_3">Copyright 2017 rootkiwi\n\nAN2Linux is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see &lt;http://www.gnu.org/licenses/&gt;.</string>
+    <string name="notif_custom_use_custom_title">Use custom settings</string>
+    <string name="notif_custom_use_custom_summary">Override global settings for %s</string>
+    <string name="notif_custom_using_custom_settings">Using custom settings</string>
+    <string name="notif_custom_using_general_settings">Using global settings</string>
+    <string name="notif_settings_global_category_title">Global settings</string>
+    <string name="notif_settings_custom_category_title">Custom settings</string>
+    <string name="notif_settings_custom_settings_title">Individual app settings</string>
+    <string name="notif_settings_custom_settings_summary">Configure custom settings per app that will override global settings</string>
+    <string name="notif_settings_custom_no_enabled_title">No app enabled for notification sync</string>
+    <string name="notif_settings_custom_no_enabled_summary">Tap here to enter the \'Enabled applications\' settings</string>
     <string name="main_changelog">Changelog</string>
     <string name="changelog">
         &lt;b&gt;0.3.0 (Feb 6, 2017)&lt;/b&gt;&lt;br&gt;

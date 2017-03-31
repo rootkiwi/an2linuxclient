@@ -25,7 +25,7 @@ public class Notification {
     private NotificationSettings ns;
 
     public Notification(StatusBarNotification sbn, Context c){
-        ns = new NotificationSettings(c);
+        ns = new NotificationSettings(c, sbn.getPackageName());
         extractStatusBarNotification(sbn, c);
     }
 
