@@ -102,6 +102,10 @@
     <PreferenceCategory android:title="@string/main_settings_category_about">
 
         <Preference
+            android:key="changelog"
+            android:title="@string/main_changelog" />
+
+        <Preference
             android:key="license"
             android:summary="@string/main_license_summary"
             android:title="@string/main_license" />

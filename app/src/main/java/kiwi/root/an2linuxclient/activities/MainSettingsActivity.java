@@ -16,6 +16,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -30,6 +32,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +81,7 @@ public class MainSettingsActivity extends AppCompatActivity {
             getActivity().setTheme(R.style.PreferenceFragmentTheme);
 
             generateKeyIfNotExists();
+            showChangeLogIfNotSeen();
 
             findPreference("preference_enable_an2linux").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -203,6 +207,13 @@ public class MainSettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+            findPreference("changelog").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new ChangelogDialogFragment().show(getFragmentManager(), "ChangelogDialogFragment");
+                    return true;
+                }
+            });
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
                 PreferenceGroup g = (PreferenceGroup) findPreference("main_settings");
@@ -219,7 +230,25 @@ public class MainSettingsActivity extends AppCompatActivity {
                 c.setSummary(getString(R.string.main_block_local_summary));
                 g.addPreference(c);
             }
+            try {
+                PackageInfo packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+                findPreference("changelog").setSummary(String.format("%s (%d)", packageInfo.versionName, packageInfo.versionCode));
+            } catch (PackageManager.NameNotFoundException e){}
+        }
 
+        private void showChangeLogIfNotSeen(){
+            PackageInfo packageInfo;
+            try {
+                packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+            } catch (PackageManager.NameNotFoundException e){
+                return;
+            }
+            int versionCode = packageInfo.versionCode;
+            SharedPreferences sp = getActivity().getSharedPreferences("seen_changelog", MODE_PRIVATE);
+            if (sp.getInt("version_code_seen", 0) < versionCode) {
+                sp.edit().putInt("version_code_seen", versionCode).apply();
+                new ChangelogDialogFragment().show(getFragmentManager(), "ChangelogDialogFragment");
+            }
         }
 
         private void generateKeyIfNotExists(){
@@ -254,6 +283,19 @@ public class MainSettingsActivity extends AppCompatActivity {
             public Dialog onCreateDialog(Bundle savedInstanceState) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
                 builder.setMessage(R.string.general_public_license_3)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                return builder.create();
+            }
+        }
+
+        public static class ChangelogDialogFragment extends DialogFragment {
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
+                builder.setMessage(Html.fromHtml(getString(R.string.changelog)))
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                             }
