@@ -116,6 +116,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
 
             MaxTitleSizePreference maxTitle = new MaxTitleSizePreference(getPreferenceScreen().getContext(), null);
             maxTitle.setDefaultValue(prefsGeneral.getInt("preference_title_max_size", MaxTitleSizePreference.DEFAULT_VALUE));
+            maxTitle.setDialogMessage(getString(R.string.main_max_title_dialog_message));
             maxTitle.setKey(packageNameUnderscore + "preference_title_max_size");
             maxTitle.setTitle(getString(R.string.main_max_title));
             screen.addPreference(maxTitle);
@@ -130,6 +131,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
 
             MaxMessageSizePreference maxMessage = new MaxMessageSizePreference(getPreferenceScreen().getContext(), null);
             maxMessage.setDefaultValue(prefsGeneral.getInt("preference_message_max_size", MaxMessageSizePreference.DEFAULT_VALUE));
+            maxMessage.setDialogMessage(getString(R.string.main_max_message_dialog_message));
             maxMessage.setKey(packageNameUnderscore + "preference_message_max_size");
             maxMessage.setTitle(getString(R.string.main_max_message));
             screen.addPreference(maxMessage);
@@ -144,6 +146,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
 
             IconSizePreference iconSize = new IconSizePreference(getPreferenceScreen().getContext(), null);
             iconSize.setDefaultValue(prefsGeneral.getInt("preference_icon_size", IconSizePreference.DEFAULT_VALUE));
+            iconSize.setDialogMessage(getString(R.string.main_icon_size_dialog_message));
             iconSize.setKey(packageNameUnderscore + "preference_icon_size");
             iconSize.setTitle(getString(R.string.main_icon_size_dialog_message));
             screen.addPreference(iconSize);
