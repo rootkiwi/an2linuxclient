@@ -153,6 +153,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
             blockOngoing.setDefaultValue(prefsGeneral.getBoolean("preference_block_ongoing", false));
             blockOngoing.setKey(packageNameUnderscore + "preference_block_ongoing");
             blockOngoing.setTitle(getString(R.string.main_block_ongoing));
+            blockOngoing.setSummary(getString(R.string.main_block_ongoing_summary));
             screen.addPreference(blockOngoing);
             blockOngoing.setDependency(packageNameUnderscore + "preference_use_custom_settings");
 
