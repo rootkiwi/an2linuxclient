@@ -214,7 +214,7 @@ public class MainSettingsActivity extends AppCompatActivity {
                 return;
             }
             int versionCode = packageInfo.versionCode;
-            SharedPreferences sp = getActivity().getSharedPreferences("seen_changelog", MODE_PRIVATE);
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
             if (sp.getInt("version_code_seen", 0) < versionCode) {
                 sp.edit().putInt("version_code_seen", versionCode).apply();
                 new ChangelogDialogFragment().show(getFragmentManager(), "ChangelogDialogFragment");
