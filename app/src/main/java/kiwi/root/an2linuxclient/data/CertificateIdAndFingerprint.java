@@ -8,7 +8,7 @@
 
 package kiwi.root.an2linuxclient.data;
 
-import kiwi.root.an2linuxclient.crypto.Sha1Helper;
+import kiwi.root.an2linuxclient.crypto.Sha256Helper;
 import kiwi.root.an2linuxclient.interfaces.CertificateSpinnerItem;
 
 public class CertificateIdAndFingerprint implements CertificateSpinnerItem {
@@ -27,7 +27,7 @@ public class CertificateIdAndFingerprint implements CertificateSpinnerItem {
 
     @Override
     public String toString() {
-        return Sha1Helper.getTwoLineHexString(fingerprint);
+        return Sha256Helper.getFourLineHexString(fingerprint);
     }
 
 }

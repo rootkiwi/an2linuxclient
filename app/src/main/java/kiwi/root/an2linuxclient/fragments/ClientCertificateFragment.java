@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
-import kiwi.root.an2linuxclient.crypto.Sha1Helper;
+import kiwi.root.an2linuxclient.crypto.Sha256Helper;
 import kiwi.root.an2linuxclient.crypto.TlsHelper;
 
 public class ClientCertificateFragment extends Fragment {
@@ -74,8 +74,8 @@ public class ClientCertificateFragment extends Fragment {
 
     private void setFingerprintText(){
         byte[] cert = TlsHelper.getCertificateBytes(getActivity());
-        byte[] sha1 = Sha1Helper.sha1(cert);
-        fingerprintTextView.setText(Sha1Helper.getTwoLineHexString(sha1));
+        byte[] sha256 = Sha256Helper.sha256(cert);
+        fingerprintTextView.setText(Sha256Helper.getFourLineHexString(sha256));
     }
 
     private void registerReceiver(){

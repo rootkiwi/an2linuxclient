@@ -24,7 +24,7 @@ import javax.net.ssl.HandshakeCompletedEvent;
 import javax.net.ssl.HandshakeCompletedListener;
 import javax.net.ssl.SSLSocket;
 
-import kiwi.root.an2linuxclient.crypto.Sha1Helper;
+import kiwi.root.an2linuxclient.crypto.Sha256Helper;
 import kiwi.root.an2linuxclient.crypto.TlsHelper;
 
 import static kiwi.root.an2linuxclient.network.PairingConnectionCallbackMessage.CallbackType.*;
@@ -105,11 +105,11 @@ public class TcpPairingConnection extends PairingConnection {
                     try {
                         Certificate serverCert = event.getPeerCertificates()[0];
 
-                        byte[] sha1Hash = Sha1Helper.sha1(clientCertBytes, serverCert.getEncoded());
+                        byte[] sha256 = Sha256Helper.sha256(clientCertBytes, serverCert.getEncoded());
 
                         notifyObservers(new PairingConnectionCallbackMessage(
                                 TLS_HANDSHAKE_COMPLETED,
-                                Sha1Helper.getTwoLineHexString(sha1Hash),
+                                Sha256Helper.getFourLineHexString(sha256),
                                 serverCert));
 
                     } catch (Exception e) {

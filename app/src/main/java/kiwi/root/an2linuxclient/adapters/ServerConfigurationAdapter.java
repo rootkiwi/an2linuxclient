@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kiwi.root.an2linuxclient.R;
-import kiwi.root.an2linuxclient.crypto.Sha1Helper;
+import kiwi.root.an2linuxclient.crypto.Sha256Helper;
 import kiwi.root.an2linuxclient.data.BluetoothServer;
 import kiwi.root.an2linuxclient.data.Server;
 import kiwi.root.an2linuxclient.data.ServerDatabaseHandler;
@@ -76,7 +76,7 @@ public class ServerConfigurationAdapter extends ArrayAdapter<Server> {
 
             listItemServerInfo3.setText(String.format("%s\n%s",
                     context.getString(R.string.server_list_certificate_fingerprint),
-                    Sha1Helper.getTwoLineHexString(
+                    Sha256Helper.getFourLineHexString(
                             dbHandler.getCertificateFingerprint(
                                     server.getCertificateId()))));
 
@@ -114,7 +114,7 @@ public class ServerConfigurationAdapter extends ArrayAdapter<Server> {
             listItemServerInfo1.setText(bluetoothServer.getBluetoothMacAddress());
             listItemServerInfo2.setText(String.format("%s\n%s",
                     context.getString(R.string.server_list_certificate_fingerprint),
-                    Sha1Helper.getTwoLineHexString(
+                    Sha256Helper.getFourLineHexString(
                             dbHandler.getCertificateFingerprint(
                                     server.getCertificateId()))));
             listItemServerInfo3.setText("");

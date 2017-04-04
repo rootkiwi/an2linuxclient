@@ -30,9 +30,9 @@ and their id is a foreign key referencing the id in table servers
 Example:
 sqlite> SELECT * FROM certificates;
 _id         _certificate  _fingerprint
-----------  ------------  ----------------------------------------
-1           BLOB          68904029fac70b32fe8a9b963c23046d45ecc236
-2           BLOB          b42532e754905f3378d90922b7561b9a32484ae6
+----------  ------------  ----------------------------------------------------------------
+1           BLOB          b7b4fe3fc6b3105d8abbc4ec28c4de27de200dba64c01f71ef9e03d835bcb1ad
+2           BLOB          152a37c15304eb14cece3558a2e7a442bc1be58374eac45c6b1fb390a91cffd1
 
 sqlite> SELECT * FROM servers;
 _id         _is_enabled  _certificate_id
@@ -69,14 +69,14 @@ import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
 
-import kiwi.root.an2linuxclient.crypto.Sha1Helper;
+import kiwi.root.an2linuxclient.crypto.Sha256Helper;
 import kiwi.root.an2linuxclient.interfaces.CertificateSpinnerItem;
 
 public class ServerDatabaseHandler extends SQLiteOpenHelper {
 
     private static ServerDatabaseHandler sInstance;
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "servers.db";
 
     private final String TABLE_CERTIFICATES = "certificates";
@@ -151,10 +151,6 @@ public class ServerDatabaseHandler extends SQLiteOpenHelper {
         return sInstance;
     }
 
-    /**
-     * Constructor should be private to prevent direct instantiation.
-     * make call to static method "getInstance()" instead.
-     */
     private ServerDatabaseHandler(Context c) {
         super(c, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -171,12 +167,39 @@ public class ServerDatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_SERVERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOBILE_SERVERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BLUETOOTH_SERVERS);
-        db.execSQL("DROP TRIGGER IF EXISTS " + TRIGGER_TRIM_UNLINKED_CERTIFICATES);
-        onCreate(db);
+        final int DATABASE_VERSION_SHA256 = 2;
+        if (oldVersion < DATABASE_VERSION_SHA256) {
+            updateFingerprints(db);
+        }
+    }
+
+    /**
+     * Update fingerprints on existing servers from SHA1 to SHA256
+     */
+    private void updateFingerprints(SQLiteDatabase db){
+        List<Server> serversToUpdate = new ArrayList<>();
+        Cursor c = db.query(TABLE_CERTIFICATES,
+                new String[]{COLUMN_ID, COLUMN_CERTIFICATE},
+                null, null, null, null, null);
+        if (c.moveToFirst()) {
+            do {
+                Server s = new Server(){};
+                s.setCertificateId(c.getLong(0));
+                s.setCertificate(c.getBlob(1));
+                serversToUpdate.add(s);
+            } while (c.moveToNext());
+        }
+        c.close();
+        for (Server s : serversToUpdate) {
+            Formatter formatter = new Formatter();
+            for (byte b : Sha256Helper.sha256(s.getCertificateBytes())){
+                formatter.format("%02x", b);
+            }
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_FINGERPRINT, formatter.toString());
+            db.update(TABLE_CERTIFICATES, values,
+                    COLUMN_ID + "=?", new String[]{String.valueOf(s.getCertificateId())});
+        }
     }
 
     @Override
@@ -191,7 +214,7 @@ public class ServerDatabaseHandler extends SQLiteOpenHelper {
         values.put(COLUMN_CERTIFICATE, certificateBytes);
 
         Formatter formatter = new Formatter();
-        for (byte b : Sha1Helper.sha1(certificateBytes)){
+        for (byte b : Sha256Helper.sha256(certificateBytes)){
             formatter.format("%02x", b);
         }
         values.put(COLUMN_FINGERPRINT, formatter.toString());
@@ -241,7 +264,7 @@ public class ServerDatabaseHandler extends SQLiteOpenHelper {
      */
     public long getCertificateId(byte[] certificateBytes){
         Formatter formatter = new Formatter();
-        for (byte b : Sha1Helper.sha1(certificateBytes)){
+        for (byte b : Sha256Helper.sha256(certificateBytes)){
             formatter.format("%02x", b);
         }
 

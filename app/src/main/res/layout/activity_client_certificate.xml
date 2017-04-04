@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="monospace"
             android:text="@string/client_certificate_fingerprint"
             android:textColor="@color/white"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="monospace"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

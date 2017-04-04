@@ -90,7 +90,7 @@
     <string name="server_list_roaming_allowed">Roaming allowed:</string>
     <string name="server_list_roaming_allowed_yes">yes</string>
     <string name="server_list_roaming_allowed_no">no</string>
-    <string name="server_list_certificate_fingerprint">Certificate fingerprint:</string>
+    <string name="server_list_certificate_fingerprint">Fingerprint (SHA256):</string>
     <string name="test_notif_need_access">Need access to notifications</string>
     <string name="test_notif_an2linux_not_enabled">AN2Linux not globally enabled</string>
     <string name="test_notif_an2linux_not_enabled_in_applications">AN2Linux not enabled in enabled applications</string>
@@ -100,7 +100,7 @@
     <string name="test_notif_message">message</string>
     <string name="test_notif_message_line_two">message line 2</string>
     <string name="client_certificate_info">AN2Linux generated on first run a 4096 bit RSA key and certificate.\n\nThis is only used for authentication to the server (your computer) and not for encryption.\n\nAfter you have successfully paired with a server you should be able to see your fingerprint in the authorized_certs file at the beginning of a line.\n\nauthorized_certs file is located in:\n$XDG_CONFIG_HOME/an2linux/\nwhich per default is:\n$HOME/.config/an2linux/</string>
-    <string name="client_certificate_fingerprint">Certificate fingerprint:</string>
+    <string name="client_certificate_fingerprint">Certificate fingerprint (SHA256):</string>
     <string name="client_certificate_button_text">Generate new key and certificate</string>
     <string name="generate_key_working">Working hard…</string>
     <string name="generate_key_working_notification">Generating a 4096 bit RSA key…</string>
