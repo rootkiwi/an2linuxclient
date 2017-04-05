@@ -117,6 +117,8 @@
     <string name="notif_settings_custom_no_enabled_summary">Tap here to enter the \'Enabled applications\' settings</string>
     <string name="main_changelog">Changelog</string>
     <string name="changelog">
+        &lt;b&gt;0.5.0 (Apr 5, 2017)&lt;/b&gt;&lt;br&gt;
+        - Replace sha1 with sha256&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.4.0 (Apr 1, 2017)&lt;/b&gt;&lt;br&gt;
         - Allow notification settings to be set individually per app&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.3.0 (Feb 6, 2017)&lt;/b&gt;&lt;br&gt;
