@@ -117,6 +117,8 @@
     <string name="notif_settings_custom_no_enabled_summary">Tap here to enter the \'Enabled applications\' settings</string>
     <string name="main_changelog">Changelog</string>
     <string name="changelog">
+        &lt;b&gt;0.5.1 (Apr 12, 2017)&lt;/b&gt;&lt;br&gt;
+        - Fix bug that caused AN2Linux to crash when opening individual app settings (affecting Android 4.4-5.1)&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.5.0 (Apr 5, 2017)&lt;/b&gt;&lt;br&gt;
         - Replace sha1 with sha256&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.4.0 (Apr 1, 2017)&lt;/b&gt;&lt;br&gt;

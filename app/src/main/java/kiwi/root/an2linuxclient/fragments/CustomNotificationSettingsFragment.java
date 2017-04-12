@@ -112,7 +112,7 @@ public class CustomNotificationSettingsFragment extends PreferenceFragment {
                             .getBoolean(appInfo.packageName + "_preference_use_custom_settings", false)
                             ? getString(R.string.notif_custom_using_custom_settings) : getString(R.string.notif_custom_using_general_settings));
                     p.setIcon(appInfo.loadIcon(pm));
-                    Intent i = new Intent(getContext(), AppNotificationSettingsActivity.class);
+                    Intent i = new Intent(getActivity().getApplicationContext(), AppNotificationSettingsActivity.class);
                     i.putExtra("appName", appLabels.get(appInfo.packageName));
                     i.putExtra("packageName", appInfo.packageName);
                     p.setIntent(i);
@@ -122,7 +122,7 @@ public class CustomNotificationSettingsFragment extends PreferenceFragment {
                     Preference p = new Preference(getPreferenceScreen().getContext());
                     p.setTitle(R.string.notif_settings_custom_no_enabled_title);
                     p.setSummary(R.string.notif_settings_custom_no_enabled_summary);
-                    p.setIntent(new Intent(getContext(), EnabledApplicationsActivity.class));
+                    p.setIntent(new Intent(getActivity().getApplicationContext(), EnabledApplicationsActivity.class));
                     prefs.add(p);
                 }
                 return prefs;
