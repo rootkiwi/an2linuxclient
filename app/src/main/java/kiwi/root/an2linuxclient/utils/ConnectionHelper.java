@@ -33,6 +33,9 @@ public class ConnectionHelper {
     }
 
     public static byte[] readAll(int size, InputStream in) throws IOException {
+        if (size <= 0) {
+            throw new RuntimeException();
+        }
         byte[] buf = new byte[size];
         int len = 0;
         while (len < size){
