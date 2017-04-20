@@ -55,10 +55,9 @@ public class ConnectionHelper {
         if (ssidWhitelist == null){
             return true;
         }
-        WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) c.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifiManager.getConnectionInfo();
         String connectedToSsid = info.getSSID();
-
         for(String ssid : ssidWhitelist.split(",")){
             if(connectedToSsid.equals("\""+ssid.trim()+"\"")){
                 return true;
