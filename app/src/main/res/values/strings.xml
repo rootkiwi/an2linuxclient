@@ -116,20 +116,4 @@
     <string name="notif_settings_custom_no_enabled_title">No app enabled for notification sync</string>
     <string name="notif_settings_custom_no_enabled_summary">Tap here to enter the \'Enabled applications\' settings</string>
     <string name="main_changelog">Changelog</string>
-    <string name="changelog">
-        &lt;b&gt;0.5.1 (Apr 12, 2017)&lt;/b&gt;&lt;br&gt;
-        - Fix bug that caused AN2Linux to crash when opening individual app settings (affecting Android 4.4-5.1)&lt;br&gt;&lt;br&gt;
-        &lt;b&gt;0.5.0 (Apr 5, 2017)&lt;/b&gt;&lt;br&gt;
-        - Replace sha1 with sha256&lt;br&gt;&lt;br&gt;
-        &lt;b&gt;0.4.0 (Apr 1, 2017)&lt;/b&gt;&lt;br&gt;
-        - Allow notification settings to be set individually per app&lt;br&gt;&lt;br&gt;
-        &lt;b&gt;0.3.0 (Feb 6, 2017)&lt;/b&gt;&lt;br&gt;
-        - New preference added for custom icon size&lt;br&gt;&lt;br&gt;
-        &lt;b&gt;0.2.0 (Jan 9, 2017)&lt;/b&gt;&lt;br&gt;
-        - New preference added for Android 5.0+ Lollipop users: "Block local notifications"&lt;br&gt;&lt;br&gt;
-        &lt;b&gt;0.1.1 (Jan 7, 2017)&lt;/b&gt;&lt;br&gt;
-        - Fix bug that made AN2Linux unusable for Android 4.4 KitKat users (using ciphers not supported until 5.0)&lt;br&gt;&lt;br&gt;
-        &lt;b&gt;0.1.0 (Jan 2, 2017)&lt;/b&gt;&lt;br&gt;
-        - Initial release
-    </string>
 </resources>
