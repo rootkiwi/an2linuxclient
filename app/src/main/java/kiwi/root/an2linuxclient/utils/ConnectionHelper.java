@@ -22,6 +22,9 @@ import kiwi.root.an2linuxclient.R;
 public class ConnectionHelper {
 
     public static byte[] intToByteArray(int value){
+        if (value < 0) {
+            throw new RuntimeException();
+        }
         return new byte[] {
                 (byte) (value >>> 24),
                 (byte) (value >>> 16),
