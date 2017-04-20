@@ -41,7 +41,7 @@ public class KeyGeneratorService extends IntentService {
         final int NOTIFICATION_ID = 2;
         startForeground(NOTIFICATION_ID, notification);
 
-        RsaHelper.initialiseRsaKeyAndCert(getSharedPreferences("device_key_and_cert", MODE_PRIVATE));
+        RsaHelper.initialiseRsaKeyAndCert(getApplicationContext());
         currentlyGenerating = false;
 
         stopForeground(true);

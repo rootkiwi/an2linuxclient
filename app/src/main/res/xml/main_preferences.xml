@@ -5,7 +5,7 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="preference_enable_an2linux"
+            android:key="@string/preference_enable_an2linux"
             android:title="@string/main_enable_an2linux"
             android:widgetLayout="@layout/appcompat_switch_layout" />
 
@@ -28,13 +28,12 @@
         </Preference>
 
         <Preference
-            android:key="display_test_notification"
+            android:key="@string/main_display_test_notification_key"
             android:title="@string/main_display_test_notification" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="main_settings"
         android:title="@string/main_settings_category_title">
 
         <Preference android:title="@string/activity_label_client_certificate">
@@ -57,11 +56,11 @@
     <PreferenceCategory android:title="@string/main_settings_category_about">
 
         <Preference
-            android:key="changelog"
+            android:key="@string/main_changelog_key"
             android:title="@string/main_changelog" />
 
         <Preference
-            android:key="license"
+            android:key="@string/main_license_key"
             android:summary="@string/main_license_summary"
             android:title="@string/main_license" />
 

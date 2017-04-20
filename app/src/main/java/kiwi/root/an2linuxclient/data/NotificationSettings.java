@@ -11,6 +11,7 @@ package kiwi.root.an2linuxclient.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.preferences.IconSizePreference;
 import kiwi.root.an2linuxclient.preferences.MaxMessageSizePreference;
 import kiwi.root.an2linuxclient.preferences.MaxTitleSizePreference;
@@ -39,28 +40,28 @@ public class NotificationSettings {
     }
 
     private void initializeSettings(Context c){
-        SharedPreferences sharedPrefs = c.getSharedPreferences("notification_settings_custom", MODE_PRIVATE);
-        usingCustomSettings = sharedPrefs.getBoolean(packageName + "_preference_use_custom_settings", false);
+        SharedPreferences sharedPrefs = c.getSharedPreferences(c.getString(R.string.notification_settings_custom), MODE_PRIVATE);
+        usingCustomSettings = sharedPrefs.getBoolean(packageName + "_" + c.getString(R.string.preference_use_custom_settings), false);
         if (!usingCustomSettings) {
-            sharedPrefs = c.getSharedPreferences("notification_settings_global", MODE_PRIVATE);
+            sharedPrefs = c.getSharedPreferences(c.getString(R.string.notification_settings_global), MODE_PRIVATE);
         }
-        prefIncludeTitle = sharedPrefs.getBoolean(getCorrectPrefKey("preference_include_notification_title"), true);
-        prefIncludeMessage = sharedPrefs.getBoolean(getCorrectPrefKey("preference_include_notification_message"), true);
-        prefIncludeIcon = sharedPrefs.getBoolean(getCorrectPrefKey("preference_include_notification_icon"), true);
+        prefIncludeTitle = sharedPrefs.getBoolean(getCorrectPrefKey(c.getString(R.string.preference_include_notification_title)), true);
+        prefIncludeMessage = sharedPrefs.getBoolean(getCorrectPrefKey(c.getString(R.string.preference_include_notification_message)), true);
+        prefIncludeIcon = sharedPrefs.getBoolean(getCorrectPrefKey(c.getString(R.string.preference_include_notification_icon)), true);
         if (prefIncludeTitle){
             final byte FLAG_INCLUDE_TITLE = 1;
             notificationFlags |= FLAG_INCLUDE_TITLE;
-            prefForceTitle = sharedPrefs.getBoolean(getCorrectPrefKey("preference_force_title"), false);
-            prefMaxTitleSize = sharedPrefs.getInt(getCorrectPrefKey("preference_title_max_size"), MaxTitleSizePreference.DEFAULT_VALUE);
+            prefForceTitle = sharedPrefs.getBoolean(getCorrectPrefKey(c.getString(R.string.preference_force_title)), false);
+            prefMaxTitleSize = sharedPrefs.getInt(getCorrectPrefKey(c.getString(R.string.preference_title_max_size)), MaxTitleSizePreference.DEFAULT_VALUE);
         }
         if (prefIncludeMessage){
             final byte FLAG_INCLUDE_MESSAGE = 2;
             notificationFlags |= FLAG_INCLUDE_MESSAGE;
-            prefMaxMessageSize = sharedPrefs.getInt(getCorrectPrefKey("preference_message_max_size"), MaxMessageSizePreference.DEFAULT_VALUE);
+            prefMaxMessageSize = sharedPrefs.getInt(getCorrectPrefKey(c.getString(R.string.preference_message_max_size)), MaxMessageSizePreference.DEFAULT_VALUE);
         }
         if (prefIncludeIcon) {
             notificationFlags |= FLAG_INCLUDE_ICON;
-            prefIconSize = sharedPrefs.getInt(getCorrectPrefKey("preference_icon_size"), IconSizePreference.DEFAULT_VALUE);
+            prefIconSize = sharedPrefs.getInt(getCorrectPrefKey(c.getString(R.string.preference_icon_size)), IconSizePreference.DEFAULT_VALUE);
         }
     }
 

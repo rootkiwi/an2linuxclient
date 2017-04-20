@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enabled_applications">enabled_applications</string>
+    <string name="device_key_and_cert">device_key_and_cert</string>
+    <string name="notification_settings_global">notification_settings_global</string>
+    <string name="notification_settings_custom">notification_settings_custom</string>
+    <string name="privatekey">privatekey</string>
+    <string name="certificate">certificate</string>
+    <string name="version_code_seen">version_code_seen</string>
+    <string name="preference_enable_an2linux">preference_enable_an2linux</string>
+    <string name="preference_enable_disable_all_applications">preference_enable_disable_all_applications</string>
+    <string name="preference_include_notification_title">preference_include_notification_title</string>
+    <string name="preference_force_title">preference_force_title</string>
+    <string name="preference_title_max_size">preference_title_max_size</string>
+    <string name="preference_include_notification_message">preference_include_notification_message</string>
+    <string name="preference_message_max_size">preference_message_max_size</string>
+    <string name="preference_include_notification_icon">preference_include_notification_icon</string>
+    <string name="preference_icon_size">preference_icon_size</string>
+    <string name="preference_block_ongoing">preference_block_ongoing</string>
+    <string name="preference_block_foreground">preference_block_foreground</string>
+    <string name="preference_block_group">preference_block_group</string>
+    <string name="preference_block_local">preference_block_local</string>
+    <string name="preference_use_custom_settings">preference_use_custom_settings</string>
+</resources>

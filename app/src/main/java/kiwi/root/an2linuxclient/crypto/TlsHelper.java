@@ -47,6 +47,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.utils.ConnectionHelper;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -68,7 +69,7 @@ public class TlsHelper {
     // TLS_DHE_RSA_WITH_AES_256_CBC_SHA -> API_9+ used with SSLEngine on Android 4.4 (API_19)
     public static final String[] TLS_CIPHERS_COMPAT_BT = new String[]{"TLS_DHE_RSA_WITH_AES_256_CBC_SHA"};
 
-    static void initialiseCertificate(SharedPreferences deviceKeyPref, KeyPair keyPair){
+    static void initialiseCertificate(Context c, KeyPair keyPair){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         Date notBefore = calendar.getTime();
@@ -90,7 +91,9 @@ public class TlsHelper {
             ContentSigner contentSigner = new JcaContentSignerBuilder("SHA256WithRSAEncryption").setProvider("BC").build(keyPair.getPrivate());
             X509Certificate certificate = new JcaX509CertificateConverter().setProvider("BC").getCertificate(certificateBuilder.build(contentSigner));
 
-            deviceKeyPref.edit().putString("certificate",
+            SharedPreferences deviceKeyPref = c.getSharedPreferences(
+                    c.getString(R.string.device_key_and_cert), MODE_PRIVATE);
+            deviceKeyPref.edit().putString(c.getString(R.string.certificate),
                     Base64.encodeToString(certificate.getEncoded(), Base64.NO_WRAP)).apply();
             Log.d("TlsHelper", "Generated new certificate successfully");
         } catch (Exception e){
@@ -100,9 +103,9 @@ public class TlsHelper {
     }
 
     private static X509Certificate getCertificate(Context c){
-        SharedPreferences deviceKeyPref = c.getSharedPreferences("device_key_and_cert", MODE_PRIVATE);
+        SharedPreferences deviceKeyPref = c.getSharedPreferences(c.getString(R.string.device_key_and_cert), MODE_PRIVATE);
         try {
-            byte[] certificateBytes = Base64.decode(deviceKeyPref.getString("certificate", ""), Base64.DEFAULT);
+            byte[] certificateBytes = Base64.decode(deviceKeyPref.getString(c.getString(R.string.certificate), ""), Base64.DEFAULT);
             X509CertificateHolder certificateHolder = new X509CertificateHolder(certificateBytes);
             return new JcaX509CertificateConverter().setProvider("BC").getCertificate(certificateHolder);
         } catch (Exception e) {
@@ -113,8 +116,8 @@ public class TlsHelper {
     }
 
     public static byte[] getCertificateBytes(Context c){
-        SharedPreferences deviceKeyPref = c.getSharedPreferences("device_key_and_cert", MODE_PRIVATE);
-        return Base64.decode(deviceKeyPref.getString("certificate", ""), Base64.DEFAULT);
+        SharedPreferences deviceKeyPref = c.getSharedPreferences(c.getString(R.string.device_key_and_cert), MODE_PRIVATE);
+        return Base64.decode(deviceKeyPref.getString(c.getString(R.string.certificate), ""), Base64.DEFAULT);
     }
 
     public static byte[] certificateToBytes(Certificate certificate){

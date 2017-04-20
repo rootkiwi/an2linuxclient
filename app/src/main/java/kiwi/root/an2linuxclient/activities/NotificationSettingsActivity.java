@@ -48,29 +48,36 @@ public class NotificationSettingsActivity extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            getPreferenceManager().setSharedPreferencesName("notification_settings_global");
+            getPreferenceManager().setSharedPreferencesName(getString(R.string.notification_settings_global));
             addPreferencesFromResource(R.xml.notification_preferences);
             getActivity().setTheme(R.style.PreferenceFragmentTheme);
 
-            SharedPreferences sp = getActivity().getSharedPreferences("notification_settings_global", MODE_PRIVATE);
-            findPreference("preference_title_max_size").setSummary(
-                    String.valueOf(sp.getInt("preference_title_max_size", MaxTitleSizePreference.DEFAULT_VALUE)));
-            findPreference("preference_message_max_size").setSummary(
-                    String.valueOf(sp.getInt("preference_message_max_size", MaxMessageSizePreference.DEFAULT_VALUE)));
-            findPreference("preference_icon_size").setSummary(getString(R.string.main_icon_size_summary,
-                    sp.getInt("preference_icon_size", IconSizePreference.DEFAULT_VALUE)));
+            SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.notification_settings_global), MODE_PRIVATE);
+
+            String prefKeyMaxTitle = getString(R.string.preference_title_max_size);
+            findPreference(prefKeyMaxTitle).setSummary(String.valueOf(
+                    sp.getInt(prefKeyMaxTitle, MaxTitleSizePreference.DEFAULT_VALUE)));
+
+            String prefKeyMaxMessage = getString(R.string.preference_message_max_size);
+            findPreference(prefKeyMaxMessage)
+                    .setSummary(String.valueOf(sp.getInt(prefKeyMaxMessage, MaxMessageSizePreference.DEFAULT_VALUE)));
+
+            String prefKeyIconSize = getString(R.string.preference_icon_size);
+            findPreference(prefKeyIconSize).setSummary(getString(
+                            R.string.main_icon_size_summary,
+                            sp.getInt(prefKeyIconSize, IconSizePreference.DEFAULT_VALUE)));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
-                PreferenceGroup g = (PreferenceGroup) findPreference("notification_settings_global_category");
+                PreferenceGroup g = (PreferenceGroup) findPreference(getString(R.string.notification_settings_global_category));
                 CheckBoxPreference c = new CheckBoxPreference(getPreferenceScreen().getContext());
                 c.setDefaultValue(false);
-                c.setKey("preference_block_group");
+                c.setKey(getString(R.string.preference_block_group));
                 c.setTitle(getString(R.string.main_block_group));
                 c.setSummary(getString(R.string.main_block_group_summary));
                 g.addPreference(c);
                 c = new CheckBoxPreference(getPreferenceScreen().getContext());
                 c.setDefaultValue(false);
-                c.setKey("preference_block_local");
+                c.setKey(getString(R.string.preference_block_local));
                 c.setTitle(getString(R.string.main_block_local));
                 c.setSummary(getString(R.string.main_block_local_summary));
                 g.addPreference(c);

@@ -73,7 +73,7 @@ public class MainSettingsActivity extends AppCompatActivity {
             generateKeyIfNotExists();
             showChangeLogIfNotSeen();
 
-            findPreference("preference_enable_an2linux").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            findPreference(getString(R.string.preference_enable_an2linux)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     if ((boolean) newValue){
@@ -89,16 +89,16 @@ public class MainSettingsActivity extends AppCompatActivity {
             });
 
             final SharedPreferences sharedPrefsDefault = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            findPreference("display_test_notification").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            findPreference(getString(R.string.main_display_test_notification_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     boolean isNotificationAccessEnabled = NotificationManagerCompat
                             .getEnabledListenerPackages(getActivity())
                             .contains(getActivity().getPackageName());
                     if (isNotificationAccessEnabled){
-                        boolean globalEnabled = sharedPrefsDefault.getBoolean("preference_enable_an2linux", false);
+                        boolean globalEnabled = sharedPrefsDefault.getBoolean(getString(R.string.preference_enable_an2linux), false);
                         if (globalEnabled){
                             SharedPreferences sharedPrefsEnabledApplications = getActivity()
-                                    .getSharedPreferences("enabled_applications", MODE_PRIVATE);
+                                    .getSharedPreferences(getString(R.string.enabled_applications), MODE_PRIVATE);
                             boolean appEnabled = sharedPrefsEnabledApplications.getBoolean(getActivity().getPackageName(), false);
                             if (appEnabled){
                                 ServerDatabaseHandler dbHandler = ServerDatabaseHandler.getInstance(getActivity());
@@ -185,14 +185,14 @@ public class MainSettingsActivity extends AppCompatActivity {
                 }
             });
 
-            findPreference("license").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            findPreference(getString(R.string.main_license_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     new LicenseDialogFragment().show(getFragmentManager(), "LicenseDialogFragment");
                     return true;
                 }
             });
-            findPreference("changelog").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            findPreference(getString(R.string.main_changelog_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     new ChangelogDialogFragment().show(getFragmentManager(), "ChangelogDialogFragment");
@@ -202,7 +202,7 @@ public class MainSettingsActivity extends AppCompatActivity {
 
             try {
                 PackageInfo packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
-                findPreference("changelog").setSummary(String.format("%s (%d)", packageInfo.versionName, packageInfo.versionCode));
+                findPreference(getString(R.string.main_changelog_key)).setSummary(String.format("%s (%d)", packageInfo.versionName, packageInfo.versionCode));
             } catch (PackageManager.NameNotFoundException e){}
         }
 
@@ -215,15 +215,15 @@ public class MainSettingsActivity extends AppCompatActivity {
             }
             int versionCode = packageInfo.versionCode;
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            if (sp.getInt("version_code_seen", 0) < versionCode) {
-                sp.edit().putInt("version_code_seen", versionCode).apply();
+            if (sp.getInt(getString(R.string.version_code_seen), 0) < versionCode) {
+                sp.edit().putInt(getString(R.string.version_code_seen), versionCode).apply();
                 new ChangelogDialogFragment().show(getFragmentManager(), "ChangelogDialogFragment");
             }
         }
 
         private void generateKeyIfNotExists(){
-            final SharedPreferences deviceKeyPref = getActivity().getSharedPreferences("device_key_and_cert", MODE_PRIVATE);
-            if ((!deviceKeyPref.contains("privatekey") || !deviceKeyPref.contains("certificate"))
+            final SharedPreferences deviceKeyPref = getActivity().getSharedPreferences(getString(R.string.device_key_and_cert), MODE_PRIVATE);
+            if ((!deviceKeyPref.contains(getString(R.string.privatekey)) || !deviceKeyPref.contains(getString(R.string.certificate)))
                     && !KeyGeneratorService.currentlyGenerating){
                 KeyGeneratorService.currentlyGenerating = true;
                 getActivity().startService(new Intent(getActivity(), KeyGeneratorService.class));

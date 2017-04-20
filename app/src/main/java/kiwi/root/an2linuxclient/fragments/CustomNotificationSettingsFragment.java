@@ -89,7 +89,7 @@ public class CustomNotificationSettingsFragment extends PreferenceFragment {
                 PackageManager pm = getActivity().getPackageManager();
                 List<ApplicationInfo> appList = pm.getInstalledApplications(PackageManager.GET_META_DATA);
                 List<ApplicationInfo> enabledApps = new ArrayList<>();
-                SharedPreferences sp = getActivity().getSharedPreferences("enabled_applications", MODE_PRIVATE);
+                SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.enabled_applications), MODE_PRIVATE);
                 // apparently loadLabel() is very slow so it's faster to do it once and store in map
                 final Map<String, String> appLabels = new HashMap<>();
                 for (ApplicationInfo appInfo : appList) {
@@ -108,8 +108,8 @@ public class CustomNotificationSettingsFragment extends PreferenceFragment {
                 for (ApplicationInfo appInfo : enabledApps) {
                     Preference p = new Preference(getPreferenceScreen().getContext());
                     p.setTitle(appLabels.get(appInfo.packageName));
-                    p.setSummary(getActivity().getSharedPreferences("notification_settings_custom", MODE_PRIVATE)
-                            .getBoolean(appInfo.packageName + "_preference_use_custom_settings", false)
+                    p.setSummary(getActivity().getSharedPreferences(getString(R.string.notification_settings_custom), MODE_PRIVATE)
+                            .getBoolean(appInfo.packageName + "_" + getString(R.string.preference_use_custom_settings), false)
                             ? getString(R.string.notif_custom_using_custom_settings) : getString(R.string.notif_custom_using_general_settings));
                     p.setIcon(appInfo.loadIcon(pm));
                     Intent i = new Intent(getActivity().getApplicationContext(), AppNotificationSettingsActivity.class);

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_display_test_notification_key">main_display_test_notification_key</string>
+    <string name="main_changelog_key">main_changelog_key</string>
+    <string name="main_license_key">main_license_key</string>
+    <string name="enabled_apps_pref_screen">enabled_apps_pref_screen</string>
+    <string name="notification_settings_global_category">notification_settings_global_category</string>
+</resources>

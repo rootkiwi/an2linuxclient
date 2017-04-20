@@ -65,11 +65,11 @@ public class EnabledApplicationsPreferenceFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        getPreferenceManager().setSharedPreferencesName("enabled_applications");
+        getPreferenceManager().setSharedPreferencesName(getString(R.string.enabled_applications));
         addPreferencesFromResource(R.xml.enabled_applications_preferences);
         getActivity().setTheme(R.style.PreferenceFragmentTheme);
-        final PreferenceScreen prefScreen = (PreferenceScreen) findPreference("installed_applications");
-        findPreference("preference_enable_disable_all_applications").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        final PreferenceScreen prefScreen = (PreferenceScreen) findPreference(getString(R.string.enabled_apps_pref_screen));
+        findPreference(getString(R.string.preference_enable_disable_all_applications)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference arg0, Object arg1) {
                 for (int i = 1; i < prefScreen.getPreferenceCount(); i++) {
@@ -95,8 +95,7 @@ public class EnabledApplicationsPreferenceFragment extends PreferenceFragment {
                 // apparently loadLabel() is very slow so it's faster to do it once and store in map
                 final Map<String, String> appLabels = new HashMap<>();
                 final Map<String, Boolean> appSettings = new HashMap<>();
-                SharedPreferences sp = getActivity()
-                        .getSharedPreferences("enabled_applications", MODE_PRIVATE);
+                SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.enabled_applications), MODE_PRIVATE);
                 for (ApplicationInfo appInfo : appList) {
                     appLabels.put(appInfo.packageName, appInfo.loadLabel(pm).toString());
                     appSettings.put(appInfo.packageName, sp.getBoolean(appInfo.packageName, false));

@@ -19,19 +19,23 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 
+import kiwi.root.an2linuxclient.R;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class RsaHelper {
 
-    static void initialiseRsaKeyAndCert(SharedPreferences deviceKeyPref){
+    static void initialiseRsaKeyAndCert(Context c){
         try {
+            SharedPreferences deviceKeyPref = c.getSharedPreferences(
+                    c.getString(R.string.device_key_and_cert), MODE_PRIVATE);
             KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
             kpg.initialize(4096);
             KeyPair keyPair = kpg.generateKeyPair();
-            deviceKeyPref.edit().putString("privatekey",
+            deviceKeyPref.edit().putString(c.getString(R.string.privatekey),
                     Base64.encodeToString(keyPair.getPrivate().getEncoded(), Base64.NO_WRAP)).apply();
             Log.d("RsaHelper", "Generated new keypair successfully");
-            TlsHelper.initialiseCertificate(deviceKeyPref, keyPair);
+            TlsHelper.initialiseCertificate(c, keyPair);
         } catch (Exception e){
             Log.e("RsaHelper", "initialiseRsaKeyAndCert");
             Log.e("StackTrace", Log.getStackTraceString(e));
@@ -40,8 +44,8 @@ public class RsaHelper {
 
     static PrivateKey getPrivateKey(Context c){
         try {
-            SharedPreferences deviceKeyPref = c.getSharedPreferences("device_key_and_cert", MODE_PRIVATE);
-            byte[] privateKeyBytes = Base64.decode(deviceKeyPref.getString("privatekey", ""), Base64.DEFAULT);
+            SharedPreferences deviceKeyPref = c.getSharedPreferences(c.getString(R.string.device_key_and_cert), MODE_PRIVATE);
+            byte[] privateKeyBytes = Base64.decode(deviceKeyPref.getString(c.getString(R.string.privatekey), ""), Base64.DEFAULT);
             return KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
         } catch (Exception e) {
             Log.e("RsaHelper", "getPrivateKey");

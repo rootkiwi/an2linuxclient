@@ -43,23 +43,23 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPreferences sp = getSharedPreferences("notification_settings_custom", MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(getString(R.string.notification_settings_custom), MODE_PRIVATE);
         String packageNameUnderscore = packageName + "_";
-        boolean usingCustomSettings = sp.getBoolean(packageNameUnderscore + "preference_use_custom_settings", false);
+        boolean usingCustomSettings = sp.getBoolean(packageNameUnderscore + getString(R.string.preference_use_custom_settings), false);
         if (!usingCustomSettings){ // clear settings if not using them
             SharedPreferences.Editor edit = sp.edit();
-            edit.remove(packageNameUnderscore + "preference_include_notification_title");
-            edit.remove(packageNameUnderscore + "preference_force_title");
-            edit.remove(packageNameUnderscore + "preference_title_max_size");
-            edit.remove(packageNameUnderscore + "preference_include_notification_message");
-            edit.remove(packageNameUnderscore + "preference_message_max_size");
-            edit.remove(packageNameUnderscore + "preference_include_notification_icon");
-            edit.remove(packageNameUnderscore + "preference_icon_size");
-            edit.remove(packageNameUnderscore + "preference_block_ongoing");
-            edit.remove(packageNameUnderscore + "preference_block_foreground");
+            edit.remove(packageNameUnderscore + getString(R.string.preference_include_notification_title));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_force_title));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_title_max_size));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_include_notification_message));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_message_max_size));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_include_notification_icon));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_icon_size));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_block_ongoing));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_block_foreground));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                edit.remove(packageNameUnderscore + "preference_block_group");
-                edit.remove(packageNameUnderscore + "preference_block_local");
+                edit.remove(packageNameUnderscore + getString(R.string.preference_block_group));
+                edit.remove(packageNameUnderscore + getString(R.string.preference_block_local));
             }
             edit.apply();
         }
@@ -77,7 +77,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            getPreferenceManager().setSharedPreferencesName("notification_settings_custom");
+            getPreferenceManager().setSharedPreferencesName(getString(R.string.notification_settings_custom));
             getActivity().setTheme(R.style.PreferenceFragmentTheme);
         }
 
@@ -90,116 +90,136 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
         private void initScreenAndPreferences(){
             PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             setPreferenceScreen(screen);
-            SharedPreferences prefsGeneral = getActivity().getSharedPreferences("notification_settings_global", MODE_PRIVATE);
+            SharedPreferences prefsGeneral = getActivity().getSharedPreferences(getString(R.string.notification_settings_global), MODE_PRIVATE);
             String packageNameUnderscore = packageName + "_";
+            String prefKeyUseCustomSettings = packageNameUnderscore + getString(R.string.preference_use_custom_settings);
 
             CheckBoxPreference useCustomSettings = new CheckBoxPreference(getPreferenceScreen().getContext());
             useCustomSettings.setWidgetLayoutResource(R.layout.appcompat_switch_layout);
             useCustomSettings.setDefaultValue(false);
-            useCustomSettings.setKey(packageNameUnderscore + "preference_use_custom_settings");
+            useCustomSettings.setKey(prefKeyUseCustomSettings);
             useCustomSettings.setTitle(R.string.notif_custom_use_custom_title);
             screen.addPreference(useCustomSettings);
 
             CheckBoxPreference includeTitle = new CheckBoxPreference(getPreferenceScreen().getContext());
-            includeTitle.setDefaultValue(prefsGeneral.getBoolean("preference_include_notification_title", true));
-            includeTitle.setKey(packageNameUnderscore + "preference_include_notification_title");
+            String prefKeyIncludeTitle = getString(R.string.preference_include_notification_title);
+            includeTitle.setDefaultValue(prefsGeneral.getBoolean(prefKeyIncludeTitle, true));
+            includeTitle.setKey(packageNameUnderscore + prefKeyIncludeTitle);
             includeTitle.setTitle(getString(R.string.main_include_title));
             screen.addPreference(includeTitle);
-            includeTitle.setDependency(packageNameUnderscore + "preference_use_custom_settings");
+            includeTitle.setDependency(prefKeyUseCustomSettings);
 
             CheckBoxPreference forceTitle = new CheckBoxPreference(getPreferenceScreen().getContext());
-            forceTitle.setDefaultValue(prefsGeneral.getBoolean("preference_force_title", false));
-            forceTitle.setKey(packageNameUnderscore + "preference_force_title");
+            String prefKeyForceTitle = getString(R.string.preference_force_title);
+            forceTitle.setDefaultValue(prefsGeneral.getBoolean(prefKeyForceTitle, false));
+            forceTitle.setKey(packageNameUnderscore + prefKeyForceTitle);
             forceTitle.setTitle(getString(R.string.main_force_title));
             screen.addPreference(forceTitle);
-            forceTitle.setDependency(packageNameUnderscore + "preference_include_notification_title");
+            forceTitle.setDependency(packageNameUnderscore + prefKeyIncludeTitle);
 
             MaxTitleSizePreference maxTitle = new MaxTitleSizePreference(getPreferenceScreen().getContext(), null);
-            maxTitle.setDefaultValue(prefsGeneral.getInt("preference_title_max_size", MaxTitleSizePreference.DEFAULT_VALUE));
+            String prefKeyMaxTitle = getString(R.string.preference_title_max_size);
+            maxTitle.setDefaultValue(prefsGeneral.getInt(prefKeyMaxTitle, MaxTitleSizePreference.DEFAULT_VALUE));
             maxTitle.setDialogMessage(getString(R.string.main_max_title_dialog_message));
-            maxTitle.setKey(packageNameUnderscore + "preference_title_max_size");
+            maxTitle.setKey(packageNameUnderscore + prefKeyMaxTitle);
             maxTitle.setTitle(getString(R.string.main_max_title));
             screen.addPreference(maxTitle);
-            maxTitle.setDependency(packageNameUnderscore + "preference_include_notification_title");
+            maxTitle.setDependency(packageNameUnderscore + prefKeyIncludeTitle);
 
             CheckBoxPreference includeMessage = new CheckBoxPreference(getPreferenceScreen().getContext());
-            includeMessage.setDefaultValue(prefsGeneral.getBoolean("preference_include_notification_message", true));
-            includeMessage.setKey(packageNameUnderscore + "preference_include_notification_message");
+            String prefKeyIncludeMessage = getString(R.string.preference_include_notification_message);
+            includeMessage.setDefaultValue(prefsGeneral.getBoolean(prefKeyIncludeMessage, true));
+            includeMessage.setKey(packageNameUnderscore + prefKeyIncludeMessage);
             includeMessage.setTitle(getString(R.string.main_include_message));
             screen.addPreference(includeMessage);
-            includeMessage.setDependency(packageNameUnderscore + "preference_use_custom_settings");
+            includeMessage.setDependency(prefKeyUseCustomSettings);
 
             MaxMessageSizePreference maxMessage = new MaxMessageSizePreference(getPreferenceScreen().getContext(), null);
-            maxMessage.setDefaultValue(prefsGeneral.getInt("preference_message_max_size", MaxMessageSizePreference.DEFAULT_VALUE));
+            String prefKeyMaxMessage = getString(R.string.preference_message_max_size);
+            maxMessage.setDefaultValue(prefsGeneral.getInt(prefKeyMaxMessage, MaxMessageSizePreference.DEFAULT_VALUE));
             maxMessage.setDialogMessage(getString(R.string.main_max_message_dialog_message));
-            maxMessage.setKey(packageNameUnderscore + "preference_message_max_size");
+            maxMessage.setKey(packageNameUnderscore + prefKeyMaxMessage);
             maxMessage.setTitle(getString(R.string.main_max_message));
             screen.addPreference(maxMessage);
-            maxMessage.setDependency(packageNameUnderscore + "preference_include_notification_message");
+            maxMessage.setDependency(packageNameUnderscore + prefKeyIncludeMessage);
 
             CheckBoxPreference includeIcon = new CheckBoxPreference(getPreferenceScreen().getContext());
-            includeIcon.setDefaultValue(prefsGeneral.getBoolean("preference_include_notification_icon", true));
-            includeIcon.setKey(packageNameUnderscore + "preference_include_notification_icon");
+            String prefKeyIncludeIcon = getString(R.string.preference_include_notification_icon);
+            includeIcon.setDefaultValue(prefsGeneral.getBoolean(prefKeyIncludeIcon, true));
+            includeIcon.setKey(packageNameUnderscore + prefKeyIncludeIcon);
             includeIcon.setTitle(getString(R.string.main_include_icon));
             screen.addPreference(includeIcon);
-            includeIcon.setDependency(packageNameUnderscore + "preference_use_custom_settings");
+            includeIcon.setDependency(prefKeyUseCustomSettings);
 
             IconSizePreference iconSize = new IconSizePreference(getPreferenceScreen().getContext(), null);
-            iconSize.setDefaultValue(prefsGeneral.getInt("preference_icon_size", IconSizePreference.DEFAULT_VALUE));
+            String prefKeyIconSize = getString(R.string.preference_icon_size);
+            iconSize.setDefaultValue(prefsGeneral.getInt(prefKeyIconSize, IconSizePreference.DEFAULT_VALUE));
             iconSize.setDialogMessage(getString(R.string.main_icon_size_dialog_message));
-            iconSize.setKey(packageNameUnderscore + "preference_icon_size");
+            iconSize.setKey(packageNameUnderscore + prefKeyIconSize);
             iconSize.setTitle(getString(R.string.main_icon_size_dialog_message));
             screen.addPreference(iconSize);
-            iconSize.setDependency(packageNameUnderscore + "preference_include_notification_icon");
+            iconSize.setDependency(packageNameUnderscore + prefKeyIncludeIcon);
 
             CheckBoxPreference blockOngoing = new CheckBoxPreference(getPreferenceScreen().getContext());
-            blockOngoing.setDefaultValue(prefsGeneral.getBoolean("preference_block_ongoing", false));
-            blockOngoing.setKey(packageNameUnderscore + "preference_block_ongoing");
+            String prefKeyBlockOngoing = getString(R.string.preference_block_ongoing);
+            blockOngoing.setDefaultValue(prefsGeneral.getBoolean(prefKeyBlockOngoing, false));
+            blockOngoing.setKey(packageNameUnderscore + prefKeyBlockOngoing);
             blockOngoing.setTitle(getString(R.string.main_block_ongoing));
             blockOngoing.setSummary(getString(R.string.main_block_ongoing_summary));
             screen.addPreference(blockOngoing);
-            blockOngoing.setDependency(packageNameUnderscore + "preference_use_custom_settings");
+            blockOngoing.setDependency(prefKeyUseCustomSettings);
 
             CheckBoxPreference blockForeground = new CheckBoxPreference(getPreferenceScreen().getContext());
-            blockForeground.setDefaultValue(prefsGeneral.getBoolean("preference_block_foreground", false));
-            blockForeground.setKey(packageNameUnderscore + "preference_block_foreground");
+            String prefKeyBlockForeground = getString(R.string.preference_block_foreground);
+            blockForeground.setDefaultValue(prefsGeneral.getBoolean(prefKeyBlockForeground, false));
+            blockForeground.setKey(packageNameUnderscore + prefKeyBlockForeground);
             blockForeground.setTitle(getString(R.string.main_block_foreground));
             screen.addPreference(blockForeground);
-            blockForeground.setDependency(packageNameUnderscore + "preference_use_custom_settings");
+            blockForeground.setDependency(prefKeyUseCustomSettings);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
                 CheckBoxPreference blockGroup = new CheckBoxPreference(getPreferenceScreen().getContext());
-                blockGroup.setDefaultValue(prefsGeneral.getBoolean("preference_block_group", false));
-                blockGroup.setKey(packageNameUnderscore + "preference_block_group");
+                String prefKeyBlockGroup = getString(R.string.preference_block_group);
+                blockGroup.setDefaultValue(prefsGeneral.getBoolean(prefKeyBlockGroup, false));
+                blockGroup.setKey(packageNameUnderscore + prefKeyBlockGroup);
                 blockGroup.setTitle(getString(R.string.main_block_group));
                 blockGroup.setSummary(getString(R.string.main_block_group_summary));
                 screen.addPreference(blockGroup);
-                blockGroup.setDependency(packageNameUnderscore + "preference_use_custom_settings");
+                blockGroup.setDependency(prefKeyUseCustomSettings);
 
                 CheckBoxPreference blockLocal = new CheckBoxPreference(getPreferenceScreen().getContext());
-                blockLocal.setDefaultValue(prefsGeneral.getBoolean("preference_block_local", false));
-                blockLocal.setKey(packageNameUnderscore + "preference_block_local");
+                String prefKeyBlockLocal = getString(R.string.preference_block_local);
+                blockLocal.setDefaultValue(prefsGeneral.getBoolean(prefKeyBlockLocal, false));
+                blockLocal.setKey(packageNameUnderscore + prefKeyBlockLocal);
                 blockLocal.setTitle(getString(R.string.main_block_local));
                 blockLocal.setSummary(getString(R.string.main_block_local_summary));
                 screen.addPreference(blockLocal);
-                blockLocal.setDependency(packageNameUnderscore + "preference_use_custom_settings");
+                blockLocal.setDependency(prefKeyUseCustomSettings);
             }
 
             setIconAndSummaries(packageNameUnderscore);
         }
 
         private void setIconAndSummaries(String packageNameUnderscore){
+            String prefKeyUseCustomSettings = packageNameUnderscore + getString(R.string.preference_use_custom_settings);
             try {
-                findPreference(packageNameUnderscore + "preference_use_custom_settings").setIcon(getActivity().getPackageManager().getApplicationIcon(packageName));
+                findPreference(prefKeyUseCustomSettings).setIcon(getActivity().getPackageManager().getApplicationIcon(packageName));
             } catch (Exception e){}
-            findPreference(packageNameUnderscore + "preference_use_custom_settings").setSummary(getString(R.string.notif_custom_use_custom_summary, appName));
-            SharedPreferences sp = getActivity().getSharedPreferences("notification_settings_custom", MODE_PRIVATE);
-            findPreference(packageNameUnderscore + "preference_title_max_size").setSummary(
-                    String.valueOf(sp.getInt(packageNameUnderscore + "preference_title_max_size", MaxTitleSizePreference.DEFAULT_VALUE)));
-            findPreference(packageNameUnderscore + "preference_message_max_size").setSummary(
-                    String.valueOf(sp.getInt(packageNameUnderscore + "preference_message_max_size", MaxMessageSizePreference.DEFAULT_VALUE)));
-            findPreference(packageNameUnderscore + "preference_icon_size").setSummary(getString(R.string.main_icon_size_summary,
-                    sp.getInt(packageNameUnderscore + "preference_icon_size", IconSizePreference.DEFAULT_VALUE)));
+            findPreference(prefKeyUseCustomSettings).setSummary(getString(R.string.notif_custom_use_custom_summary, appName));
+            SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.notification_settings_custom), MODE_PRIVATE);
+
+            String prefKeyMaxTitle = packageNameUnderscore + getString(R.string.preference_title_max_size);
+            findPreference(prefKeyMaxTitle).setSummary(String.valueOf(
+                    sp.getInt(prefKeyMaxTitle, MaxTitleSizePreference.DEFAULT_VALUE)));
+
+            String prefKeyMaxMessage = packageNameUnderscore + getString(R.string.preference_message_max_size);
+            findPreference(prefKeyMaxMessage).setSummary(
+                    String.valueOf(sp.getInt(prefKeyMaxMessage, MaxMessageSizePreference.DEFAULT_VALUE)));
+
+            String prefKeyIconSize = packageNameUnderscore + getString(R.string.preference_icon_size);
+            findPreference(prefKeyIconSize).setSummary(getString(
+                    R.string.main_icon_size_summary,
+                    sp.getInt(prefKeyIconSize, IconSizePreference.DEFAULT_VALUE)));
         }
 
     }

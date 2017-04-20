@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="installed_applications">
+    android:key="@string/enabled_apps_pref_screen">
 
     <CheckBoxPreference
         android:defaultValue="false"
-        android:key="preference_enable_disable_all_applications"
+        android:key="@string/preference_enable_disable_all_applications"
         android:title="@string/enabled_apps_enable_disable_all" />
 
 </PreferenceScreen>
