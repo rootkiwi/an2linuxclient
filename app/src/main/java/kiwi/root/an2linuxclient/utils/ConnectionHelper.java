@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.SocketException;
 
 import kiwi.root.an2linuxclient.R;
 
@@ -37,9 +38,15 @@ public class ConnectionHelper {
             throw new RuntimeException();
         }
         byte[] buf = new byte[size];
-        int len = 0;
-        while (len < size){
-            len += in.read(buf, len, size-len);
+        int bytesRead = 0;
+        int tmp;
+        while (bytesRead < size){
+            tmp = in.read(buf, bytesRead, size-bytesRead);
+            if (tmp == -1){
+                throw new SocketException();
+            } else {
+                bytesRead += tmp;
+            }
         }
         return buf;
     }
