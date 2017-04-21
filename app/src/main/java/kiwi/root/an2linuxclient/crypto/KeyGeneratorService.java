@@ -11,6 +11,7 @@ package kiwi.root.an2linuxclient.crypto;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v4.content.LocalBroadcastManager;
@@ -46,6 +47,11 @@ public class KeyGeneratorService extends IntentService {
 
         stopForeground(true);
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(BROADCAST_ACTION));
+    }
+
+    public static void startGenerate(Context c) {
+        currentlyGenerating = true;
+        c.startService(new Intent(c, KeyGeneratorService.class));
     }
 
 }

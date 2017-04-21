@@ -65,8 +65,7 @@ public class ClientCertificateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 registerReceiver();
-                KeyGeneratorService.currentlyGenerating = true;
-                getActivity().startService(new Intent(getActivity(), KeyGeneratorService.class));
+                KeyGeneratorService.startGenerate(getActivity());
             }
         });
         return v;

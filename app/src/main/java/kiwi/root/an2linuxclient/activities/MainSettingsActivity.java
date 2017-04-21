@@ -222,11 +222,12 @@ public class MainSettingsActivity extends AppCompatActivity {
         }
 
         private void generateKeyIfNotExists(){
-            final SharedPreferences deviceKeyPref = getActivity().getSharedPreferences(getString(R.string.device_key_and_cert), MODE_PRIVATE);
-            if ((!deviceKeyPref.contains(getString(R.string.privatekey)) || !deviceKeyPref.contains(getString(R.string.certificate)))
-                    && !KeyGeneratorService.currentlyGenerating){
-                KeyGeneratorService.currentlyGenerating = true;
-                getActivity().startService(new Intent(getActivity(), KeyGeneratorService.class));
+            SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.device_key_and_cert), MODE_PRIVATE);
+            boolean certExists = sp.contains(getString(R.string.certificate));
+            boolean keyExists = sp.contains(getString(R.string.privatekey));
+            boolean certOrKeyNotExists = !certExists || !keyExists;
+            if (certOrKeyNotExists && !KeyGeneratorService.currentlyGenerating){
+                KeyGeneratorService.startGenerate(getActivity());
             }
         }
 
