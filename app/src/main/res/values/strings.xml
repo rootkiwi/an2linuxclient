@@ -115,5 +115,6 @@
     <string name="notif_settings_custom_settings_summary">Configure custom settings per app that will override global settings</string>
     <string name="notif_settings_custom_no_enabled_title">No app enabled for notification sync</string>
     <string name="notif_settings_custom_no_enabled_summary">Tap here to enter the \'Enabled applications\' settings</string>
+    <string name="notif_settings_min_notification_priority_title">Minimum notification priority</string>
     <string name="main_changelog">Changelog</string>
 </resources>

@@ -47,6 +47,15 @@
             android:key="@string/preference_icon_size"
             android:title="@string/main_icon_size" />
 
+        <ListPreference
+            android:defaultValue="@string/preference_min_notification_priority_default"
+            android:dialogTitle="@string/notif_settings_min_notification_priority_title"
+            android:entries="@array/preference_min_notification_priority_entries"
+            android:entryValues="@array/preference_min_notification_priority_values"
+            android:key="@string/preference_min_notification_priority"
+            android:summary="%s"
+            android:title="@string/notif_settings_min_notification_priority_title" />
+
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="@string/preference_block_ongoing"

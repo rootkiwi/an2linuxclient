@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
             edit.remove(packageNameUnderscore + getString(R.string.preference_message_max_size));
             edit.remove(packageNameUnderscore + getString(R.string.preference_include_notification_icon));
             edit.remove(packageNameUnderscore + getString(R.string.preference_icon_size));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_min_notification_priority));
             edit.remove(packageNameUnderscore + getString(R.string.preference_block_ongoing));
             edit.remove(packageNameUnderscore + getString(R.string.preference_block_foreground));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
@@ -159,6 +161,18 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
             iconSize.setTitle(getString(R.string.main_icon_size_dialog_message));
             screen.addPreference(iconSize);
             iconSize.setDependency(packageNameUnderscore + prefKeyIncludeIcon);
+
+            ListPreference minNotificationPriority = new ListPreference(getPreferenceScreen().getContext());
+            String prefKeyMinNotificationPriority = getString(R.string.preference_min_notification_priority);
+            minNotificationPriority.setDefaultValue(prefsGeneral.getString(prefKeyMinNotificationPriority, getString(R.string.preference_min_notification_priority_default)));
+            minNotificationPriority.setDialogTitle(R.string.notif_settings_min_notification_priority_title);
+            minNotificationPriority.setEntries(R.array.preference_min_notification_priority_entries);
+            minNotificationPriority.setEntryValues(R.array.preference_min_notification_priority_values);
+            minNotificationPriority.setKey(packageNameUnderscore + prefKeyMinNotificationPriority);
+            minNotificationPriority.setSummary("%s");
+            minNotificationPriority.setTitle(R.string.notif_settings_min_notification_priority_title);
+            screen.addPreference(minNotificationPriority);
+            minNotificationPriority.setDependency(prefKeyUseCustomSettings);
 
             CheckBoxPreference blockOngoing = new CheckBoxPreference(getPreferenceScreen().getContext());
             String prefKeyBlockOngoing = getString(R.string.preference_block_ongoing);

@@ -25,54 +25,101 @@ public class NotificationService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         //logDebug(sbn);
-        boolean globalEnabled = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(getString(R.string.preference_enable_an2linux), false);
-
-        String packageName = sbn.getPackageName();
-        boolean appEnabled = getSharedPreferences(getString(R.string.enabled_applications), MODE_PRIVATE)
-                .getBoolean(packageName, false);
-
-        if (globalEnabled && appEnabled) {
-            SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.notification_settings_custom), MODE_PRIVATE);
-            boolean usingCustomSettings = sharedPrefs.getBoolean(
-                    packageName + "_" + getString(R.string.preference_use_custom_settings), false);
-
-            if (!usingCustomSettings) {
-                sharedPrefs = getSharedPreferences(getString(R.string.notification_settings_global), MODE_PRIVATE);
-            }
-
-            int flags = sbn.getNotification().flags;
-            boolean blockOngoing = sharedPrefs.getBoolean(getCorrectPrefKey(
-                    getString(R.string.preference_block_ongoing), packageName, usingCustomSettings), false);
-            if (blockOngoing && (flags & Notification.FLAG_ONGOING_EVENT) != 0){
-                return;
-            }
-
-            boolean blockForeground = sharedPrefs.getBoolean(getCorrectPrefKey(
-                    getString(R.string.preference_block_foreground), packageName, usingCustomSettings), false);
-            if (blockForeground && (flags & Notification.FLAG_FOREGROUND_SERVICE) != 0){
-                return;
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
-                boolean blockGroup = sharedPrefs.getBoolean(getCorrectPrefKey(
-                        getString(R.string.preference_block_group), packageName, usingCustomSettings), false);
-                if (blockGroup && (flags & Notification.FLAG_GROUP_SUMMARY) != 0){
-                    return;
-                }
-                boolean blockLocal = sharedPrefs.getBoolean(getCorrectPrefKey(
-                        getString(R.string.preference_block_local), packageName, usingCustomSettings), false);
-                if (blockLocal && (flags & Notification.FLAG_LOCAL_ONLY) != 0){
-                    return;
-                }
-            }
-
+        if (filter(sbn)) {
             NotificationHandler.handleStatusBarNotification(sbn, getApplicationContext());
         }
     }
 
+    private boolean filter(StatusBarNotification sbn) {
+        String packageName = sbn.getPackageName();
+        if (!globalEnabled() || !appEnabled(packageName)) {
+            return false;
+        }
+        boolean usingCustomSettings = isUsingCustomSettings(packageName);
+        SharedPreferences sp;
+        if (usingCustomSettings) {
+            sp = getSharedPreferences(getString(R.string.notification_settings_custom), MODE_PRIVATE);
+        } else {
+            sp = getSharedPreferences(getString(R.string.notification_settings_global), MODE_PRIVATE);
+        }
+        int flags = sbn.getNotification().flags;
+        if (blockOngoing(sp, packageName, usingCustomSettings) && isOngoing(flags)){
+            return false;
+        }
+        if (blockForeground(sp, packageName, usingCustomSettings) && isForeground(flags)){
+            return false;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
+            if (blockGroupSummary(sp, packageName, usingCustomSettings) && isGroupSummary(flags)){
+                return false;
+            }
+            if (blockLocalOnly(sp, packageName, usingCustomSettings) && isLocalOnly(flags)){
+                return false;
+            }
+        }
+        return priorityAllowed(sp, packageName, usingCustomSettings, sbn.getNotification().priority);
+    }
+
+    private boolean globalEnabled() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.preference_enable_an2linux), false);
+    }
+
+    private boolean appEnabled(String packageName) {
+        return getSharedPreferences(getString(R.string.enabled_applications), MODE_PRIVATE)
+                .getBoolean(packageName, false);
+    }
+
+    private boolean isUsingCustomSettings(String packageName) {
+        SharedPreferences sharedPrefsCustom = getSharedPreferences(getString(R.string.notification_settings_custom), MODE_PRIVATE);
+        return sharedPrefsCustom.getBoolean(packageName + "_" + getString(R.string.preference_use_custom_settings), false);
+    }
+
+    private boolean blockOngoing(SharedPreferences sp, String packageName, boolean usingCustomSettings) {
+        return sp.getBoolean(getCorrectPrefKey(
+                getString(R.string.preference_block_ongoing), packageName, usingCustomSettings), false);
+    }
+
+    private boolean blockForeground(SharedPreferences sp, String packageName, boolean usingCustomSettings) {
+        return sp.getBoolean(getCorrectPrefKey(
+                getString(R.string.preference_block_foreground), packageName, usingCustomSettings), false);
+    }
+
+    private boolean blockGroupSummary(SharedPreferences sp, String packageName, boolean usingCustomSettings) {
+        return sp.getBoolean(getCorrectPrefKey(
+                getString(R.string.preference_block_group), packageName, usingCustomSettings), false);
+    }
+
+    private boolean blockLocalOnly(SharedPreferences sp, String packageName, boolean usingCustomSettings) {
+        return sp.getBoolean(getCorrectPrefKey(
+                getString(R.string.preference_block_local), packageName, usingCustomSettings), false);
+    }
+
+    private boolean priorityAllowed(SharedPreferences sp, String packageName, boolean usingCustomSettings, int priority) {
+        int minNotificationPriority = Integer.parseInt(sp.getString(getCorrectPrefKey(
+                getString(R.string.preference_min_notification_priority), packageName, usingCustomSettings),
+                getString(R.string.preference_min_notification_priority_default)));
+        return priority >= minNotificationPriority;
+    }
+
     private String getCorrectPrefKey(String key, String packageName, boolean usingCustomSettings) {
         return usingCustomSettings ? packageName + "_" + key : key;
+    }
+
+    private boolean isOngoing(int flags) {
+        return (flags & Notification.FLAG_ONGOING_EVENT) != 0;
+    }
+
+    private boolean isForeground(int flags) {
+        return (flags & Notification.FLAG_FOREGROUND_SERVICE) != 0;
+    }
+
+    private boolean isGroupSummary(int flags) {
+        return (flags & Notification.FLAG_GROUP_SUMMARY) != 0;
+    }
+
+    private boolean isLocalOnly(int flags) {
+        return (flags & Notification.FLAG_LOCAL_ONLY) != 0;
     }
 
     @Override
@@ -101,33 +148,13 @@ public class NotificationService extends NotificationListenerService {
             Log.d("subText", "null");
         }
 
-        if (sbn.getNotification().tickerText != null){
-            Log.d("tickerText", sbn.getNotification().tickerText.toString());
-        }
-        else {
-            Log.d("tickerText", "null");
-        }
-
-        if (extras.getCharSequence(android.app.Notification.EXTRA_SUMMARY_TEXT) != null){
-            Log.d("summaryText", extras.getCharSequence(android.app.Notification.EXTRA_SUMMARY_TEXT).toString());
-        } else {
-            Log.d("summaryText", "null");
-        }
-
-        Log.d("flags", String.valueOf(sbn.getNotification().flags));
-        Log.d("FLAG_AUTO_CANCEL", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_AUTO_CANCEL) == 16));
+        Log.d("FLAG_ONGOING_EVENT", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_ONGOING_EVENT) == 2));
         Log.d("FLAG_FOREGROUND_SERVICE", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_FOREGROUND_SERVICE) == 64));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
             Log.d("FLAG_GROUP_SUMMARY", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_GROUP_SUMMARY) == 512));
             Log.d("FLAG_LOCAL_ONLY", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_LOCAL_ONLY) == 256));
         }
-        Log.d("FLAG_HIGH_PRIORITY", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_HIGH_PRIORITY) == 128));
         Log.d("priority", String.valueOf(sbn.getNotification().priority));
-        Log.d("FLAG_INSISTENT", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_INSISTENT) == 4));
-        Log.d("FLAG_NO_CLEAR", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_NO_CLEAR) == 32));
-        Log.d("FLAG_ONGOING_EVENT", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_ONGOING_EVENT) == 2));
-        Log.d("FLAG_ONLY_ALERT_ONCE", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_ONLY_ALERT_ONCE) == 8));
-        Log.d("FLAG_SHOW_LIGHTS", String.valueOf((sbn.getNotification().flags & android.app.Notification.FLAG_SHOW_LIGHTS) == 1));
         Log.d("<<<END_NOTIFICATION>>>", "<<<" + sbn.getPackageName() + ">>>");
     }*/
 
