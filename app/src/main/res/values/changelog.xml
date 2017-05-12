@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        &lt;b&gt;0.6.0 (May 12, 2017)&lt;/b&gt;&lt;br&gt;
+        - New preference added for minimum notification priority&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.5.1 (Apr 12, 2017)&lt;/b&gt;&lt;br&gt;
         - Fix bug that caused AN2Linux to crash when opening individual app settings (affecting Android 4.4-5.1)&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.5.0 (Apr 5, 2017)&lt;/b&gt;&lt;br&gt;
