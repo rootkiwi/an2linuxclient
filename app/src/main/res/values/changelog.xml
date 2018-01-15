@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        &lt;b&gt;0.7.0 (Jan 16, 2018)&lt;/b&gt;&lt;br&gt;
+        - New icon created by conrad-heimbold@github, thank you!&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.6.0 (May 12, 2017)&lt;/b&gt;&lt;br&gt;
         - New preference added for minimum notification priority&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.5.1 (Apr 12, 2017)&lt;/b&gt;&lt;br&gt;
