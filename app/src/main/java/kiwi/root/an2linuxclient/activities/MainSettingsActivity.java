@@ -42,9 +42,17 @@ import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
 import kiwi.root.an2linuxclient.data.MobileServer;
 import kiwi.root.an2linuxclient.data.ServerDatabaseHandler;
 import kiwi.root.an2linuxclient.data.WifiServer;
+import kiwi.root.an2linuxclient.utils.AN2LinuxService;
 import kiwi.root.an2linuxclient.utils.ConnectionHelper;
 
 public class MainSettingsActivity extends AppCompatActivity {
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        startService(new Intent(this, AN2LinuxService.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,8 @@ public class MainSettingsActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
+
+        startService(new Intent(this, AN2LinuxService.class));
     }
 
     public static class SettingsFragment extends PreferenceFragment {
