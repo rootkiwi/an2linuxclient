@@ -64,6 +64,10 @@
             android:label="@string/activity_label_client_certificate"
             android:parentActivityName=".activities.MainSettingsActivity" />
 
+        <service
+            android:name=".utils.AN2LinuxService"
+            android:label="@string/utils_an2linux_service"/>
+
     </application>
 
 </manifest>
