@@ -8,6 +8,7 @@
 
 package kiwi.root.an2linuxclient.activities;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.NotificationManager;
@@ -21,22 +22,21 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import java.util.List;
-
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
 import kiwi.root.an2linuxclient.data.MobileServer;
@@ -44,6 +44,8 @@ import kiwi.root.an2linuxclient.data.ServerDatabaseHandler;
 import kiwi.root.an2linuxclient.data.WifiServer;
 import kiwi.root.an2linuxclient.utils.AN2LinuxService;
 import kiwi.root.an2linuxclient.utils.ConnectionHelper;
+
+import java.util.List;
 
 public class MainSettingsActivity extends AppCompatActivity {
 
@@ -90,8 +92,14 @@ public class MainSettingsActivity extends AppCompatActivity {
                         boolean isNotificationAccessEnabled = NotificationManagerCompat
                                 .getEnabledListenerPackages(getActivity())
                                 .contains(getActivity().getPackageName());
+                        boolean hasCoarseLocationPermission = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O ||
+                                ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
                         if (!isNotificationAccessEnabled){
                             new AskNotificationAccessDialogFragment().show(getFragmentManager(), "AskNotificationAccessDialogFragment");
+                        }
+                        if (!hasCoarseLocationPermission) {
+                            new AskCoarseLocationAccessDialogFragment().show(getFragmentManager(), "AskCoarseLocationAccessDialogFragment");
                         }
                     }
                     return true;
@@ -249,6 +257,28 @@ public class MainSettingsActivity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 getActivity().startActivity((new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")));
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+                return builder.create();
+            }
+        }
+
+        public static class AskCoarseLocationAccessDialogFragment extends DialogFragment {
+            static int UNIQUE_COARSE_LOCATION_ID  = 0; // WTF is this not a normal constant?
+
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
+                builder.setMessage(R.string.main_dialog_ask_coarse_location_access)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                        UNIQUE_COARSE_LOCATION_ID);
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
