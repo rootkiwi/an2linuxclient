@@ -9,9 +9,7 @@
 package kiwi.root.an2linuxclient.activities;
 
 import android.Manifest;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.NotificationManager;
+import android.app.*;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +18,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -27,6 +26,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -48,12 +48,18 @@ import kiwi.root.an2linuxclient.utils.ConnectionHelper;
 import java.util.List;
 
 public class MainSettingsActivity extends AppCompatActivity {
+    private final static int HIDING_NOTIFICATION_ID = 2;
+    private final static String INFORMATION_CHANNEL_ID = "AN2LinuxInformationChannel";
+
+    private boolean useForegroundService = false;
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
 
-        startService(new Intent(this, AN2LinuxService.class));
+        if (useForegroundService){
+            startService(new Intent(this, AN2LinuxService.class));
+        }
     }
 
     @Override
@@ -64,7 +70,55 @@ public class MainSettingsActivity extends AppCompatActivity {
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
 
-        startService(new Intent(this, AN2LinuxService.class));
+        if (useForegroundService){
+            startService(new Intent(this, AN2LinuxService.class));
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String createNotificationChannel() {
+        NotificationChannel chan = new NotificationChannel(INFORMATION_CHANNEL_ID,
+                getString(R.string.main_enable_service_information_notification_channel_name), NotificationManager.IMPORTANCE_LOW);
+        chan.setLightColor(Color.GREEN);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+        notificationManager.createNotificationChannel(chan);
+
+        return INFORMATION_CHANNEL_ID;
+    }
+
+    private void displayNotificationHidingHelp() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, createNotificationChannel());
+
+            notificationBuilder.setCategory(Notification.CATEGORY_MESSAGE);
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            notificationBuilder.setTicker(getString(R.string.main_enable_service_information_notification_title));
+            notificationBuilder.setContentIntent(
+                    PendingIntent.getActivity(this, 0,
+                            new Intent(this, MainSettingsActivity.class),
+                            PendingIntent.FLAG_UPDATE_CURRENT)
+            );
+            notificationBuilder.setAutoCancel(true);
+            notificationBuilder.setContentTitle(getString(R.string.main_enable_service_information_notification_title));
+            notificationBuilder.setContentText(getString(R.string.main_enable_service_information_notification_text));
+            notificationBuilder.setStyle(new NotificationCompat.BigTextStyle()
+                    .bigText(getString(R.string.main_enable_service_information_notification_text)));
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(HIDING_NOTIFICATION_ID, notificationBuilder.build());
+        }
+    }
+
+    private void setUseForegroundService(boolean useForegroundService) {
+        this.useForegroundService = useForegroundService;
+        if (useForegroundService){
+            startService(new Intent(this, AN2LinuxService.class));
+            displayNotificationHidingHelp();
+        } else{
+            stopService(new Intent(this, AN2LinuxService.class));
+        }
     }
 
     public static class SettingsFragment extends PreferenceFragment {
@@ -101,6 +155,17 @@ public class MainSettingsActivity extends AppCompatActivity {
                         if (!hasCoarseLocationPermission) {
                             new AskCoarseLocationAccessDialogFragment().show(getFragmentManager(), "AskCoarseLocationAccessDialogFragment");
                         }
+                    }
+                    return true;
+                }
+            });
+
+            findPreference(getString(R.string.preference_enable_service)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    Activity activity = getActivity();
+                    if (activity instanceof MainSettingsActivity){
+                        ((MainSettingsActivity) activity).setUseForegroundService((boolean) newValue);
                     }
                     return true;
                 }
