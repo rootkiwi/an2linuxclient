@@ -10,6 +10,14 @@
     <string name="main_settings_category_title">Settings</string>
     <string name="main_settings_category_about">About</string>
     <string name="main_enable_an2linux">Enable AN2Linux</string>
+    <string name="main_enable_service">Enable foreground service</string>
+    <string name="main_enable_service_notification_channel_name">AN2Linux foreground service</string>
+    <string name="main_enable_service_information_notification_channel_name">AN2Linux information channel</string>
+    <string name="main_enable_service_information_notification_title">How to hide AN2Linux Notification</string>
+    <string name="main_enable_service_information_notification_text">To hide the notification dot of the service
+        notification, open the notification settings of this app, click on the service channel name and set the
+        importance to low.
+    </string>
     <string name="main_enabled_apps_summary">Send notifications from these apps only</string>
     <string name="main_server_configuration_summary">Add a server to send notifications to</string>
     <string name="main_display_test_notification">Display test notification</string>

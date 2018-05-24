@@ -8,6 +8,7 @@
     <string name="certificate">certificate</string>
     <string name="version_code_seen">version_code_seen</string>
     <string name="preference_enable_an2linux">preference_enable_an2linux</string>
+    <string name="preference_enable_service">preference_enable_service</string>
     <string name="preference_enable_disable_all_applications">preference_enable_disable_all_applications</string>
     <string name="preference_include_notification_title">preference_include_notification_title</string>
     <string name="preference_force_title">preference_force_title</string>

@@ -12,11 +12,8 @@ import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.activities.MainSettingsActivity;
 
 public class AN2LinuxService extends Service {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
+    private final static int SERVICE_NOTIFICATION_ID = 1;
+    private final static String SERVICE_CHANNEL_ID = "AN2LinuxServiceChannel";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -40,16 +37,14 @@ public class AN2LinuxService extends Service {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String createNotificationChannel() {
-        String channelId = "AN2LinuxChannel";
-        String channelName = "AN2Linux foreground notification channel";
-        NotificationChannel chan = new NotificationChannel(channelId,
-                channelName, NotificationManager.IMPORTANCE_MIN);
+        NotificationChannel chan = new NotificationChannel(SERVICE_CHANNEL_ID,
+                getString(R.string.main_enable_service_notification_channel_name), NotificationManager.IMPORTANCE_MIN);
         chan.setLightColor(Color.GREEN);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        NotificationManager service = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        assert service != null;
-        service.createNotificationChannel(chan);
-        return channelId;
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+        notificationManager.createNotificationChannel(chan);
+        return SERVICE_CHANNEL_ID;
     }
 
     private void do_foreground() {
@@ -65,14 +60,17 @@ public class AN2LinuxService extends Service {
         } else{
             notificationBuilder.setPriority(Notification.PRIORITY_MIN);
         }
-        notificationBuilder.setOngoing(true).setSmallIcon(R.mipmap.ic_launcher).setTicker("AN2Linux").setContentIntent(
+        notificationBuilder.setOngoing(true);
+        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        notificationBuilder.setTicker(getString(R.string.main_enable_service_notification_channel_name));
+        notificationBuilder.setContentIntent(
                 PendingIntent.getActivity(this, 0,
                         new Intent(this, MainSettingsActivity.class),
                         PendingIntent.FLAG_UPDATE_CURRENT)
         );
         Notification n = notificationBuilder.build();
 
-        startForeground(1, n);
+        startForeground(SERVICE_NOTIFICATION_ID, n);
     }
 }
 
