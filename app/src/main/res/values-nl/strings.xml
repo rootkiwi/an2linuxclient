@@ -39,7 +39,7 @@
     <string name="main_source_code_server_link">https://github.com/rootkiwi/an2linuxserver</string>
     <string name="main_dialog_ask_notification_access">AN2Linux vereist toegang tot je meldingen. Als de meldingsinstellingen worden geopend, schakel dan AN2Linux in en druk daarna op de terug-knop.</string>
     <string name="enabled_apps_enable_disable_all">Alles inschakelen/uitschakelen</string>
-    <string name="empty_view_text_server_configuration">Er zijn drie soorten "servers": Wi-Fi, Mobiel en Bluetooth.\n\nDit betekent dat AN2Linux alleen meldingen zal proberen te versturen naar een server als je verbonden bent met één van de soorten servers.\n\nAls je bijv. verbonden bent met Wi-Fi, dan zal alleen worden geprobeerd meldingen te sturen naar Wi-Fi-servers en niet naar servers van het soort 'Mobiel'.\n\nBluetooth is een beetje speciaal; "verbonden" betekent hier dat bluetooth is ingeschakeld.</string>
+    <string name="empty_view_text_server_configuration">Er zijn drie soorten "servers": Wi-Fi, Mobiel en Bluetooth.\n\nDit betekent dat AN2Linux alleen meldingen zal proberen te versturen naar een server als je verbonden bent met één van de soorten servers.\n\nAls je bijv. verbonden bent met Wi-Fi, dan zal alleen worden geprobeerd meldingen te sturen naar Wi-Fi-servers en niet naar servers van het soort \'Mobiel\'.\n\nBluetooth is een beetje speciaal; "verbonden" betekent hier dat bluetooth is ingeschakeld.</string>
     <string name="connection_type_wifi">Wi-Fi</string>
     <string name="connection_type_mobile">Mobiel</string>
     <string name="connection_type_bluetooth">Bluetooth</string>
@@ -47,14 +47,14 @@
     <string name="button_delete_text">Verwijderen</string>
     <string name="dialog_title_address">Adres</string>
     <string name="dialog_title_port">Poort</string>
-    <string name="dialog_title_ssid">Witte lijst van SSID's</string>
+    <string name="dialog_title_ssid">Witte lijst van SSID\'s</string>
     <string name="dialog_title_pairing">Koppelen</string>
     <string name="dialog_title_roaming">Roamen</string>
     <string name="dialog_title_bt_name">Weergavenaam</string>
     <string name="dialog_title_bt_mac">MAC-adres</string>
     <string name="dialog_ip_or_hostname_hint">Voer een ip-adres of hostnaam in</string>
     <string name="dialog_port_hint">Voer het poortnummer in</string>
-    <string name="dialog_title_ssid_hint">Voer één of meer SSID's in, komma-gescheiden\nBijv.: Wi-Fi1, wi-fi2 (hoofdlettergevoelig)\nLaat leeg om alles toe te staan</string>
+    <string name="dialog_title_ssid_hint">Voer één of meer SSID\'s in, komma-gescheiden\nBijv.: Wi-Fi1, wi-fi2 (hoofdlettergevoelig)\nLaat leeg om alles toe te staan</string>
     <string name="dialog_pairing_info_text">Certificaten moeten worden uitgewisseld</string>
     <string name="spinner_choose_certificate">Kies een bestaand certificaat…</string>
     <string name="dialog_pairing_button_text">Koppeling met server starten</string>
@@ -85,7 +85,7 @@
     <string name="connected_timed_out">De verbinding is verlopen.</string>
     <string name="waiting_for_server_to_accept">Bezig met wachten op acceptatie door server…\n%s</string>
     <string name="server_list_port_colon">Poort:</string>
-    <string name="server_list_ssid_whitelist_colon">Witte lijst met SSID's:</string>
+    <string name="server_list_ssid_whitelist_colon">Witte lijst met SSID\'s:</string>
     <string name="server_list_any_ssid">Alle</string>
     <string name="server_list_roaming_allowed">Roamen toestaan:</string>
     <string name="server_list_roaming_allowed_yes">ja</string>
