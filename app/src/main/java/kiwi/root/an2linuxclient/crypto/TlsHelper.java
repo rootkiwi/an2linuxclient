@@ -242,6 +242,15 @@ public class TlsHelper {
                 result = tlsEngine.unwrap(netDataBuf, empty);
             }
 
+            /*On Android 8.1 (LineageOS 15.1) on a Xiaomi device (not sure about others) the
+            SSL_ENGINE may return NEED_WRAP here, so we do that even though no data gets written
+            by the SSL_ENGINE ???*/
+            if (result.getHandshakeStatus() == SSLEngineResult.HandshakeStatus.NEED_WRAP) {
+                netDataBuf.clear();
+                result = tlsEngine.wrap(empty, netDataBuf);
+                // netDataBuf still empty here...
+            }
+
             /*Apparently on Android 4.4 (API_19) with SSLEngine the latest call tlsEngine.unwrap(..)
             that finishes the handshake returns NOT_HANDSHAKING instead of FINISHED as the result*/
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
