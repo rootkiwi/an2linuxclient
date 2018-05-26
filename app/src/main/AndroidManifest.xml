@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Needed since 8.1 to obtain the SSID -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -69,6 +70,12 @@
         <service
             android:name=".utils.AN2LinuxService"
             android:label="@string/utils_an2linux_service"/>
+
+        <receiver android:name="kiwi.root.an2linuxclient.utils.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
