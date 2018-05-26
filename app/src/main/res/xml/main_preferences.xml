@@ -11,6 +11,7 @@
 
         <CheckBoxPreference
                     android:defaultValue="false"
+                    android:dependency="@string/preference_enable_an2linux"
                     android:key="@string/preference_enable_service"
                     android:title="@string/main_enable_service"
                     android:widgetLayout="@layout/appcompat_switch_layout" />

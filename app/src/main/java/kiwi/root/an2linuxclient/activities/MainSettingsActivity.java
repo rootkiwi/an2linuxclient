@@ -56,10 +56,16 @@ public class MainSettingsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        boolean useForegroundService = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(getString(R.string.preference_enable_service), false);
-        if (useForegroundService){
-            startService(new Intent(this, AN2LinuxService.class));
+        boolean an2linuxEnabled = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.preference_enable_an2linux), false);
+
+        if (an2linuxEnabled){
+            boolean useForegroundService = PreferenceManager.getDefaultSharedPreferences(this)
+                    .getBoolean(getString(R.string.preference_enable_service), false);
+
+            if (useForegroundService){
+                startService(new Intent(this, AN2LinuxService.class));
+            }
         }
     }
 
@@ -109,7 +115,10 @@ public class MainSettingsActivity extends AppCompatActivity {
     }
 
     private void changeForegroundService(boolean useForegroundService) {
-        if (useForegroundService){
+        boolean an2linuxEnabled = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.preference_enable_an2linux), false);
+
+        if (an2linuxEnabled && useForegroundService){
             startService(new Intent(this, AN2LinuxService.class));
             displayNotificationHidingHelp();
         } else{
@@ -148,9 +157,17 @@ public class MainSettingsActivity extends AppCompatActivity {
                         if (!isNotificationAccessEnabled){
                             new AskNotificationAccessDialogFragment().show(getFragmentManager(), "AskNotificationAccessDialogFragment");
                         }
-                        if (!hasCoarseLocationPermission) {
+                        if (!hasCoarseLocationPermission){
                             new AskCoarseLocationAccessDialogFragment().show(getFragmentManager(), "AskCoarseLocationAccessDialogFragment");
                         }
+
+                        boolean useForegroundService = preference.getSharedPreferences().getBoolean(getString(R.string.preference_enable_service), false);
+
+                        if (useForegroundService){
+                            getActivity().startService(new Intent(getActivity(), AN2LinuxService.class));
+                        }
+                    } else{
+                        getActivity().stopService(new Intent(getActivity(), AN2LinuxService.class));
                     }
                     return true;
                 }
