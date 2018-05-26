@@ -51,12 +51,13 @@ public class MainSettingsActivity extends AppCompatActivity {
     private final static int HIDING_NOTIFICATION_ID = 2;
     private final static String INFORMATION_CHANNEL_ID = "AN2LinuxInformationChannel";
 
-    private boolean useForegroundService = false;
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        boolean useForegroundService = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean(getString(R.string.preference_enable_service), false);
         if (useForegroundService){
             startService(new Intent(this, AN2LinuxService.class));
         }
@@ -69,10 +70,6 @@ public class MainSettingsActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
-
-        if (useForegroundService){
-            startService(new Intent(this, AN2LinuxService.class));
-        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -111,8 +108,7 @@ public class MainSettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void setUseForegroundService(boolean useForegroundService) {
-        this.useForegroundService = useForegroundService;
+    private void changeForegroundService(boolean useForegroundService) {
         if (useForegroundService){
             startService(new Intent(this, AN2LinuxService.class));
             displayNotificationHidingHelp();
@@ -165,7 +161,7 @@ public class MainSettingsActivity extends AppCompatActivity {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     Activity activity = getActivity();
                     if (activity instanceof MainSettingsActivity){
-                        ((MainSettingsActivity) activity).setUseForegroundService((boolean) newValue);
+                        ((MainSettingsActivity) activity).changeForegroundService((boolean) newValue);
                     }
                     return true;
                 }
