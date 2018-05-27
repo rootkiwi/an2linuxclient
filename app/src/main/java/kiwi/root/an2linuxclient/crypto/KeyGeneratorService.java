@@ -14,12 +14,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.activities.ClientCertificateActivity;
 
+import static kiwi.root.an2linuxclient.App.CHANNEL_ID_GEN;
+import static kiwi.root.an2linuxclient.App.NOTIFICATION_ID_GEN;
+
 public class KeyGeneratorService extends IntentService {
+
 
     public static String BROADCAST_ACTION = "kiwi.root.an2linuxclient.crypto.KEY_GENERATOR_COMPLETED";
     public static boolean currentlyGenerating;
@@ -32,15 +37,14 @@ public class KeyGeneratorService extends IntentService {
     protected void onHandleIntent(Intent workIntent) {
         Intent notificationIntent = new Intent(this, ClientCertificateActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        Notification notification = new Notification.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID_GEN)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(getString(R.string.generate_key_working))
-                .setContentText(getString(R.string.generate_key_working_notification))
-                .setSmallIcon(R.drawable.ic_stat_tux)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                .setContentTitle(getString(R.string.generate_key_working_notification))
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setContentIntent(pendingIntent)
                 .build();
-        final int NOTIFICATION_ID = 2;
-        startForeground(NOTIFICATION_ID, notification);
+        startForeground(NOTIFICATION_ID_GEN, notification);
 
         RsaHelper.initialiseRsaKeyAndCert(getApplicationContext());
         currentlyGenerating = false;

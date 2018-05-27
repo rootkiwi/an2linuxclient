@@ -1,19 +1,17 @@
 package kiwi.root.an2linuxclient.utils;
 
 import android.app.*;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.activities.MainSettingsActivity;
 
+import static kiwi.root.an2linuxclient.App.CHANNEL_ID_FOREGROUND_SERVICE;
+import static kiwi.root.an2linuxclient.App.NOTIFICATION_ID_FOREGROUND_SERVICE;
+
 public class AN2LinuxService extends Service {
-    private final static int SERVICE_NOTIFICATION_ID = 1;
-    private final static String SERVICE_CHANNEL_ID = "AN2LinuxServiceChannel";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -34,26 +32,10 @@ public class AN2LinuxService extends Service {
         super.onDestroy();
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private String createNotificationChannel() {
-        NotificationChannel chan = new NotificationChannel(SERVICE_CHANNEL_ID,
-                getString(R.string.main_enable_service_notification_channel_name), NotificationManager.IMPORTANCE_MIN);
-        chan.setLightColor(Color.GREEN);
-        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        assert notificationManager != null;
-        notificationManager.createNotificationChannel(chan);
-        return SERVICE_CHANNEL_ID;
-    }
-
     private void do_foreground() {
-        String channelID = "";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            channelID = createNotificationChannel();
-        }
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelID);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+                this, CHANNEL_ID_FOREGROUND_SERVICE
+        );
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             notificationBuilder.setCategory(Notification.CATEGORY_SERVICE);
@@ -70,7 +52,7 @@ public class AN2LinuxService extends Service {
         );
         Notification n = notificationBuilder.build();
 
-        startForeground(SERVICE_NOTIFICATION_ID, n);
+        startForeground(NOTIFICATION_ID_FOREGROUND_SERVICE, n);
     }
 }
 

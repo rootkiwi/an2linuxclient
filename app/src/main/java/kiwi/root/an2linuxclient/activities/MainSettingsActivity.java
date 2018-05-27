@@ -18,7 +18,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -26,7 +25,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -47,10 +45,11 @@ import kiwi.root.an2linuxclient.utils.ConnectionHelper;
 
 import java.util.List;
 
-public class MainSettingsActivity extends AppCompatActivity {
-    private final static int HIDING_NOTIFICATION_ID = 2;
-    private final static String INFORMATION_CHANNEL_ID = "AN2LinuxInformationChannel";
+import static kiwi.root.an2linuxclient.App.NOTIFICATION_ID_HIDE_FOREGROUND_NOTIF;
+import static kiwi.root.an2linuxclient.App.CHANNEL_ID_INFORMATION;
+import static kiwi.root.an2linuxclient.App.NOTIFICATION_ID_TEST_NOTIF;
 
+public class MainSettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
@@ -78,22 +77,9 @@ public class MainSettingsActivity extends AppCompatActivity {
                 .commit();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private String createNotificationChannel() {
-        NotificationChannel chan = new NotificationChannel(INFORMATION_CHANNEL_ID,
-                getString(R.string.main_enable_service_information_notification_channel_name), NotificationManager.IMPORTANCE_LOW);
-        chan.setLightColor(Color.GREEN);
-        chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        assert notificationManager != null;
-        notificationManager.createNotificationChannel(chan);
-
-        return INFORMATION_CHANNEL_ID;
-    }
-
     private void displayNotificationHidingHelp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, createNotificationChannel());
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID_INFORMATION);
 
             notificationBuilder.setCategory(Notification.CATEGORY_MESSAGE);
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
@@ -110,7 +96,7 @@ public class MainSettingsActivity extends AppCompatActivity {
                     .bigText(getString(R.string.main_enable_service_information_notification_text)));
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(HIDING_NOTIFICATION_ID, notificationBuilder.build());
+            notificationManager.notify(NOTIFICATION_ID_HIDE_FOREGROUND_NOTIF, notificationBuilder.build());
         }
     }
 
@@ -251,10 +237,12 @@ public class MainSettingsActivity extends AppCompatActivity {
                                     }
                                 }
                                 dbHandler.close();
-                                if (displayTestNotif){
-                                    final int NOTIFICATION_ID = 1;
-                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity().getApplicationContext());
-                                    builder.setSmallIcon(R.drawable.ic_stat_tux);
+                                if (displayTestNotif) {
+                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                                            getActivity().getApplicationContext(),
+                                            CHANNEL_ID_INFORMATION
+                                    );
+                                    builder.setSmallIcon(R.mipmap.ic_launcher);
                                     builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher));
                                     builder.setContentTitle(getString(R.string.test_notif_title));
                                     builder.setContentText(getString(R.string.test_notif_message));
@@ -264,7 +252,7 @@ public class MainSettingsActivity extends AppCompatActivity {
                                             getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 
                                     for (int i = 0; i < 1; i++){
-                                        notificationManager.notify(NOTIFICATION_ID, builder.build());
+                                        notificationManager.notify(NOTIFICATION_ID_TEST_NOTIF, builder.build());
                                     }
                                 }
                             } else {
