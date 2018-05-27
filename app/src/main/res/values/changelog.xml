@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        &lt;b&gt;0.8.0 (May 26, 2018)&lt;/b&gt;&lt;br&gt;
+        - From Android 8.1 COARSE_LOCATION permission is needed to access WiFi SSID! Also it seems
+        that location services needs to be turned on as well, otherwise the SSID reported will
+        be \"unknown ssid\".&lt;br&gt;&lt;br&gt;
+        - Setting to run AN2Linux as a foreground service, thank you Eyenseo!&lt;br&gt;
+        From Android Oreo (8.0) some new limitations about background services have been added to help
+        with battery drain etc. Which means that AN2Linux might be killed by the system. So if you
+        run Android Oreo+ and have problems with AN2Linux missing notifications, then you could try
+        to run AN2Linux as a foreground service.&lt;br&gt;&lt;br&gt;
+        - Dutch translation by Vistaus, thank you!&lt;br&gt;&lt;br&gt;
+        - Spanish translation by CalebCDE, thank you!&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.7.0 (Jan 16, 2018)&lt;/b&gt;&lt;br&gt;
         - New icon created by conrad-heimbold@github, thank you!&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.6.0 (May 12, 2017)&lt;/b&gt;&lt;br&gt;
