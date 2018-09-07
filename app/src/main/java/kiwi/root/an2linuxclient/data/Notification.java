@@ -19,6 +19,7 @@ import android.service.notification.StatusBarNotification;
 
 public class Notification {
 
+    private String appName;
     private String title;
     private String message;
     private Bitmap icon;
@@ -34,6 +35,11 @@ public class Notification {
 
         PackageManager pm =  c.getPackageManager();
         String packageName = sbn.getPackageName();
+        try {
+            appName = (String) pm.getApplicationLabel(pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA));
+        } catch (PackageManager.NameNotFoundException e) {
+            appName = packageName;
+        }
 
         if (ns.includeTitle()){
             String contentTitle = "";
@@ -42,15 +48,7 @@ public class Notification {
                 contentTitle = temp.toString();
             }
 
-            String appName;
-            try {
-                appName = (String) pm.getApplicationLabel(pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA));
-            } catch (PackageManager.NameNotFoundException e) {
-                appName = packageName;
-            }
-
             title = "";
-
             if (ns.forceTitle()){
                 title = appName;
             } else {
@@ -117,6 +115,10 @@ public class Notification {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    public String getAppName() {
+        return this.appName;
     }
 
     public String getTitle() {

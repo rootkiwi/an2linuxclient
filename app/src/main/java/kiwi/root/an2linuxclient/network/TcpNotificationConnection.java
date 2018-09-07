@@ -75,6 +75,11 @@ class TcpNotificationConnection extends NotificationConnection {
 
             out.write(ns.getNotificationFlags());
 
+            String appName = n.getAppName();
+            byte[] appName_payload = (appName).getBytes();
+            out.write(ConnectionHelper.intToByteArray(appName_payload.length));
+            out.write(appName_payload);
+
             if (ns.includeTitle() || ns.includeMessage()){
                 String title = "";
                 if (ns.includeTitle()){
