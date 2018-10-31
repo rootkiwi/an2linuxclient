@@ -1,0 +1,15 @@
+<resources>
+    <string name="activity_label_notification_settings">Benachrichtigungseinstellungen</string>
+    <string name="activity_label_server_configuration">Server Konfiguration</string>
+    <string name="connection_type_bluetooth">Bluetooth</string>
+    <string name="button_save_text">Speichern</string>
+    <string name="button_delete_text">Löschen</string>
+    <string name="dialog_ip_or_hostname_hint">IP-Adresse oder Hostname eintragen</string>
+    <string name="bluetooth_no_paired_found">Keine verbundenen Bluetooth Computer gefunden</string>
+    <string name="bluetooth_not_supported">Bluetooth wird auf dem Gerät nicht unterstützt</string>
+    <string name="bluetooth_new_edit">Bearbeiten</string>
+    <string name="bluetooth_is_off">Bluetooth ist ausgeschaltet</string>
+    <string name="connection_closed">Verbindung geschlossen</string>
+    <string name="client_certificate_fingerprint">Zertifikatsfingerabdruck (SHA256):</string>
+    <string name="client_certificate_button_text">Generiere neuen Schlüssel und neues Zertifikat</string>
+</resources>
