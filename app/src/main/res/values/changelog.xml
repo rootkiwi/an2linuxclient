@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        &lt;b&gt;0.8.1 (Feb 26, 2019)&lt;/b&gt;&lt;br&gt;
+        - Fix build bug which is stopping F-Droid, now disable error on lint. Thank you edaubert!&lt;br&gt;&lt;br&gt;
+        - German translation by Luensche, thank you!&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.8.0 (May 26, 2018)&lt;/b&gt;&lt;br&gt;
         - From Android 8.1 COARSE_LOCATION permission is needed to access WiFi SSID! Also it seems
         that location services needs to be turned on as well, otherwise the SSID reported will
