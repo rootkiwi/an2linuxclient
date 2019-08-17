@@ -1,4 +1,5 @@
 # Created by https://www.gitignore.io/api/androidstudio
+# Edit at https://www.gitignore.io/?templates=androidstudio
 
 ### AndroidStudio ###
 # Covers files to be ignored for android development using Android Studio.
@@ -62,7 +63,9 @@ obj/
 /out/
 
 # User-specific configurations
+.idea/caches/
 .idea/libraries/
+.idea/shelf/
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/.name
@@ -80,9 +83,7 @@ obj/
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
-
-# Keystore files
-*.jks
+.idea/assetWizardSettings.xml
 
 # OS-specific files
 .DS_Store
@@ -96,12 +97,13 @@ Thumbs.db
 # Legacy Eclipse project files
 .classpath
 .project
+.cproject
+.settings/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -125,8 +127,19 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+### AndroidStudio Patch ###
+
+!/gradle/wrapper/gradle-wrapper.jar
+
 # End of https://www.gitignore.io/api/androidstudio
 
-projectFilesBackup/
+# Keystore files
+*.jks
+
+# Statistic plugin
 .idea/statistic.xml
-.idea/codeStyleSettings.xml
+
+.idea/gradle.xml
+
+
+
