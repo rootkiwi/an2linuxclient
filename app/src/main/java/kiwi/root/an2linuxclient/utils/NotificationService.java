@@ -9,11 +9,15 @@
 package kiwi.root.an2linuxclient.utils;
 
 import android.app.Notification;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.hardware.display.DisplayManager;
 import android.os.Build;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.view.Display;
 //import android.os.Bundle;
 //import android.util.Log;
 
@@ -42,18 +46,47 @@ public class NotificationService extends NotificationListenerService {
         } else {
             sp = getSharedPreferences(getString(R.string.notification_settings_global), MODE_PRIVATE);
         }
+
+        if (dontSendIfScreenIsOn(sp, packageName, usingCustomSettings)) {
+            boolean screenIsOn = false;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                DisplayManager dm = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
+                for (Display display : dm.getDisplays()) {
+                    if (display.getState() == Display.STATE_ON) {
+                        // private as in samsung always-on feature, not sure if this is how it works
+                        // https://stackoverflow.com/questions/2474367/how-can-i-tell-if-the-screen-is-on-in-android#comment71534994_17348755
+                        boolean displayIsPrivate = (display.getFlags() & Display.FLAG_PRIVATE) == Display.FLAG_PRIVATE;
+                        if (!displayIsPrivate) {
+                            screenIsOn = true;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+                if (powerManager.isScreenOn()){
+                    screenIsOn = true;
+                }
+            }
+
+            if (screenIsOn) {
+                return false;
+            }
+        }
+
         int flags = sbn.getNotification().flags;
-        if (blockOngoing(sp, packageName, usingCustomSettings) && isOngoing(flags)){
+        if (isOngoing(flags) && blockOngoing(sp, packageName, usingCustomSettings)){
             return false;
         }
-        if (blockForeground(sp, packageName, usingCustomSettings) && isForeground(flags)){
+        if (isForeground(flags) && blockForeground(sp, packageName, usingCustomSettings)){
             return false;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
-            if (blockGroupSummary(sp, packageName, usingCustomSettings) && isGroupSummary(flags)){
+            if (isGroupSummary(flags) && blockGroupSummary(sp, packageName, usingCustomSettings)){
                 return false;
             }
-            if (blockLocalOnly(sp, packageName, usingCustomSettings) && isLocalOnly(flags)){
+            if (isLocalOnly(flags) && blockLocalOnly(sp, packageName, usingCustomSettings)){
                 return false;
             }
         }
@@ -73,6 +106,11 @@ public class NotificationService extends NotificationListenerService {
     private boolean isUsingCustomSettings(String packageName) {
         SharedPreferences sharedPrefsCustom = getSharedPreferences(getString(R.string.notification_settings_custom), MODE_PRIVATE);
         return sharedPrefsCustom.getBoolean(packageName + "_" + getString(R.string.preference_use_custom_settings), false);
+    }
+
+    private boolean dontSendIfScreenIsOn(SharedPreferences sp, String packageName, boolean usingCustomSettings) {
+        return sp.getBoolean(getCorrectPrefKey(
+                getString(R.string.preference_dont_send_if_screen_on), packageName, usingCustomSettings), false);
     }
 
     private boolean blockOngoing(SharedPreferences sp, String packageName, boolean usingCustomSettings) {

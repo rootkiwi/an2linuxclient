@@ -174,6 +174,15 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
             screen.addPreference(minNotificationPriority);
             minNotificationPriority.setDependency(prefKeyUseCustomSettings);
 
+            CheckBoxPreference dontSendIfScreenOn = new CheckBoxPreference(getPreferenceScreen().getContext());
+            String prefKeyDontSendIfScreenOn = getString(R.string.preference_dont_send_if_screen_on);
+            dontSendIfScreenOn.setDefaultValue(prefsGeneral.getBoolean(prefKeyDontSendIfScreenOn, false));
+            dontSendIfScreenOn.setKey(packageNameUnderscore + prefKeyDontSendIfScreenOn);
+            dontSendIfScreenOn.setTitle(getString(R.string.main_dont_send_if_screen_on));
+            dontSendIfScreenOn.setSummary(getString(R.string.main_dont_send_if_screen_on_summary));
+            screen.addPreference(dontSendIfScreenOn);
+            dontSendIfScreenOn.setDependency(prefKeyUseCustomSettings);
+
             CheckBoxPreference blockOngoing = new CheckBoxPreference(getPreferenceScreen().getContext());
             String prefKeyBlockOngoing = getString(R.string.preference_block_ongoing);
             blockOngoing.setDefaultValue(prefsGeneral.getBoolean(prefKeyBlockOngoing, false));

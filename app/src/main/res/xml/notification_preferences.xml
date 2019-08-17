@@ -58,6 +58,12 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="@string/preference_dont_send_if_screen_on"
+            android:summary="@string/main_dont_send_if_screen_on_summary"
+            android:title="@string/main_dont_send_if_screen_on" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="@string/preference_block_ongoing"
             android:summary="@string/main_block_ongoing_summary"
             android:title="@string/main_block_ongoing" />

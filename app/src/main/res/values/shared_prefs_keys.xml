@@ -17,6 +17,7 @@
     <string name="preference_message_max_size">preference_message_max_size</string>
     <string name="preference_include_notification_icon">preference_include_notification_icon</string>
     <string name="preference_icon_size">preference_icon_size</string>
+    <string name="preference_dont_send_if_screen_on">preference_dont_send_if_screen_on</string>
     <string name="preference_block_ongoing">preference_block_ongoing</string>
     <string name="preference_block_foreground">preference_block_foreground</string>
     <string name="preference_block_group">preference_block_group</string>

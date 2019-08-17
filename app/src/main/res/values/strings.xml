@@ -32,6 +32,8 @@
     <string name="main_max_title_dialog_message">Select max title size:</string>
     <string name="main_max_message">Maximum chars to include from message</string>
     <string name="main_max_message_dialog_message">Select max message size:</string>
+    <string name="main_dont_send_if_screen_on">Don\'t send if phone screen is on</string>
+    <string name="main_dont_send_if_screen_on_summary">Don\'t send notifications if phone screen is on</string>
     <string name="main_block_ongoing">Block ongoing event notifications</string>
     <string name="main_block_ongoing_summary">For example an incoming or active phone call</string>
     <string name="main_block_foreground">Block running service notifications</string>
