@@ -47,7 +47,8 @@ public class NotificationService extends NotificationListenerService {
             sp = getSharedPreferences(getString(R.string.notification_settings_global), MODE_PRIVATE);
         }
 
-        if (dontSendIfScreenIsOn(sp, packageName, usingCustomSettings)) {
+        boolean isAn2linuxTestNotification = packageName.startsWith("kiwi.root.an2linuxclient");
+        if (dontSendIfScreenIsOn(sp, packageName, usingCustomSettings) && !isAn2linuxTestNotification) {
             boolean screenIsOn = false;
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
