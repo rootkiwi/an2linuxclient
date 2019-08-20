@@ -57,6 +57,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
             edit.remove(packageNameUnderscore + getString(R.string.preference_include_notification_icon));
             edit.remove(packageNameUnderscore + getString(R.string.preference_icon_size));
             edit.remove(packageNameUnderscore + getString(R.string.preference_min_notification_priority));
+            edit.remove(packageNameUnderscore + getString(R.string.preference_dont_send_if_screen_on));
             edit.remove(packageNameUnderscore + getString(R.string.preference_block_ongoing));
             edit.remove(packageNameUnderscore + getString(R.string.preference_block_foreground));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
@@ -218,6 +219,18 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
                 blockLocal.setSummary(getString(R.string.main_block_local_summary));
                 screen.addPreference(blockLocal);
                 blockLocal.setDependency(prefKeyUseCustomSettings);
+            }
+
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                forceTitle.setSummary(getString(R.string.pref_force_appname_info_extraction_unsupported));
+                forceTitle.setDefaultValue(true);
+                forceTitle.setChecked(true);
+                forceTitle.setEnabled(false);
+
+                includeMessage.setSummary(getString(R.string.pref_message_info_extraction_unsupported_version));
+                includeMessage.setDefaultValue(false);
+                includeMessage.setChecked(false);
+                includeMessage.setEnabled(false);
             }
 
             setIconAndSummaries(packageNameUnderscore);

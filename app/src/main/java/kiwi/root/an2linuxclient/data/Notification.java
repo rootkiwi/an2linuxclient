@@ -14,8 +14,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
+import android.support.annotation.RequiresApi;
+
+import kiwi.root.an2linuxclient.R;
 
 public class Notification {
 
@@ -30,68 +34,28 @@ public class Notification {
     }
 
     private void extractStatusBarNotification(StatusBarNotification sbn, Context c){
-        Bundle extras = sbn.getNotification().extras;
-
         PackageManager pm =  c.getPackageManager();
-        String packageName = sbn.getPackageName();
 
-        if (ns.includeTitle()){
-            String contentTitle = "";
-            CharSequence temp = extras.getCharSequence(android.app.Notification.EXTRA_TITLE);
-            if (temp != null){
-                contentTitle = temp.toString();
-            }
-
-            String appName;
-            try {
-                appName = (String) pm.getApplicationLabel(pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA));
-            } catch (PackageManager.NameNotFoundException e) {
-                appName = packageName;
-            }
-
-            title = "";
-
-            if (ns.forceTitle()){
-                title = appName;
+        if (ns.includeTitle()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                extractTitle(sbn, pm);
             } else {
-                if (!contentTitle.equals("")){
-                    title = contentTitle;
-                } else {
-                    title = appName;
-                }
-            }
-
-            title = title.trim();
-            if (title.length() > ns.getTitleMax()){
-                title = title.substring(0, ns.getTitleMax()) + "…";
+                // Android 4.3 and below (SDK 18) does not support simple extraction of notification
+                // data. It still might be possible with reflection...
+                title = getAppName(pm, sbn.getPackageName());
             }
         }
 
-        if (ns.includeMessage()){
-            String contentText = "";
-            String subText = "";
-            CharSequence temp = extras.getCharSequence(android.app.Notification.EXTRA_TEXT);
-            if (temp != null){
-                contentText = temp.toString();
-            }
-            temp = extras.getCharSequence(android.app.Notification.EXTRA_SUB_TEXT);
-            if (temp != null){
-                subText = temp.toString();
-            }
-
-            message = "";
-            if (!contentText.equals("")) message += contentText;
-            if (!subText.equals("")) message += "\n" + subText;
-            message = message.replace("\n\n", "\n").trim();
-            if (message.length() > ns.getMessageMax()){
-                message = message.substring(0, ns.getMessageMax()) + "…";
+        if (ns.includeMessage()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                extractMessage(sbn);
             }
         }
 
-        if (ns.includeIcon()){
+        if (ns.includeIcon()) {
             try {
                 int iconSize = ns.getIconSize();
-                icon = Bitmap.createScaledBitmap(drawableToBitmap(pm.getApplicationIcon(packageName)), iconSize, iconSize, true);
+                icon = Bitmap.createScaledBitmap(drawableToBitmap(pm.getApplicationIcon(sbn.getPackageName())), iconSize, iconSize, true);
             } catch (PackageManager.NameNotFoundException e){
                 ns.removeIconFlag();
             }
@@ -117,6 +81,73 @@ public class Notification {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    /**
+     * @return The app name if successful, otherwise packagename
+     */
+    private String getAppName(PackageManager pm, String packageName) {
+        String appName;
+        try {
+            appName = (String) pm.getApplicationLabel(pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA));
+        } catch (PackageManager.NameNotFoundException e) {
+            appName = packageName;
+        }
+        return appName;
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private void extractTitle(StatusBarNotification sbn, PackageManager pm) {
+        Bundle extras = sbn.getNotification().extras;
+
+        String contentTitle = "";
+        CharSequence temp = extras.getCharSequence(android.app.Notification.EXTRA_TITLE);
+        if (temp != null){
+            contentTitle = temp.toString();
+        }
+
+        String appName = getAppName(pm, sbn.getPackageName());
+
+        title = "";
+
+        if (ns.forceTitle()){
+            title = appName;
+        } else {
+            if (!contentTitle.equals("")){
+                title = contentTitle;
+            } else {
+                title = appName;
+            }
+        }
+
+        title = title.trim();
+        if (title.length() > ns.getTitleMax()){
+            title = title.substring(0, ns.getTitleMax()) + "…";
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private void extractMessage(StatusBarNotification sbn) {
+        Bundle extras = sbn.getNotification().extras;
+
+        String contentText = "";
+        String subText = "";
+        CharSequence temp = extras.getCharSequence(android.app.Notification.EXTRA_TEXT);
+        if (temp != null){
+            contentText = temp.toString();
+        }
+        temp = extras.getCharSequence(android.app.Notification.EXTRA_SUB_TEXT);
+        if (temp != null){
+            subText = temp.toString();
+        }
+
+        message = "";
+        if (!contentText.equals("")) message += contentText;
+        if (!subText.equals("")) message += "\n" + subText;
+        message = message.replace("\n\n", "\n").trim();
+        if (message.length() > ns.getMessageMax()){
+            message = message.substring(0, ns.getMessageMax()) + "…";
+        }
     }
 
     public String getTitle() {

@@ -67,7 +67,7 @@ public class NotificationSettingsActivity extends AppCompatActivity {
                             R.string.main_icon_size_summary,
                             sp.getInt(prefKeyIconSize, IconSizePreference.DEFAULT_VALUE)));
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
                 PreferenceGroup g = (PreferenceGroup) findPreference(getString(R.string.notification_settings_global_category));
                 CheckBoxPreference c = new CheckBoxPreference(getPreferenceScreen().getContext());
                 c.setDefaultValue(false);
@@ -81,6 +81,20 @@ public class NotificationSettingsActivity extends AppCompatActivity {
                 c.setTitle(getString(R.string.main_block_local));
                 c.setSummary(getString(R.string.main_block_local_summary));
                 g.addPreference(c);
+            }
+
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                CheckBoxPreference forceTitleAppNamePref = (CheckBoxPreference) findPreference(getString(R.string.preference_force_title));
+                forceTitleAppNamePref.setSummary(getString(R.string.pref_force_appname_info_extraction_unsupported));
+                forceTitleAppNamePref.setDefaultValue(true);
+                forceTitleAppNamePref.setChecked(true);
+                forceTitleAppNamePref.setEnabled(false);
+
+                CheckBoxPreference includeMessagePref = (CheckBoxPreference) findPreference(getString(R.string.preference_include_notification_message));
+                includeMessagePref.setSummary(getString(R.string.pref_message_info_extraction_unsupported_version));
+                includeMessagePref.setDefaultValue(false);
+                includeMessagePref.setChecked(false);
+                includeMessagePref.setEnabled(false);
             }
         }
 

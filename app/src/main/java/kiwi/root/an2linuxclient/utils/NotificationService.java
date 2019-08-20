@@ -17,6 +17,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.support.annotation.RequiresApi;
 import android.view.Display;
 //import android.os.Bundle;
 //import android.util.Log;
@@ -153,10 +154,12 @@ public class NotificationService extends NotificationListenerService {
         return (flags & Notification.FLAG_FOREGROUND_SERVICE) != 0;
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
     private boolean isGroupSummary(int flags) {
         return (flags & Notification.FLAG_GROUP_SUMMARY) != 0;
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
     private boolean isLocalOnly(int flags) {
         return (flags & Notification.FLAG_LOCAL_ONLY) != 0;
     }

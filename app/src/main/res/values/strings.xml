@@ -130,4 +130,6 @@
     <string name="notif_settings_min_notification_priority_title">Minimum notification priority</string>
     <string name="main_changelog">Changelog</string>
     <string name="utils_an2linux_service">AN2Linux foreground service</string>
+    <string name="pref_message_info_extraction_unsupported_version">Title/message extraction requires Android 4.4+</string>
+    <string name="pref_force_appname_info_extraction_unsupported">Title/message extraction requires Android 4.4+. So if title is included, it will always be forced to app name.</string>
 </resources>
