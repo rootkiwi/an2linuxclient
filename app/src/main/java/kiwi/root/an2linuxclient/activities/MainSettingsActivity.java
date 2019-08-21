@@ -22,6 +22,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -112,7 +113,7 @@ public class MainSettingsActivity extends AppCompatActivity {
         }
     }
 
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -380,6 +381,47 @@ public class MainSettingsActivity extends AppCompatActivity {
                 return builder.create();
             }
         }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            /*
+            This is required if the user left the app but it's still running and the user uses the
+            tile to change the setting and then reopens the app. Without this the checked state will
+            be wrong. Without this it's required to unregister the listener below in onDestroy
+            instead of onPause.
+             */
+            updateAn2linuxEnabled(PreferenceManager.getDefaultSharedPreferences(getActivity()));
+
+            /*
+            The listener: Preference.OnPreferenceChangeListener in onCreate does not notify updates
+            from the quicksettings tile. For that this listener is required, if this is not used
+            the state in the app will not be updated if the user changes the tile while the app
+            is still running. It will only be updated after onDestroy / onCreate cycle.
+             */
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
+            String prefEnableAn2linuxKey = getString(R.string.preference_enable_an2linux);
+            if (key.equals(prefEnableAn2linuxKey)) {
+                updateAn2linuxEnabled(sp);
+            }
+        }
+
+        private void updateAn2linuxEnabled(SharedPreferences sp) {
+            String prefEnableAn2linuxKey = getString(R.string.preference_enable_an2linux);
+            boolean currentSetting = sp.getBoolean(prefEnableAn2linuxKey, false);
+            ((CheckBoxPreference) findPreference(prefEnableAn2linuxKey)).setChecked(currentSetting);
+        }
+
     }
 
 }
