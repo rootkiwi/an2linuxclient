@@ -36,6 +36,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import kiwi.root.an2linuxclient.BuildConfig;
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.crypto.KeyGeneratorService;
 import kiwi.root.an2linuxclient.data.MobileServer;
@@ -284,11 +286,8 @@ public class MainSettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
-
-            try {
-                PackageInfo packageInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
-                findPreference(getString(R.string.main_changelog_key)).setSummary(String.format("%s (%d)", packageInfo.versionName, packageInfo.versionCode));
-            } catch (PackageManager.NameNotFoundException e){}
+            findPreference(getString(R.string.main_changelog_key))
+                    .setSummary(String.format("%s (%d)", BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
         }
 
         private void showChangeLogIfNotSeen(){
