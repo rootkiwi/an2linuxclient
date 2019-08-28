@@ -25,8 +25,15 @@ android {
     }
 }
 
+ext {
+    // https://developer.android.com/jetpack/androidx/versions/
+
+    appcompatVersion = '1.0.2'
+    materialVersion = '1.0.0'
+}
+
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.madgag.spongycastle:pkix:1.54.0.0' // for X.509 certificate generation
+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "com.madgag.spongycastle:pkix:1.54.0.0" // for X.509 certificate generation
 }

@@ -17,9 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
-import android.support.annotation.RequiresApi;
-
-import kiwi.root.an2linuxclient.R;
+import androidx.annotation.RequiresApi;
 
 public class Notification {
 

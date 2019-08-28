@@ -10,7 +10,7 @@ package kiwi.root.an2linuxclient.activities;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import kiwi.root.an2linuxclient.fragments.ClientCertificateFragment;
 

@@ -12,7 +12,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -17,7 +17,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.view.Display;
 //import android.os.Bundle;
 //import android.util.Log;
