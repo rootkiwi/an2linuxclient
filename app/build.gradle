@@ -28,12 +28,24 @@ android {
 ext {
     // https://developer.android.com/jetpack/androidx/versions/
 
-    appcompatVersion = '1.0.2'
     materialVersion = '1.0.0'
+    appcompatVersion = "1.0.2"
+    annotationVersion = "1.1.0"
+    preferenceVersion = "1.1.0-rc01"
+    lifecycleVersion = "2.0.0"
 }
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "androidx.annotation:annotation:$annotationVersion"
+    implementation "androidx.preference:preference:$preferenceVersion"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
+
+    // For Floating Action Button
     implementation "com.google.android.material:material:$materialVersion"
+
     implementation "com.madgag.spongycastle:pkix:1.54.0.0" // for X.509 certificate generation
 }

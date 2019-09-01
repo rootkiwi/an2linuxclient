@@ -20,7 +20,7 @@
         <item name="android:fontFamily">monospace</item>
     </style>
 
-    <style name="PreferenceFragmentTheme">
+    <style name="PreferenceFragmentTheme" parent="AppTheme">
         <item name="android:textColorPrimary">@color/pref_two_state_color_text</item>
         <item name="android:textColorSecondary">@color/pref_two_state_color_text_secondary</item>
     </style>
@@ -94,6 +94,14 @@
         <item name="android:paddingRight">12dp</item>
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_marginBottom">20dp</item>
+    </style>
+
+    <style name="EnabledApplicationsFilterEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@color/gray_little_dark</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>

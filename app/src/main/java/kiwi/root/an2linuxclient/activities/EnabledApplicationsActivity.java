@@ -8,98 +8,41 @@
 
 package kiwi.root.an2linuxclient.activities;
 
-import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import kiwi.root.an2linuxclient.R;
-import kiwi.root.an2linuxclient.fragments.EnabledApplicationsPreferenceFragment;
+import kiwi.root.an2linuxclient.viewmodels.EnabledApplicationsViewModel;
+import kiwi.root.an2linuxclient.views.CustomProgressDialog;
 
-public class EnabledApplicationsActivity extends AppCompatActivity implements EnabledApplicationsPreferenceFragment.TaskCallbacks {
+public class EnabledApplicationsActivity extends AppCompatActivity {
 
-    final String STATE_IS_TASK_DONE = "applicationListTaskIsDone";
-    private boolean applicationListTaskIsDone;
     private CustomProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final String TAG = "EnabledApplicationsPreferenceFragment";
-        FragmentManager fm = getFragmentManager();
-        EnabledApplicationsPreferenceFragment fragment = (EnabledApplicationsPreferenceFragment) fm.findFragmentByTag(TAG);
-        if (fragment == null) {
-            fragment = new EnabledApplicationsPreferenceFragment();
-            fm.beginTransaction().replace(android.R.id.content, fragment, TAG).commit();
-        }
-    }
+        setContentView(R.layout.activity_enabled_applications);
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean(STATE_IS_TASK_DONE, applicationListTaskIsDone);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        applicationListTaskIsDone = savedInstanceState.getBoolean(STATE_IS_TASK_DONE);
-        if (!applicationListTaskIsDone){
-            displayProgressDialog();
-        }
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        if (progressDialog != null){
-            progressDialog.dismiss();
-        }
-    }
-
-    private void displayProgressDialog(){
-        progressDialog = new CustomProgressDialog();
-        progressDialog.setCancelable(false);
-        progressDialog.show(getFragmentManager(), "test_dialog");
-    }
-
-    @Override
-    public void onPreExecute(){
-        displayProgressDialog();
-    }
-
-    @Override
-    public void onPostExecute(){
-        if (progressDialog != null){
-            progressDialog.dismiss();
-        }
-        applicationListTaskIsDone = true;
-    }
-
-    public static class CustomProgressDialog extends DialogFragment {
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setStyle(DialogFragment.STYLE_NO_TITLE, R.style.ProgressDialogStyle);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.view_progressbar, container);
-            getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-            ((ProgressBar) view.findViewById(R.id.progressBar))
-                    .getIndeterminateDrawable()
-                    .setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
-            return view;
-        }
-
+        EnabledApplicationsViewModel viewModel = ViewModelProviders.of(this).get(EnabledApplicationsViewModel.class);
+        viewModel.getOperationRunning().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean operationIsRunning) {
+                if (operationIsRunning) {
+                    progressDialog = new CustomProgressDialog();
+                    progressDialog.setCancelable(false);
+                    progressDialog.show(getSupportFragmentManager(), "progressDialog");
+                } else {
+                    if (progressDialog != null) {
+                        progressDialog.dismiss();
+                    }
+                }
+            }
+        });
     }
 
 }
