@@ -37,7 +37,8 @@ public class ServerConfigurationActivity extends AppCompatActivity implements Se
     FragmentManager manager;
     private final static int REQUEST_ENABLE_BT = 1;
 
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ENABLE_BT){
             if (resultCode == RESULT_OK) {
                 BluetoothPairedListDialog myDialog = new BluetoothPairedListDialog();
