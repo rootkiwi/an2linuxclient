@@ -29,8 +29,6 @@ import kiwi.root.an2linuxclient.viewmodels.EnabledApplicationsViewModel;
 
 public class EnabledApplicationsPreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private EnabledApplicationsViewModel viewModel;
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         getPreferenceManager().setSharedPreferencesName(getString(R.string.enabled_applications));
@@ -40,7 +38,7 @@ public class EnabledApplicationsPreferenceFragment extends PreferenceFragmentCom
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(getActivity()).get(EnabledApplicationsViewModel.class);
+        EnabledApplicationsViewModel viewModel = ViewModelProviders.of(getActivity()).get(EnabledApplicationsViewModel.class);
         viewModel.getFilteredCheckBoxPrefsData().observe(getViewLifecycleOwner(), new Observer<List<CheckBoxPreferenceData>>() {
             @Override
             public void onChanged(List<CheckBoxPreferenceData> checkBoxPreferencesData) {
