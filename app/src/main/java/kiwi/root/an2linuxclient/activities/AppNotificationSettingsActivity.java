@@ -11,14 +11,19 @@ package kiwi.root.an2linuxclient.activities;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceScreen;
+import androidx.preference.SwitchPreferenceCompat;
 
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.preferences.IconSizePreference;
@@ -36,7 +41,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
         appName = getIntent().getStringExtra("appName");
         packageName = getIntent().getStringExtra("packageName");
         setTitle(appName);
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
     }
@@ -49,6 +54,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
         boolean usingCustomSettings = sp.getBoolean(packageNameUnderscore + getString(R.string.preference_use_custom_settings), false);
         if (!usingCustomSettings){ // clear settings if not using them
             SharedPreferences.Editor edit = sp.edit();
+            edit.remove(packageNameUnderscore + getString(R.string.preference_use_custom_settings));
             edit.remove(packageNameUnderscore + getString(R.string.preference_include_notification_title));
             edit.remove(packageNameUnderscore + getString(R.string.preference_force_title));
             edit.remove(packageNameUnderscore + getString(R.string.preference_title_max_size));
@@ -68,7 +74,16 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
         }
     }
 
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragmentCompat {
+
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            getPreferenceManager().setSharedPreferencesName(getString(R.string.notification_settings_custom));
+            initScreenAndPreferences();
+        }
+
+        @Override
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,19 +92,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
             return view;
         }
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            getPreferenceManager().setSharedPreferencesName(getString(R.string.notification_settings_custom));
-        }
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            initScreenAndPreferences();
-        }
-
-        private void initScreenAndPreferences(){
+        private void initScreenAndPreferences() {
             PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(getActivity());
             setPreferenceScreen(screen);
             SharedPreferences prefsGeneral = getActivity().getSharedPreferences(getString(R.string.notification_settings_global), MODE_PRIVATE);

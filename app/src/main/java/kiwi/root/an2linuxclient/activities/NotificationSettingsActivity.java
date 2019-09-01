@@ -11,14 +11,18 @@ package kiwi.root.an2linuxclient.activities;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceGroup;
-import android.preference.PreferenceManager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceGroup;
+import androidx.preference.PreferenceManager;
 
 import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.preferences.IconSizePreference;
@@ -31,23 +35,15 @@ public class NotificationSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PreferenceManager.setDefaultValues(this, R.xml.notification_preferences, false);
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
     }
 
-    public static class SettingsFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragmentCompat {
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View view = super.onCreateView(inflater, container, savedInstanceState);
-            view.setBackgroundColor(getResources().getColor(R.color.gray_dark));
-            return view;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             getPreferenceManager().setSharedPreferencesName(getString(R.string.notification_settings_global));
             addPreferencesFromResource(R.xml.notification_preferences);
 
@@ -83,13 +79,13 @@ public class NotificationSettingsActivity extends AppCompatActivity {
             }
 
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                CheckBoxPreference forceTitleAppNamePref = (CheckBoxPreference) findPreference(getString(R.string.preference_force_title));
+                CheckBoxPreference forceTitleAppNamePref = findPreference(getString(R.string.preference_force_title));
                 forceTitleAppNamePref.setSummary(getString(R.string.pref_force_appname_info_extraction_unsupported));
                 forceTitleAppNamePref.setDefaultValue(true);
                 forceTitleAppNamePref.setChecked(true);
                 forceTitleAppNamePref.setEnabled(false);
 
-                CheckBoxPreference includeMessagePref = (CheckBoxPreference) findPreference(getString(R.string.preference_include_notification_message));
+                CheckBoxPreference includeMessagePref = findPreference(getString(R.string.preference_include_notification_message));
                 includeMessagePref.setSummary(getString(R.string.pref_message_info_extraction_unsupported_version));
                 includeMessagePref.setDefaultValue(false);
                 includeMessagePref.setChecked(false);
@@ -97,6 +93,12 @@ public class NotificationSettingsActivity extends AppCompatActivity {
             }
         }
 
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = super.onCreateView(inflater, container, savedInstanceState);
+            view.setBackgroundColor(getResources().getColor(R.color.gray_dark));
+            return view;
+        }
     }
 
 }
