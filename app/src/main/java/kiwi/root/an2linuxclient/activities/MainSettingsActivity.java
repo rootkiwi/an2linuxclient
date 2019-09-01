@@ -417,7 +417,7 @@ public class MainSettingsActivity extends AppCompatActivity {
         private void updateAn2linuxEnabled(SharedPreferences sp) {
             String prefEnableAn2linuxKey = getString(R.string.preference_enable_an2linux);
             boolean currentSetting = sp.getBoolean(prefEnableAn2linuxKey, false);
-            ((CheckBoxPreference) findPreference(prefEnableAn2linuxKey)).setChecked(currentSetting);
+            ((SwitchPreferenceCompat) findPreference(prefEnableAn2linuxKey)).setChecked(currentSetting);
         }
 
     }

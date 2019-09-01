@@ -96,8 +96,7 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
             String packageNameUnderscore = packageName + "_";
             String prefKeyUseCustomSettings = packageNameUnderscore + getString(R.string.preference_use_custom_settings);
 
-            CheckBoxPreference useCustomSettings = new CheckBoxPreference(getPreferenceScreen().getContext());
-            useCustomSettings.setWidgetLayoutResource(R.layout.appcompat_switch_layout);
+            SwitchPreferenceCompat useCustomSettings = new SwitchPreferenceCompat(getPreferenceScreen().getContext());
             useCustomSettings.setDefaultValue(false);
             useCustomSettings.setKey(prefKeyUseCustomSettings);
             useCustomSettings.setTitle(R.string.notif_custom_use_custom_title);

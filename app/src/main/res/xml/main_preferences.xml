@@ -3,18 +3,16 @@
 
     <PreferenceCategory android:title="@string/main_setup_category_title">
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/preference_enable_an2linux"
-            android:title="@string/main_enable_an2linux"
-            android:widgetLayout="@layout/appcompat_switch_layout" />
+            android:title="@string/main_enable_an2linux" />
 
-        <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:dependency="@string/preference_enable_an2linux"
-                    android:key="@string/preference_enable_service"
-                    android:title="@string/main_enable_service"
-                    android:widgetLayout="@layout/appcompat_switch_layout" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:dependency="@string/preference_enable_an2linux"
+            android:key="@string/preference_enable_service"
+            android:title="@string/main_enable_service" />
 
         <Preference
             android:summary="@string/main_enabled_apps_summary"
@@ -50,8 +48,7 @@
                 android:targetPackage="@string/packagename" />
         </Preference>
 
-        <Preference
-            android:title="@string/activity_label_notification_settings">
+        <Preference android:title="@string/activity_label_notification_settings">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetClass="kiwi.root.an2linuxclient.activities.NotificationSettingsActivity"
