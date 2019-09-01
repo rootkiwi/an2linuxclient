@@ -6,18 +6,18 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_dialog_message"
+        android:id="@android:id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="monospace"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
     <kiwi.root.an2linuxclient.preferences.ThemedNumberPicker
-        android:id="@+id/number_picker"
+        android:id="@+id/numberPicker"
         style="@style/NumberPickerStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

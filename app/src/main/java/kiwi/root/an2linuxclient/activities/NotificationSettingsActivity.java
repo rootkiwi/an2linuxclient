@@ -28,6 +28,8 @@ import kiwi.root.an2linuxclient.R;
 import kiwi.root.an2linuxclient.preferences.IconSizePreference;
 import kiwi.root.an2linuxclient.preferences.MaxMessageSizePreference;
 import kiwi.root.an2linuxclient.preferences.MaxTitleSizePreference;
+import kiwi.root.an2linuxclient.preferences.NumberPickerPreference;
+import kiwi.root.an2linuxclient.preferences.NumberPickerPreferenceDialog;
 
 public class NotificationSettingsActivity extends AppCompatActivity {
 
@@ -59,8 +61,8 @@ public class NotificationSettingsActivity extends AppCompatActivity {
 
             String prefKeyIconSize = getString(R.string.preference_icon_size);
             findPreference(prefKeyIconSize).setSummary(getString(
-                            R.string.main_icon_size_summary,
-                            sp.getInt(prefKeyIconSize, IconSizePreference.DEFAULT_VALUE)));
+                    R.string.main_icon_size_summary,
+                    sp.getInt(prefKeyIconSize, IconSizePreference.DEFAULT_VALUE)));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
                 PreferenceGroup g = (PreferenceGroup) findPreference(getString(R.string.notification_settings_global_category));
@@ -99,6 +101,24 @@ public class NotificationSettingsActivity extends AppCompatActivity {
             view.setBackgroundColor(getResources().getColor(R.color.gray_dark));
             return view;
         }
+
+        @Override
+        public void onDisplayPreferenceDialog(Preference preference) {
+            String TAG = "NumberPickerPreference";
+            FragmentManager fm = getFragmentManager();
+            if (fm.findFragmentByTag(TAG) != null) {
+                return;
+            }
+
+            if (preference instanceof NumberPickerPreference) {
+                final DialogFragment f = NumberPickerPreferenceDialog.newInstance(preference.getKey());
+                f.setTargetFragment(this, 0);
+                f.show(fm, TAG);
+            } else {
+                super.onDisplayPreferenceDialog(preference);
+            }
+        }
+
     }
 
 }

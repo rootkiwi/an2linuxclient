@@ -25,7 +25,7 @@ public class IconSizePreference extends NumberPickerPreference {
 
     @Override
     String getSummaryString(){
-        return getContext().getString(R.string.main_icon_size_summary, mValue);
+        return getContext().getString(R.string.main_icon_size_summary, value);
     }
 
 }

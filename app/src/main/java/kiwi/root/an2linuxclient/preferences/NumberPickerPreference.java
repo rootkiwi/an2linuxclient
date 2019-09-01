@@ -9,24 +9,17 @@
 package kiwi.root.an2linuxclient.preferences;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.NumberPicker;
-import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.preference.DialogPreference;
 
 import kiwi.root.an2linuxclient.R;
 
-abstract class NumberPickerPreference extends DialogPreference {
+abstract public class NumberPickerPreference extends DialogPreference {
 
-    private NumberPicker mNumberPicker;
-    int mValue;
+    int value;
     private int minValue;
     private int maxValue;
     private int defaultValue;
@@ -44,58 +37,36 @@ abstract class NumberPickerPreference extends DialogPreference {
         setDialogTitle(null);
     }
 
-    @Override
-    protected void showDialog(Bundle state) {
-        super.showDialog(state);
-        final Resources res = getContext().getResources();
-        final Window window = getDialog().getWindow();
-        Button button1 = (Button) window.findViewById(res.getIdentifier("button1", "id", "android"));
-        Button button2 = (Button) window.findViewById(res.getIdentifier("button2", "id", "android"));
-        button1.setTextColor(res.getColor(R.color.black));
-        button2.setTextColor(res.getColor(R.color.black));
-    }
-
-    @Override
-    protected void onBindDialogView(View view) {
-        super.onBindDialogView(view);
-        TextView dialogMessageText = (TextView) view.findViewById(R.id.text_dialog_message);
-        dialogMessageText.setText(getDialogMessage());
-        mNumberPicker = (NumberPicker) view.findViewById(R.id.number_picker);
-        mNumberPicker.setMinValue(minValue);
-        mNumberPicker.setMaxValue(maxValue);
-        mNumberPicker.setValue(mValue);
-        mNumberPicker.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-    }
-
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        // When the user selects "OK", persist the new value
-        if (positiveResult) {
-            mValue = mNumberPicker.getValue();
-            findPreferenceInHierarchy(getKey()).setSummary(getSummaryString());
-            persistInt(mValue);
-        }
-    }
-
     String getSummaryString(){
-        return String.valueOf(mValue);
+        return String.valueOf(value);
     }
 
     @Override
-    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        if (restorePersistedValue) {
-            // Restore existing state
-            mValue = getPersistedInt(this.defaultValue);
-        } else {
-            // Set default state from the XML attribute
-            mValue = (Integer) defaultValue;
-            persistInt(mValue);
-        }
+    protected void onSetInitialValue(@Nullable Object defaultValue) {
+        value = getPersistedInt(defaultValue == null ? this.defaultValue : (int) defaultValue);
     }
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getInteger(index, defaultValue);
+        return a.getInt(index, defaultValue);
+    }
+
+    int getValue() {
+        return value;
+    }
+
+    int getMinValue() {
+        return minValue;
+    }
+
+    int getMaxValue() {
+        return maxValue;
+    }
+
+    void saveValue(int value) {
+        this.value = value;
+        findPreferenceInHierarchy(getKey()).setSummary(getSummaryString());
+        persistInt(value);
     }
 
 }
