@@ -73,7 +73,7 @@ public abstract class Server implements Comparable<Server> {
 
     @Override
     public int compareTo(Server server) {
-        return Long.compare(this.id, server.getId());
+        return Long.valueOf(this.id).compareTo(server.getId());
     }
 
 }
