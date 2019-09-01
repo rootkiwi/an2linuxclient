@@ -7,8 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Needed since 8.1 to obtain the SSID -->
+    <!-- Needed since Android 8.1 / API 27 to obtain the SSID -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Needed since Android 9.0 / API 28 to Service.startForeground -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".App"
@@ -16,44 +18,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
-        <service
-            android:name=".utils.NotificationService"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".crypto.KeyGeneratorService"
-            android:exported="false" />
-
-        <service
-            android:name=".utils.AN2LinuxTileService"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE"/>
-            </intent-filter>
-        </service>
-
-        <activity android:name=".activities.MainSettingsActivity">
+        <activity
+            android:name=".activities.MainSettingsActivity"
             android:theme="@style/PreferenceFragmentTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.EnabledApplicationsActivity"
             android:label="@string/activity_label_enabled_applications"
@@ -78,22 +54,40 @@
             android:name=".activities.ServerConfigurationActivity"
             android:label="@string/activity_label_server_configuration"
             android:parentActivityName=".activities.MainSettingsActivity" />
-
         <activity
             android:name=".activities.ClientCertificateActivity"
             android:label="@string/activity_label_client_certificate"
             android:parentActivityName=".activities.MainSettingsActivity" />
 
-        <service
-            android:name=".utils.AN2LinuxService"
-            android:label="@string/utils_an2linux_service"/>
-
-        <receiver android:name="kiwi.root.an2linuxclient.utils.BootReceiver">
+        <receiver android:name=".utils.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
+        <service
+            android:name=".utils.NotificationService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".crypto.KeyGeneratorService"
+            android:exported="false" />
+        <service
+            android:name=".utils.AN2LinuxTileService"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".utils.AN2LinuxService"
+            android:label="@string/utils_an2linux_service" />
     </application>
 
 </manifest>
