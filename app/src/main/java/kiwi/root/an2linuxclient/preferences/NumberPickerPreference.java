@@ -44,6 +44,7 @@ abstract public class NumberPickerPreference extends DialogPreference {
     @Override
     protected void onSetInitialValue(@Nullable Object defaultValue) {
         value = getPersistedInt(defaultValue == null ? this.defaultValue : (int) defaultValue);
+        persistInt(value);
     }
 
     @Override
