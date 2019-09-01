@@ -79,8 +79,8 @@
         android:title="@string/notif_settings_custom_category_title">
 
         <Preference
-            android:title="@string/notif_settings_custom_settings_title"
-            android:summary="@string/notif_settings_custom_settings_summary">
+            android:summary="@string/notif_settings_custom_settings_summary"
+            android:title="@string/notif_settings_custom_settings_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetClass="kiwi.root.an2linuxclient.activities.CustomNotificationSettingsActivity"
