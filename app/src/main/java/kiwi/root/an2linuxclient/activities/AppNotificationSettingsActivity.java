@@ -81,7 +81,6 @@ public class AppNotificationSettingsActivity extends AppCompatActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             getPreferenceManager().setSharedPreferencesName(getString(R.string.notification_settings_custom));
-            getActivity().setTheme(R.style.PreferenceFragmentTheme);
         }
 
         @Override

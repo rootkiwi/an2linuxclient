@@ -50,7 +50,6 @@ public class NotificationSettingsActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             getPreferenceManager().setSharedPreferencesName(getString(R.string.notification_settings_global));
             addPreferencesFromResource(R.xml.notification_preferences);
-            getActivity().setTheme(R.style.PreferenceFragmentTheme);
 
             SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.notification_settings_global), MODE_PRIVATE);
 

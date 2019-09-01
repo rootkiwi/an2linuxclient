@@ -128,7 +128,6 @@ public class MainSettingsActivity extends AppCompatActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.main_preferences);
-            getActivity().setTheme(R.style.PreferenceFragmentTheme);
 
             generateKeyIfNotExists();
             showChangeLogIfNotSeen();

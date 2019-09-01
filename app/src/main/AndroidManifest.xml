@@ -42,6 +42,7 @@
         </service>
 
         <activity android:name=".activities.MainSettingsActivity">
+            android:theme="@style/PreferenceFragmentTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,23 +57,23 @@
         <activity
             android:name=".activities.EnabledApplicationsActivity"
             android:label="@string/activity_label_enabled_applications"
-            android:parentActivityName=".activities.MainSettingsActivity" />
-
+            android:parentActivityName=".activities.MainSettingsActivity"
+            android:theme="@style/PreferenceFragmentTheme" />
         <activity
             android:name=".activities.NotificationSettingsActivity"
             android:label="@string/activity_label_notification_settings"
-            android:parentActivityName=".activities.MainSettingsActivity" />
-
+            android:parentActivityName=".activities.MainSettingsActivity"
+            android:theme="@style/PreferenceFragmentTheme" />
         <activity
             android:name=".activities.CustomNotificationSettingsActivity"
             android:label="@string/activity_label_custom_notification_settings"
-            android:parentActivityName=".activities.NotificationSettingsActivity" />
-
+            android:parentActivityName=".activities.NotificationSettingsActivity"
+            android:theme="@style/PreferenceFragmentTheme" />
         <activity
             android:name=".activities.AppNotificationSettingsActivity"
             android:label="@string/activity_label_custom_notification_settings"
-            android:parentActivityName=".activities.CustomNotificationSettingsActivity" />
-
+            android:parentActivityName=".activities.CustomNotificationSettingsActivity"
+            android:theme="@style/PreferenceFragmentTheme" />
         <activity
             android:name=".activities.ServerConfigurationActivity"
             android:label="@string/activity_label_server_configuration"
