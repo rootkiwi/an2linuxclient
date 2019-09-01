@@ -2,7 +2,6 @@ package kiwi.root.an2linuxclient.preferences;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;

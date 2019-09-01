@@ -9,10 +9,7 @@
 package kiwi.root.an2linuxclient.preferences;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.AttributeSet;
-
-import androidx.preference.Preference;
 
 public class MaxTitleSizePreference extends NumberPickerPreference {
 
