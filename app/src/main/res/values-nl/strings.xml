@@ -108,7 +108,6 @@
     <string name="notif_custom_use_custom_title">Aangepaste instellingen gebruiken</string>
     <string name="notif_custom_use_custom_summary">Global instellingen gebruiken voor %s</string>
     <string name="notif_custom_using_custom_settings">Gebruikmakend van aangepaste instellingen</string>
-    <string name="notif_custom_using_general_settings">Gebruikmakend van globale instellingen</string>
     <string name="notif_settings_global_category_title">Globale instellingen</string>
     <string name="notif_settings_custom_category_title">Aangepaste instellingen</string>
     <string name="notif_settings_custom_settings_title">Individuele app-instellingen</string>

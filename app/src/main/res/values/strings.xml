@@ -120,7 +120,6 @@
     <string name="notif_custom_use_custom_title">Use custom settings</string>
     <string name="notif_custom_use_custom_summary">Override global settings for %s</string>
     <string name="notif_custom_using_custom_settings">Using custom settings</string>
-    <string name="notif_custom_using_general_settings">Using global settings</string>
     <string name="notif_settings_global_category_title">Global settings</string>
     <string name="notif_settings_custom_category_title">Custom settings</string>
     <string name="notif_settings_custom_settings_title">Individual app settings</string>
