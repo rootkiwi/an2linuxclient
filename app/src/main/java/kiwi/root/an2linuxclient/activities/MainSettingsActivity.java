@@ -92,7 +92,7 @@ public class MainSettingsActivity extends AppCompatActivity {
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID_INFORMATION);
 
             notificationBuilder.setCategory(Notification.CATEGORY_MESSAGE);
-            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            notificationBuilder.setSmallIcon(R.drawable.an2linux_icon);
             notificationBuilder.setTicker(getString(R.string.main_enable_service_information_notification_title));
             notificationBuilder.setContentIntent(
                     PendingIntent.getActivity(this, 0,
@@ -255,8 +255,8 @@ public class MainSettingsActivity extends AppCompatActivity {
                                             getActivity().getApplicationContext(),
                                             CHANNEL_ID_INFORMATION
                                     );
-                                    builder.setSmallIcon(R.mipmap.ic_launcher);
-                                    builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher));
+                                    builder.setSmallIcon(R.drawable.an2linux_icon);
+                                    builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.an2linux_icon));
                                     builder.setContentTitle(getString(R.string.test_notif_title));
                                     builder.setContentText(getString(R.string.test_notif_message));
                                     builder.setSubText(getString(R.string.test_notif_message_line_two));

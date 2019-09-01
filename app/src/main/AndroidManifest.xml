@@ -78,7 +78,7 @@
             android:exported="false" />
         <service
             android:name=".utils.AN2LinuxTileService"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/an2linux_icon"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>

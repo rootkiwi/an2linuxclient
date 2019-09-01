@@ -43,7 +43,7 @@ public class AN2LinuxService extends Service {
             notificationBuilder.setPriority(Notification.PRIORITY_MIN);
         }
         notificationBuilder.setOngoing(true);
-        notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        notificationBuilder.setSmallIcon(R.drawable.an2linux_icon);
         notificationBuilder.setTicker(getString(R.string.main_enable_service_notification_channel_name));
         notificationBuilder.setContentIntent(
                 PendingIntent.getActivity(this, 0,
