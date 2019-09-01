@@ -23,7 +23,7 @@ import kiwi.root.an2linuxclient.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RsaHelper {
+class RsaHelper {
 
     static void initialiseRsaKeyAndCert(Context c){
         try {

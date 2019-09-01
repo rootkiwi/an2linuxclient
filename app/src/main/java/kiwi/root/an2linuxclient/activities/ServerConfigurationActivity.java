@@ -33,8 +33,8 @@ import kiwi.root.an2linuxclient.views.WifiDialogNew;
 
 public class ServerConfigurationActivity extends AppCompatActivity implements ServerAdapterListCallbacks {
 
-    ServerConfigurationAdapter adapter;
-    FragmentManager manager;
+    private ServerConfigurationAdapter adapter;
+    private FragmentManager manager;
     private final static int REQUEST_ENABLE_BT = 1;
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
