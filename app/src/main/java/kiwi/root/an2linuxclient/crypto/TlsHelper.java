@@ -88,8 +88,8 @@ public class TlsHelper {
                 keyPair.getPublic()
         );
         try {
-            ContentSigner contentSigner = new JcaContentSignerBuilder("SHA256WithRSAEncryption").setProvider("BC").build(keyPair.getPrivate());
-            X509Certificate certificate = new JcaX509CertificateConverter().setProvider("BC").getCertificate(certificateBuilder.build(contentSigner));
+            ContentSigner contentSigner = new JcaContentSignerBuilder("SHA256WithRSAEncryption").build(keyPair.getPrivate());
+            X509Certificate certificate = new JcaX509CertificateConverter().getCertificate(certificateBuilder.build(contentSigner));
 
             SharedPreferences deviceKeyPref = c.getSharedPreferences(
                     c.getString(R.string.device_key_and_cert), MODE_PRIVATE);
@@ -107,7 +107,7 @@ public class TlsHelper {
         try {
             byte[] certificateBytes = Base64.decode(deviceKeyPref.getString(c.getString(R.string.certificate), ""), Base64.DEFAULT);
             X509CertificateHolder certificateHolder = new X509CertificateHolder(certificateBytes);
-            return new JcaX509CertificateConverter().setProvider("BC").getCertificate(certificateHolder);
+            return new JcaX509CertificateConverter().getCertificate(certificateHolder);
         } catch (Exception e) {
             Log.e("TlsHelper", "getCertificate");
             Log.e("StackTrace", Log.getStackTraceString(e));

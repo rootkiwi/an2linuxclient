@@ -34,7 +34,7 @@ public abstract class Server implements Comparable<Server> {
     public void setCertificate(byte[] certificateBytes){
         try {
             X509CertificateHolder certificateHolder = new X509CertificateHolder(certificateBytes);
-            this.certificate = new JcaX509CertificateConverter().setProvider("BC").getCertificate(certificateHolder);
+            this.certificate = new JcaX509CertificateConverter().getCertificate(certificateHolder);
         } catch (Exception e) {
             Log.e("Server", "setCertificate");
             Log.e("StackTrace", Log.getStackTraceString(e));
