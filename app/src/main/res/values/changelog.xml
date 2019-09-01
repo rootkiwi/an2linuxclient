@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        &lt;b&gt;0.9.0 (Sep 1, 2019)&lt;/b&gt;&lt;br&gt;
+        - Add support for filtering apps with text search in \'Enabled applications\' settings.&lt;br&gt;&lt;br&gt;
+        - Add quick settings tile for toggle enable/disable AN2Linux.&lt;br&gt;&lt;br&gt;
+        - Change minimum version required from Android 4.4 (API 19) to Android 4.3 (API 18).&lt;br&gt;
+        Title/message extraction from notification was added in API 19, which
+        means that it will not be supported for Android 4.3 users. It might
+        still be possible to extract title/message with reflection however (or in some other way).&lt;br&gt;&lt;br&gt;
+        - New setting: don\'t send notification if phone display is turned on.&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.8.1 (Feb 26, 2019)&lt;/b&gt;&lt;br&gt;
         - Fix build bug which is stopping F-Droid, now disable error on lint. Thank you edaubert!&lt;br&gt;&lt;br&gt;
         - German translation by Luensche, thank you!&lt;br&gt;&lt;br&gt;
