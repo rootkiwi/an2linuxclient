@@ -42,6 +42,9 @@ public class Notification {
                 // data. It still might be possible with reflection...
                 title = getAppName(pm, sbn.getPackageName());
             }
+            if (title.length() > ns.getTitleMax()){
+                title = title.substring(0, ns.getTitleMax()) + "…";
+            }
         }
 
         if (ns.includeMessage()) {
@@ -119,9 +122,6 @@ public class Notification {
         }
 
         title = title.trim();
-        if (title.length() > ns.getTitleMax()){
-            title = title.substring(0, ns.getTitleMax()) + "…";
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
