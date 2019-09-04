@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/main_setup_category_title">
+    <PreferenceCategory android:title="@string/main_setup_category_title"
+        android:key="@string/main_setup_category_key">
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
@@ -12,7 +13,14 @@
             android:defaultValue="false"
             android:dependency="@string/preference_enable_an2linux"
             android:key="@string/preference_enable_service"
+            android:summary="@string/main_enable_service_summary"
             android:title="@string/main_enable_service" />
+
+        <Preference
+            android:key="@string/open_ignore_battery_optimization_settings_key"
+            android:summary="@string/main_ignore_battery_optimization_summary"
+            android:title="@string/main_ignore_battery_optimization_title">
+        </Preference>
 
         <Preference
             android:summary="@string/main_enabled_apps_summary"

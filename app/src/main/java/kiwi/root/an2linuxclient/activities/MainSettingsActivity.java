@@ -16,6 +16,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,8 +26,11 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +44,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
@@ -182,6 +187,34 @@ public class MainSettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+
+            Preference ignoreDozePref = findPreference(getString(R.string.open_ignore_battery_optimization_settings_key));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ignoreDozePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        PowerManager powerManager = (PowerManager) getContext().getSystemService(POWER_SERVICE);
+                        Intent intent;
+                        if (powerManager.isIgnoringBatteryOptimizations(getContext().getPackageName())) {
+                            Toast.makeText(getContext(), R.string.dialog_disable_battery_optimizations_restart_info, Toast.LENGTH_LONG).show();
+                            intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                        } else {
+                            intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                            intent.setData(Uri.parse("package:" + getContext().getPackageName()));
+                        }
+                        try {
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException e) {
+                            Toast.makeText(getContext(), R.string.dialog_disable_battery_optimizations_not_supported, Toast.LENGTH_LONG).show();
+                        }
+                        return true;
+                    }
+                });
+            } else {
+                // Doze was introduced in Android M 6.0 API 23
+                PreferenceCategory setupCategory = findPreference(getString(R.string.main_setup_category_key));
+                setupCategory.removePreference(ignoreDozePref);
+            }
 
             final SharedPreferences sharedPrefsDefault = PreferenceManager.getDefaultSharedPreferences(getActivity());
             findPreference(getString(R.string.main_display_test_notification_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -409,6 +442,16 @@ public class MainSettingsActivity extends AppCompatActivity {
             is still running. It will only be updated after onDestroy / onCreate cycle.
              */
             PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Preference ignoreDozePref = findPreference(getString(R.string.open_ignore_battery_optimization_settings_key));
+                final PowerManager powerManager = (PowerManager) getContext().getSystemService(POWER_SERVICE);
+                if (powerManager.isIgnoringBatteryOptimizations(getContext().getPackageName())) {
+                    ignoreDozePref.setSummary(getString(R.string.main_ignore_battery_optimization_summary_already_ignored));
+                } else {
+                    ignoreDozePref.setSummary(getString(R.string.main_ignore_battery_optimization_summary));
+                }
+            }
         }
 
         @Override

@@ -5,4 +5,5 @@
     <string name="main_license_key">main_license_key</string>
     <string name="enabled_apps_pref_screen">enabled_apps_pref_screen</string>
     <string name="notification_settings_global_category">notification_settings_global_category</string>
+    <string name="open_ignore_battery_optimization_settings_key">open_ignore_battery_optimization_settings_key</string>
 </resources>

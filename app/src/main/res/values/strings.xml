@@ -11,6 +11,11 @@
     <string name="main_settings_category_about">About</string>
     <string name="main_enable_an2linux">Enable AN2Linux</string>
     <string name="main_enable_service">Enable foreground service</string>
+    <string name="main_enable_service_summary">
+        Android 8.0 added \'Background Execution Limits\' to help with battery drain caused by apps
+        running in background. Which means that AN2Linux might be killed by the system. So if you
+        run Android 8.0+ and have problems with AN2Linux missing notifications, then you could try
+        to run AN2Linux as a foreground service.</string>
     <string name="main_enable_service_notification_channel_name">AN2Linux foreground service</string>
     <string name="main_enable_service_information_notification_channel_name">AN2Linux information channel</string>
     <string name="main_enable_service_information_notification_title">How to hide AN2Linux Notification</string>
@@ -18,6 +23,13 @@
         notification, open the notification settings of this app, click on the service channel name and set the
         importance to low.
     </string>
+    <string name="main_ignore_battery_optimization_title">Ignore battery optimizations (Doze)</string>
+    <string name="main_ignore_battery_optimization_summary">
+        Android 6.0 added \'Doze\' to limit apps running in background, it can for example block network access.
+        Disabling \'Doze\' for AN2Linux may be necessary for it to work properly (unless using a foreground service, foreground services don\'t get dozed).
+        It may be worth to try this before going full foreground service mode.
+        Click here to do that.</string>
+    <string name="main_ignore_battery_optimization_summary_already_ignored">AN2Linux is ignored by Doze</string>
     <string name="main_enabled_apps_summary">Send notifications from these apps only</string>
     <string name="main_server_configuration_summary">Add a server to send notifications to</string>
     <string name="main_display_test_notification">Display test notification</string>
@@ -132,4 +144,6 @@
     <string name="pref_message_info_extraction_unsupported_version">Title/message extraction requires Android 4.4+</string>
     <string name="pref_force_appname_info_extraction_unsupported">Title/message extraction requires Android 4.4+. So if title is included, it will always be forced to app name.</string>
     <string name="enabled_applications_filter_hint_text">Filter:</string>
+    <string name="dialog_disable_battery_optimizations_not_supported">Your device does not support disabling battery optimizations</string>
+    <string name="dialog_disable_battery_optimizations_restart_info">A phone restart may be necessary for this list to update correctly</string>
 </resources>
