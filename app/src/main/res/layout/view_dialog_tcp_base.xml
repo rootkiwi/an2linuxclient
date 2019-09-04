@@ -18,6 +18,7 @@
         android:id="@+id/portNumber"
         style="@style/DialogEditText"
         android:hint="@string/dialog_port_hint"
-        android:inputType="number" />
+        android:inputType="number"
+        android:text="46352" />
 
 </merge>
