@@ -13,14 +13,7 @@ Setup instructions for AN2Linux server can be found here:
 <a href="https://github.com/rootkiwi/an2linuxserver/" target="_blank">https://github.com/rootkiwi/an2linuxserver/</a>
 
 ## Screenshots
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/1.png" width=200>
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/2.png" width=200>
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/3.png" width=200>
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/4.png" width=200>
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/5.png" width=200>
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/6.png" width=200>
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/7.png" width=200>
-<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/8.png" width=200>
+<img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/1.png" width=200 /><img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/2.png" width=200 /><img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/3.png" width=200 /><img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/4.png" width=200 /><img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/5.png" width=200 /><img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/6.png" width=200 /><img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/7.png" width=200 /><img src="app/src/main/play/listings/en-US/graphics/phone-screenshots/8.png" width=200 />
 
 ## License
 [GNU General Public License 3](https://www.gnu.org/licenses/gpl-3.0.html)
