@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        &lt;b&gt;0.9.1 (Sep 4, 2019)&lt;/b&gt;&lt;br&gt;
+        - Add information about Android battery optimizations (Doze) introduced in Android 6.0.
         &lt;b&gt;0.9.0 (Sep 1, 2019)&lt;/b&gt;&lt;br&gt;
         - Add support for filtering apps with text search in \'Enabled applications\' settings.&lt;br&gt;&lt;br&gt;
         - Add quick settings tile for toggle enable/disable AN2Linux.&lt;br&gt;&lt;br&gt;
@@ -17,8 +19,8 @@
         that location services needs to be turned on as well, otherwise the SSID reported will
         be \"unknown ssid\".&lt;br&gt;&lt;br&gt;
         - Setting to run AN2Linux as a foreground service, thank you Eyenseo!&lt;br&gt;
-        From Android Oreo (8.0) some new limitations about background services have been added to help
-        with battery drain etc. Which means that AN2Linux might be killed by the system. So if you
+        Android 8.0 added \'Background Execution Limits\' to help with battery drain caused by apps
+        running in background. Which means that AN2Linux might be killed by the system. So if you
         run Android Oreo+ and have problems with AN2Linux missing notifications, then you could try
         to run AN2Linux as a foreground service.&lt;br&gt;&lt;br&gt;
         - Dutch translation by Vistaus, thank you!&lt;br&gt;&lt;br&gt;
