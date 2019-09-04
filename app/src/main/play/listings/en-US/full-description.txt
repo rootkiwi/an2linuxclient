@@ -1,0 +1,16 @@
+AN2Linux allows you to sync notifications on your phone to your Linux desktop encrypted using TLS.
+
+It can do so over WiFi, Mobile data or Bluetooth.
+
+For AN2Linux to work you need to have AN2Linux-server running on your computer.
+
+For more info read the README files from the git repositories.
+If you have any issues you can create an Issue on GitHub.
+
+AN2Linux is free and open-source software licensed under GNU GPLv3.
+
+Source code this app:
+https://github.com/rootkiwi/an2linuxclient/
+
+Source code server:
+https://github.com/rootkiwi/an2linuxserver/
