@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
-        &lt;b&gt;0.9.1 (Sep 4, 2019)&lt;/b&gt;&lt;br&gt;
-        - Add information about Android battery optimizations (Doze) introduced in Android 6.0.
+        &lt;b&gt;0.9.2 (Sep 4, 2019)&lt;/b&gt;&lt;br&gt;
+        - Add information about battery optimizations (Doze) introduced in Android 6.0.&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.9.0 (Sep 1, 2019)&lt;/b&gt;&lt;br&gt;
         - Add support for filtering apps with text search in \'Enabled applications\' settings.&lt;br&gt;&lt;br&gt;
         - Add quick settings tile for toggle enable/disable AN2Linux.&lt;br&gt;&lt;br&gt;
