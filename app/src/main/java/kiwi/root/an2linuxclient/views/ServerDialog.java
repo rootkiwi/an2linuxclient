@@ -134,12 +134,7 @@ abstract class ServerDialog extends DialogFragment implements
         initiatePairingButton = (Button) v.findViewById(R.id.initiatePairingButton);
         saveServerBtn = (Button) v.findViewById(R.id.saveServerBtn);
 
-        v.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancel();
-            }
-        });
+        v.findViewById(R.id.cancelBtn).setOnClickListener(view -> cancel());
     }
 
     void initViewsDialogNew(View v) {
@@ -197,13 +192,10 @@ abstract class ServerDialog extends DialogFragment implements
             }
         }
 
-        v.findViewById(R.id.deleteServerBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dbHandler.deleteServer(server.getId());
-                serverAdapterListCallbacks.deleteServer(serverListPosition);
-                cancel();
-            }
+        v.findViewById(R.id.deleteServerBtn).setOnClickListener(view -> {
+            dbHandler.deleteServer(server.getId());
+            serverAdapterListCallbacks.deleteServer(serverListPosition);
+            cancel();
         });
 
         dbHandler.close();

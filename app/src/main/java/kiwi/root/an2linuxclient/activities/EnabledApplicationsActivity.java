@@ -29,17 +29,14 @@ public class EnabledApplicationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_enabled_applications);
 
         EnabledApplicationsViewModel viewModel = ViewModelProviders.of(this).get(EnabledApplicationsViewModel.class);
-        viewModel.getOperationRunning().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean operationIsRunning) {
-                if (operationIsRunning) {
-                    progressDialog = new CustomProgressDialog();
-                    progressDialog.setCancelable(false);
-                    progressDialog.show(getSupportFragmentManager(), "progressDialog");
-                } else {
-                    if (progressDialog != null) {
-                        progressDialog.dismiss();
-                    }
+        viewModel.getOperationRunning().observe(this, operationIsRunning -> {
+            if (operationIsRunning) {
+                progressDialog = new CustomProgressDialog();
+                progressDialog.setCancelable(false);
+                progressDialog.show(getSupportFragmentManager(), "progressDialog");
+            } else {
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
                 }
             }
         });

@@ -49,15 +49,12 @@ public class BluetoothPairedDevicesAdapter extends ArrayAdapter<BluetoothDevice>
         btDeviceNameText.setText(device.getName());
         btMacText.setText(device.getAddress());
 
-        bluetoothEditBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = ((Activity) getContext()).getFragmentManager();
-                BluetoothDialogNew myDialog = BluetoothDialogNew.newInstance(device.getName(), device.getAddress());
-                myDialog.setCancelable(false);
-                myDialog.show(manager, "bluetooth");
-                dialog.dismiss();
-            }
+        bluetoothEditBtn.setOnClickListener(v -> {
+            FragmentManager manager = ((Activity) getContext()).getFragmentManager();
+            BluetoothDialogNew myDialog = BluetoothDialogNew.newInstance(device.getName(), device.getAddress());
+            myDialog.setCancelable(false);
+            myDialog.show(manager, "bluetooth");
+            dialog.dismiss();
         });
 
         return convertView;

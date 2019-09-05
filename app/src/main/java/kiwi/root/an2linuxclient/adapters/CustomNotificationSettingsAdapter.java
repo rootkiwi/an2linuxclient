@@ -42,12 +42,7 @@ public class CustomNotificationSettingsAdapter extends RecyclerView.Adapter<Cust
                 usingCustomTextView.setText("");
             }
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onItemClickListener.onItemClick(appData);
-                }
-            });
+            itemView.setOnClickListener(view -> onItemClickListener.onItemClick(appData));
         }
     }
 

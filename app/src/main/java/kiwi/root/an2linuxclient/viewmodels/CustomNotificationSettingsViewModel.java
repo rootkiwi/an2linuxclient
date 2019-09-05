@@ -33,12 +33,7 @@ public class CustomNotificationSettingsViewModel extends AndroidViewModel {
     }
 
     private void loadAppListFromNewThread() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                loadAppList();
-            }
-        }).start();
+        new Thread(this::loadAppList).start();
     }
 
     private void loadAppList() {
@@ -57,12 +52,7 @@ public class CustomNotificationSettingsViewModel extends AndroidViewModel {
             }
         }
 
-        Collections.sort(enabledApps, new Comparator<ApplicationInfo>() {
-            @Override
-            public int compare(ApplicationInfo lhs, ApplicationInfo rhs) {
-                return enabledAppLabels.get(lhs.packageName).compareToIgnoreCase(enabledAppLabels.get(rhs.packageName));
-            }
-        });
+        Collections.sort(enabledApps, (lhs, rhs) -> enabledAppLabels.get(lhs.packageName).compareToIgnoreCase(enabledAppLabels.get(rhs.packageName)));
 
         List<CustomSettingsAppData> enabledAppsDataList = new ArrayList<>();
         SharedPreferences spCustomSettings = c.getSharedPreferences(c.getString(R.string.notification_settings_custom), MODE_PRIVATE);

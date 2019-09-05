@@ -124,42 +124,36 @@ public class ServerConfigurationAdapter extends ArrayAdapter<Server> {
 
         enabledSwitch.setChecked(server.isEnabled());
 
-        enabledSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ServerDatabaseHandler dbHandler = ServerDatabaseHandler.getInstance(getContext());
-                if (enabledSwitch.isChecked()) {
-                    dbHandler.updateIsEnabled(server.getId(), true);
-                    updateServerInListIsEnabled(position, true);
-                } else {
-                    dbHandler.updateIsEnabled(server.getId(), false);
-                    updateServerInListIsEnabled(position, false);
-                }
+        enabledSwitch.setOnClickListener(v -> {
+            ServerDatabaseHandler dbHandler1 = ServerDatabaseHandler.getInstance(getContext());
+            if (enabledSwitch.isChecked()) {
+                dbHandler1.updateIsEnabled(server.getId(), true);
+                updateServerInListIsEnabled(position, true);
+            } else {
+                dbHandler1.updateIsEnabled(server.getId(), false);
+                updateServerInListIsEnabled(position, false);
             }
         });
 
-        ((ListView) parent).setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
-                Server server = serverList.get(position);
-                long id = serverList.get(position).getId();
-                FragmentManager manager = ((Activity) context).getFragmentManager();
+        ((ListView) parent).setOnItemClickListener((adapter, v, position1, arg3) -> {
+            Server server1 = serverList.get(position1);
+            long id = serverList.get(position1).getId();
+            FragmentManager manager = ((Activity) context).getFragmentManager();
 
-                if (server instanceof WifiServer) {
-                    WifiDialogEdit myDialog = WifiDialogEdit.newInstance(id, position);
-                    myDialog.setCancelable(false);
-                    myDialog.show(manager, "wifi");
-                } else if (server instanceof MobileServer) {
-                    MobileDialogEdit myDialog = MobileDialogEdit.newInstance(id, position);
-                    myDialog.setCancelable(false);
-                    myDialog.show(manager, "mobile");
-                } else {
-                    BluetoothDialogEdit myDialog = BluetoothDialogEdit.newInstance(id, position);
-                    myDialog.setCancelable(false);
-                    myDialog.show(manager, "bluetooth");
-                }
-
+            if (server1 instanceof WifiServer) {
+                WifiDialogEdit myDialog = WifiDialogEdit.newInstance(id, position1);
+                myDialog.setCancelable(false);
+                myDialog.show(manager, "wifi");
+            } else if (server1 instanceof MobileServer) {
+                MobileDialogEdit myDialog = MobileDialogEdit.newInstance(id, position1);
+                myDialog.setCancelable(false);
+                myDialog.show(manager, "mobile");
+            } else {
+                BluetoothDialogEdit myDialog = BluetoothDialogEdit.newInstance(id, position1);
+                myDialog.setCancelable(false);
+                myDialog.show(manager, "bluetooth");
             }
+
         });
 
         return convertView;

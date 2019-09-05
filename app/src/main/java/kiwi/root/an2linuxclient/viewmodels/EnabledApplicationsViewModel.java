@@ -34,13 +34,10 @@ public class EnabledApplicationsViewModel extends AndroidViewModel {
     public EnabledApplicationsViewModel(Application application) {
         super(application);
         operationRunning.setValue(true);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                loadAppList();
-                setFilteredCheckBoxPreferences();
-                operationRunning.postValue(false);
-            }
+        new Thread(() -> {
+            loadAppList();
+            setFilteredCheckBoxPreferences();
+            operationRunning.postValue(false);
         }).start();
     }
 
@@ -79,20 +76,17 @@ public class EnabledApplicationsViewModel extends AndroidViewModel {
         }
 
         updateAppSettings();
-        Collections.sort(filteredAppInfos, new Comparator<ApplicationInfo>() {
-            @Override
-            public int compare(ApplicationInfo lhs, ApplicationInfo rhs) {
-                boolean lhsEnabled = appSettings.get(lhs.packageName);
-                boolean rhsEnabled = appSettings.get(rhs.packageName);
-                if (lhsEnabled && !rhsEnabled) {
-                    return -1;
-                }
-                else if (!lhsEnabled && rhsEnabled) {
-                    return 1;
-                }
-                else {
-                    return allAppLabels.get(lhs.packageName).compareToIgnoreCase(allAppLabels.get(rhs.packageName));
-                }
+        Collections.sort(filteredAppInfos, (lhs, rhs) -> {
+            boolean lhsEnabled = appSettings.get(lhs.packageName);
+            boolean rhsEnabled = appSettings.get(rhs.packageName);
+            if (lhsEnabled && !rhsEnabled) {
+                return -1;
+            }
+            else if (!lhsEnabled && rhsEnabled) {
+                return 1;
+            }
+            else {
+                return allAppLabels.get(lhs.packageName).compareToIgnoreCase(allAppLabels.get(rhs.packageName));
             }
         });
 

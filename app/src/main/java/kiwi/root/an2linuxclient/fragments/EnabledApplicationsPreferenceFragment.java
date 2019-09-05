@@ -39,19 +39,16 @@ public class EnabledApplicationsPreferenceFragment extends PreferenceFragmentCom
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         EnabledApplicationsViewModel viewModel = ViewModelProviders.of(getActivity()).get(EnabledApplicationsViewModel.class);
-        viewModel.getFilteredCheckBoxPrefsData().observe(getViewLifecycleOwner(), new Observer<List<CheckBoxPreferenceData>>() {
-            @Override
-            public void onChanged(List<CheckBoxPreferenceData> checkBoxPreferencesData) {
-                setPreferencesFromResource(R.xml.enabled_applications_preferences, null);
-                PreferenceScreen prefScreen = (PreferenceScreen) findPreference(getString(R.string.enabled_apps_pref_screen));
-                for (CheckBoxPreferenceData checkBoxPreferenceData : checkBoxPreferencesData) {
-                    CheckBoxPreference c = new CheckBoxPreference(getPreferenceScreen().getContext());
-                    c.setKey(checkBoxPreferenceData.key);
-                    c.setTitle(checkBoxPreferenceData.title);
-                    c.setSummary(checkBoxPreferenceData.summary);
-                    c.setIcon(checkBoxPreferenceData.icon);
-                    prefScreen.addPreference(c);
-                }
+        viewModel.getFilteredCheckBoxPrefsData().observe(getViewLifecycleOwner(), checkBoxPreferencesData -> {
+            setPreferencesFromResource(R.xml.enabled_applications_preferences, null);
+            PreferenceScreen prefScreen = (PreferenceScreen) findPreference(getString(R.string.enabled_apps_pref_screen));
+            for (CheckBoxPreferenceData checkBoxPreferenceData : checkBoxPreferencesData) {
+                CheckBoxPreference c = new CheckBoxPreference(getPreferenceScreen().getContext());
+                c.setKey(checkBoxPreferenceData.key);
+                c.setTitle(checkBoxPreferenceData.title);
+                c.setSummary(checkBoxPreferenceData.summary);
+                c.setIcon(checkBoxPreferenceData.icon);
+                prefScreen.addPreference(c);
             }
         });
     }

@@ -99,23 +99,20 @@ public class TcpPairingConnection extends PairingConnection {
             }
 
             final byte[] clientCertBytes = TlsHelper.getCertificateBytes(c);
-            tlsSocket.addHandshakeCompletedListener(new HandshakeCompletedListener() {
-                @Override
-                public void handshakeCompleted(HandshakeCompletedEvent event) {
-                    try {
-                        Certificate serverCert = event.getPeerCertificates()[0];
+            tlsSocket.addHandshakeCompletedListener(event -> {
+                try {
+                    Certificate serverCert = event.getPeerCertificates()[0];
 
-                        byte[] sha256 = Sha256Helper.sha256(clientCertBytes, serverCert.getEncoded());
+                    byte[] sha256 = Sha256Helper.sha256(clientCertBytes, serverCert.getEncoded());
 
-                        notifyObservers(new PairingConnectionCallbackMessage(
-                                TLS_HANDSHAKE_COMPLETED,
-                                Sha256Helper.getFourLineHexString(sha256),
-                                serverCert));
+                    notifyObservers(new PairingConnectionCallbackMessage(
+                            TLS_HANDSHAKE_COMPLETED,
+                            Sha256Helper.getFourLineHexString(sha256),
+                            serverCert));
 
-                    } catch (Exception e) {
-                        Log.e("TcpPairingConnection", "run:handshakeCompleted");
-                        Log.e("StackTrace", Log.getStackTraceString(e));
-                    }
+                } catch (Exception e) {
+                    Log.e("TcpPairingConnection", "run:handshakeCompleted");
+                    Log.e("StackTrace", Log.getStackTraceString(e));
                 }
             });
 

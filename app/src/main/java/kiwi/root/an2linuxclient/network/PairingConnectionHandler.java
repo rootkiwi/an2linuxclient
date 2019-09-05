@@ -116,24 +116,14 @@ public class PairingConnectionHandler extends Observable implements Observer {
     }
 
     public void acceptPairing(){
-        ThreadPoolHandler.enqueueRunnable(new Runnable() {
-            @Override
-            public void run() {
-                pairingConnection.acceptPairing();
-            }
-        });
+        ThreadPoolHandler.enqueueRunnable(() -> pairingConnection.acceptPairing());
     }
 
     public void cancel(){
         deleteObservers();
         if (pairingConnection != null) {
             pairingConnection.deleteObservers();
-            ThreadPoolHandler.enqueueRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    pairingConnection.cancel();
-                }
-            });
+            ThreadPoolHandler.enqueueRunnable(() -> pairingConnection.cancel());
         }
     }
 

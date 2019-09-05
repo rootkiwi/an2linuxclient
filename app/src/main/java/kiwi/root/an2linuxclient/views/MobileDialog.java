@@ -85,12 +85,7 @@ abstract class MobileDialog extends TcpServerDialog implements Observer {
                 break;
             case SERVER_ACCEPTED_PAIR:
                 if (clientAcceptedPair){
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            saveMobileServerToDatabase(true);
-                        }
-                    });
+                    getActivity().runOnUiThread(() -> saveMobileServerToDatabase(true));
                     return;
                 } else {
                     infoText = getString(R.string.server_accepted_pairing) + pairingInfoTextView.getText().toString();
@@ -114,12 +109,7 @@ abstract class MobileDialog extends TcpServerDialog implements Observer {
                 return;
         }
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                pairingInfoTextView.setText(infoText);
-            }
-        });
+        getActivity().runOnUiThread(() -> pairingInfoTextView.setText(infoText));
     }
 
     private class InitiatePairingOnClickListener implements View.OnClickListener {

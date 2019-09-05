@@ -27,7 +27,7 @@ class ThreadPoolHandler {
             threadPool = new ThreadPoolExecutor(CORE_POOL_SIZE,
                     MAXIMUM_POOL_SIZE,
                     KEEP_ALIVE_TIME, TIME_UNIT,
-                    new LinkedBlockingQueue<Runnable>());
+                    new LinkedBlockingQueue<>());
             threadPool.allowCoreThreadTimeOut(true);
         }
         threadPool.execute(r);
@@ -43,7 +43,7 @@ class ThreadPoolHandler {
             bluetoothThreadPool = new ThreadPoolExecutor(CORE_POOL_SIZE,
                     MAXIMUM_POOL_SIZE,
                     KEEP_ALIVE_TIME, TIME_UNIT,
-                    new LinkedBlockingQueue<Runnable>());
+                    new LinkedBlockingQueue<>());
         }
         bluetoothThreadPool.execute(r);
     }

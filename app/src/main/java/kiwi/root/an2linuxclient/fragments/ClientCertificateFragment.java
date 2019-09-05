@@ -61,12 +61,9 @@ public class ClientCertificateFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_client_certificate, container, false);
         fingerprintTextView = (TextView) v.findViewById(R.id.fingerprintTextView);
         generateNewButton = (Button) v.findViewById(R.id.generateNewButton);
-        generateNewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerReceiver();
-                KeyGeneratorService.startGenerate(getActivity());
-            }
+        generateNewButton.setOnClickListener(v1 -> {
+            registerReceiver();
+            KeyGeneratorService.startGenerate(getActivity());
         });
         return v;
     }

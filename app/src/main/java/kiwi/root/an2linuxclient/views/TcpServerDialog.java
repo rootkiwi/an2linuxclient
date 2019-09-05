@@ -32,21 +32,18 @@ abstract class TcpServerDialog extends ServerDialog {
     }
 
     void resetAfterFailedPairingConnection(){
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ipOrHostnameEditText.setEnabled(true);
-                portNumberEditText.setEnabled(true);
-                initiatePairingButton.setVisibility(View.VISIBLE);
-                initiatePairingButton.setText(R.string.try_again);
-                if (certificateSpinner != null){
-                    certificateSpinner.setVisibility(View.VISIBLE);
-                }
-                saveServerBtn.setEnabled(true);
+        getActivity().runOnUiThread(() -> {
+            ipOrHostnameEditText.setEnabled(true);
+            portNumberEditText.setEnabled(true);
+            initiatePairingButton.setVisibility(View.VISIBLE);
+            initiatePairingButton.setText(R.string.try_again);
+            if (certificateSpinner != null){
+                certificateSpinner.setVisibility(View.VISIBLE);
+            }
+            saveServerBtn.setEnabled(true);
 
-                if (connectionHandler != null){
-                    connectionHandler.cancel();
-                }
+            if (connectionHandler != null){
+                connectionHandler.cancel();
             }
         });
     }

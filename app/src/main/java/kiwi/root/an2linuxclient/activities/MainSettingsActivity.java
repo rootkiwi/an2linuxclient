@@ -148,67 +148,58 @@ public class MainSettingsActivity extends AppCompatActivity {
             generateKeyIfNotExists();
             showChangeLogIfNotSeen();
 
-            findPreference(getString(R.string.preference_enable_an2linux)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    if ((boolean) newValue){
-                        boolean isNotificationAccessEnabled = NotificationManagerCompat
-                                .getEnabledListenerPackages(getActivity())
-                                .contains(getActivity().getPackageName());
-                        boolean hasCoarseLocationPermission = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O ||
-                                ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+            findPreference(getString(R.string.preference_enable_an2linux)).setOnPreferenceChangeListener((preference, newValue) -> {
+                if ((boolean) newValue){
+                    boolean isNotificationAccessEnabled = NotificationManagerCompat
+                            .getEnabledListenerPackages(getActivity())
+                            .contains(getActivity().getPackageName());
+                    boolean hasCoarseLocationPermission = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O ||
+                            ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
-                        if (!isNotificationAccessEnabled){
-                            new AskNotificationAccessDialogFragment().show(getFragmentManager(), "AskNotificationAccessDialogFragment");
-                        }
-                        if (!hasCoarseLocationPermission){
-                            new AskCoarseLocationAccessDialogFragment().show(getFragmentManager(), "AskCoarseLocationAccessDialogFragment");
-                        }
-
-                        boolean useForegroundService = preference.getSharedPreferences().getBoolean(getString(R.string.preference_enable_service), false);
-
-                        if (useForegroundService){
-                            getActivity().startService(new Intent(getActivity(), AN2LinuxService.class));
-                        }
-                    } else{
-                        getActivity().stopService(new Intent(getActivity(), AN2LinuxService.class));
+                    if (!isNotificationAccessEnabled){
+                        new AskNotificationAccessDialogFragment().show(getFragmentManager(), "AskNotificationAccessDialogFragment");
                     }
-                    return true;
+                    if (!hasCoarseLocationPermission){
+                        new AskCoarseLocationAccessDialogFragment().show(getFragmentManager(), "AskCoarseLocationAccessDialogFragment");
+                    }
+
+                    boolean useForegroundService = preference.getSharedPreferences().getBoolean(getString(R.string.preference_enable_service), false);
+
+                    if (useForegroundService){
+                        getActivity().startService(new Intent(getActivity(), AN2LinuxService.class));
+                    }
+                } else{
+                    getActivity().stopService(new Intent(getActivity(), AN2LinuxService.class));
                 }
+                return true;
             });
 
-            findPreference(getString(R.string.preference_enable_service)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    Activity activity = getActivity();
-                    if (activity instanceof MainSettingsActivity){
-                        ((MainSettingsActivity) activity).changeForegroundService((boolean) newValue);
-                    }
-                    return true;
+            findPreference(getString(R.string.preference_enable_service)).setOnPreferenceChangeListener((preference, newValue) -> {
+                Activity activity = getActivity();
+                if (activity instanceof MainSettingsActivity){
+                    ((MainSettingsActivity) activity).changeForegroundService((boolean) newValue);
                 }
+                return true;
             });
 
             Preference ignoreDozePref = findPreference(getString(R.string.open_ignore_battery_optimization_settings_key));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ignoreDozePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        PowerManager powerManager = (PowerManager) getContext().getSystemService(POWER_SERVICE);
-                        Intent intent;
-                        if (powerManager.isIgnoringBatteryOptimizations(getContext().getPackageName())) {
-                            Toast.makeText(getContext(), R.string.dialog_disable_battery_optimizations_restart_info, Toast.LENGTH_LONG).show();
-                            intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-                        } else {
-                            intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                            intent.setData(Uri.parse("package:" + getContext().getPackageName()));
-                        }
-                        try {
-                            startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            Toast.makeText(getContext(), R.string.dialog_disable_battery_optimizations_not_supported, Toast.LENGTH_LONG).show();
-                        }
-                        return true;
+                ignoreDozePref.setOnPreferenceClickListener(preference -> {
+                    PowerManager powerManager = (PowerManager) getContext().getSystemService(POWER_SERVICE);
+                    Intent intent;
+                    if (powerManager.isIgnoringBatteryOptimizations(getContext().getPackageName())) {
+                        Toast.makeText(getContext(), R.string.dialog_disable_battery_optimizations_restart_info, Toast.LENGTH_LONG).show();
+                        intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                    } else {
+                        intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                        intent.setData(Uri.parse("package:" + getContext().getPackageName()));
                     }
+                    try {
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(getContext(), R.string.dialog_disable_battery_optimizations_not_supported, Toast.LENGTH_LONG).show();
+                    }
+                    return true;
                 });
             } else {
                 // Doze was introduced in Android M 6.0 API 23
@@ -217,117 +208,109 @@ public class MainSettingsActivity extends AppCompatActivity {
             }
 
             final SharedPreferences sharedPrefsDefault = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            findPreference(getString(R.string.main_display_test_notification_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    boolean isNotificationAccessEnabled = NotificationManagerCompat
-                            .getEnabledListenerPackages(getActivity())
-                            .contains(getActivity().getPackageName());
-                    if (isNotificationAccessEnabled){
-                        boolean globalEnabled = sharedPrefsDefault.getBoolean(getString(R.string.preference_enable_an2linux), false);
-                        if (globalEnabled){
-                            SharedPreferences sharedPrefsEnabledApplications = getActivity()
-                                    .getSharedPreferences(getString(R.string.enabled_applications), MODE_PRIVATE);
-                            boolean appEnabled = sharedPrefsEnabledApplications.getBoolean(getActivity().getPackageName(), false);
-                            if (appEnabled){
-                                ServerDatabaseHandler dbHandler = ServerDatabaseHandler.getInstance(getActivity());
-                                ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-                                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-                                boolean displayTestNotif = false;
-                                if (networkInfo != null && networkInfo.isConnected()){
-                                    if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-                                        List<WifiServer> enabledWifiServers = dbHandler.getAllEnabledWifiServers();
-                                        if (enabledWifiServers.size() == 0){
-                                            Toast.makeText(getActivity(), getString(R.string.test_notif_found_no_enabled, getString(R.string.connection_type_wifi)), Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            boolean found = false;
-                                            for(WifiServer wifiServer : enabledWifiServers) {
-                                                if (ConnectionHelper.checkIfSsidIsAllowed(wifiServer.getSsidWhitelist(), getActivity())){
-                                                    found = true;
-                                                    break;
-                                                }
-                                            }
-                                            if (found){
-                                                Toast.makeText(getActivity(), getString(R.string.test_notif_testing, getString(R.string.connection_type_wifi)), Toast.LENGTH_SHORT).show();
-                                                displayTestNotif = true;
-                                            } else {
-                                                Toast.makeText(getActivity(), R.string.disallowed_ssid, Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-                                        List<MobileServer> enabledMobileServers = dbHandler.getAllEnabledMobileServers();
-                                        if (enabledMobileServers.size() == 0){
-                                            Toast.makeText(getActivity(), getString(R.string.test_notif_found_no_enabled, getString(R.string.connection_type_mobile)), Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            boolean found = false;
-                                            for(MobileServer mobileServer : enabledMobileServers){
-                                                if (!networkInfo.isRoaming() || mobileServer.isRoamingAllowed()){
-                                                    found = true;
-                                                    break;
-                                                }
-                                            }
-                                            if (found){
-                                                Toast.makeText(getActivity(), getString(R.string.test_notif_testing, getString(R.string.connection_type_mobile)), Toast.LENGTH_SHORT).show();
-                                                displayTestNotif = true;
-                                            } else {
-                                                Toast.makeText(getActivity(), R.string.you_are_roaming, Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    }
-                                }
-                                if (BluetoothAdapter.getDefaultAdapter() != null && BluetoothAdapter.getDefaultAdapter().isEnabled()){
-                                    if (dbHandler.getAllEnabledBluetoothServers().size() == 0){
-                                        Toast.makeText(getActivity(), getString(R.string.test_notif_found_no_enabled, getString(R.string.connection_type_bluetooth)), Toast.LENGTH_SHORT).show();
+            findPreference(getString(R.string.main_display_test_notification_key)).setOnPreferenceClickListener(preference -> {
+                boolean isNotificationAccessEnabled = NotificationManagerCompat
+                        .getEnabledListenerPackages(getActivity())
+                        .contains(getActivity().getPackageName());
+                if (isNotificationAccessEnabled){
+                    boolean globalEnabled = sharedPrefsDefault.getBoolean(getString(R.string.preference_enable_an2linux), false);
+                    if (globalEnabled){
+                        SharedPreferences sharedPrefsEnabledApplications = getActivity()
+                                .getSharedPreferences(getString(R.string.enabled_applications), MODE_PRIVATE);
+                        boolean appEnabled = sharedPrefsEnabledApplications.getBoolean(getActivity().getPackageName(), false);
+                        if (appEnabled){
+                            ServerDatabaseHandler dbHandler = ServerDatabaseHandler.getInstance(getActivity());
+                            ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                            boolean displayTestNotif = false;
+                            if (networkInfo != null && networkInfo.isConnected()){
+                                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                                    List<WifiServer> enabledWifiServers = dbHandler.getAllEnabledWifiServers();
+                                    if (enabledWifiServers.size() == 0){
+                                        Toast.makeText(getActivity(), getString(R.string.test_notif_found_no_enabled, getString(R.string.connection_type_wifi)), Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(getActivity(), getString(R.string.test_notif_testing, getString(R.string.connection_type_bluetooth)), Toast.LENGTH_SHORT).show();
-                                        displayTestNotif = true;
+                                        boolean found = false;
+                                        for(WifiServer wifiServer : enabledWifiServers) {
+                                            if (ConnectionHelper.checkIfSsidIsAllowed(wifiServer.getSsidWhitelist(), getActivity())){
+                                                found = true;
+                                                break;
+                                            }
+                                        }
+                                        if (found){
+                                            Toast.makeText(getActivity(), getString(R.string.test_notif_testing, getString(R.string.connection_type_wifi)), Toast.LENGTH_SHORT).show();
+                                            displayTestNotif = true;
+                                        } else {
+                                            Toast.makeText(getActivity(), R.string.disallowed_ssid, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                                    List<MobileServer> enabledMobileServers = dbHandler.getAllEnabledMobileServers();
+                                    if (enabledMobileServers.size() == 0){
+                                        Toast.makeText(getActivity(), getString(R.string.test_notif_found_no_enabled, getString(R.string.connection_type_mobile)), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        boolean found = false;
+                                        for(MobileServer mobileServer : enabledMobileServers){
+                                            if (!networkInfo.isRoaming() || mobileServer.isRoamingAllowed()){
+                                                found = true;
+                                                break;
+                                            }
+                                        }
+                                        if (found){
+                                            Toast.makeText(getActivity(), getString(R.string.test_notif_testing, getString(R.string.connection_type_mobile)), Toast.LENGTH_SHORT).show();
+                                            displayTestNotif = true;
+                                        } else {
+                                            Toast.makeText(getActivity(), R.string.you_are_roaming, Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 }
-                                dbHandler.close();
-                                if (displayTestNotif) {
-                                    NotificationCompat.Builder builder = new NotificationCompat.Builder(
-                                            getActivity().getApplicationContext(),
-                                            CHANNEL_ID_INFORMATION
-                                    );
-                                    builder.setSmallIcon(R.drawable.an2linux_icon);
-                                    builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.an2linux_icon));
-                                    builder.setContentTitle(getString(R.string.test_notif_title));
-                                    builder.setContentText(getString(R.string.test_notif_message));
-                                    builder.setSubText(getString(R.string.test_notif_message_line_two));
-
-                                    NotificationManager notificationManager = (NotificationManager) getActivity().
-                                            getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-
-                                    for (int i = 0; i < 1; i++){
-                                        notificationManager.notify(NOTIFICATION_ID_TEST_NOTIF, builder.build());
-                                    }
+                            }
+                            if (BluetoothAdapter.getDefaultAdapter() != null && BluetoothAdapter.getDefaultAdapter().isEnabled()){
+                                if (dbHandler.getAllEnabledBluetoothServers().size() == 0){
+                                    Toast.makeText(getActivity(), getString(R.string.test_notif_found_no_enabled, getString(R.string.connection_type_bluetooth)), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), getString(R.string.test_notif_testing, getString(R.string.connection_type_bluetooth)), Toast.LENGTH_SHORT).show();
+                                    displayTestNotif = true;
                                 }
-                            } else {
-                                Toast.makeText(getActivity(), R.string.test_notif_an2linux_not_enabled_in_applications, Toast.LENGTH_SHORT).show();
+                            }
+                            dbHandler.close();
+                            if (displayTestNotif) {
+                                NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                                        getActivity().getApplicationContext(),
+                                        CHANNEL_ID_INFORMATION
+                                );
+                                builder.setSmallIcon(R.drawable.an2linux_icon);
+                                builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.an2linux_icon));
+                                builder.setContentTitle(getString(R.string.test_notif_title));
+                                builder.setContentText(getString(R.string.test_notif_message));
+                                builder.setSubText(getString(R.string.test_notif_message_line_two));
+
+                                NotificationManager notificationManager = (NotificationManager) getActivity().
+                                        getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+
+                                for (int i = 0; i < 1; i++){
+                                    notificationManager.notify(NOTIFICATION_ID_TEST_NOTIF, builder.build());
+                                }
                             }
                         } else {
-                            Toast.makeText(getActivity(), R.string.test_notif_an2linux_not_enabled, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.test_notif_an2linux_not_enabled_in_applications, Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(getActivity(), R.string.test_notif_need_access, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.test_notif_an2linux_not_enabled, Toast.LENGTH_SHORT).show();
                     }
-
-                    return true;
+                } else {
+                    Toast.makeText(getActivity(), R.string.test_notif_need_access, Toast.LENGTH_SHORT).show();
                 }
+
+                return true;
             });
 
-            findPreference(getString(R.string.main_license_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new LicenseDialogFragment().show(getFragmentManager(), "LicenseDialogFragment");
-                    return true;
-                }
+            findPreference(getString(R.string.main_license_key)).setOnPreferenceClickListener(preference -> {
+                new LicenseDialogFragment().show(getFragmentManager(), "LicenseDialogFragment");
+                return true;
             });
-            findPreference(getString(R.string.main_changelog_key)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    new ChangelogDialogFragment().show(getFragmentManager(), "ChangelogDialogFragment");
-                    return true;
-                }
+            findPreference(getString(R.string.main_changelog_key)).setOnPreferenceClickListener(preference -> {
+                new ChangelogDialogFragment().show(getFragmentManager(), "ChangelogDialogFragment");
+                return true;
             });
             findPreference(getString(R.string.main_changelog_key))
                     .setSummary(String.format("%s (%d)", BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE));
@@ -363,14 +346,8 @@ public class MainSettingsActivity extends AppCompatActivity {
             public Dialog onCreateDialog(Bundle savedInstanceState) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
                 builder.setMessage(R.string.main_dialog_ask_notification_access)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                getActivity().startActivity((new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")));
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
+                        .setPositiveButton(android.R.string.ok, (dialog, id) -> getActivity().startActivity((new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))))
+                        .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
                         });
                 return builder.create();
             }
@@ -383,16 +360,10 @@ public class MainSettingsActivity extends AppCompatActivity {
             public Dialog onCreateDialog(Bundle savedInstanceState) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
                 builder.setMessage(R.string.main_dialog_ask_coarse_location_access)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                ActivityCompat.requestPermissions(getActivity(),
-                                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                                        UNIQUE_COARSE_LOCATION_ID);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
+                        .setPositiveButton(android.R.string.ok, (dialog, id) -> ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                UNIQUE_COARSE_LOCATION_ID))
+                        .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
                         });
                 return builder.create();
             }
@@ -403,9 +374,7 @@ public class MainSettingsActivity extends AppCompatActivity {
             public Dialog onCreateDialog(Bundle savedInstanceState) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
                 builder.setMessage(R.string.general_public_license_3)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
+                        .setPositiveButton(android.R.string.ok, (dialog, id) -> {
                         });
                 return builder.create();
             }
@@ -416,9 +385,7 @@ public class MainSettingsActivity extends AppCompatActivity {
             public Dialog onCreateDialog(Bundle savedInstanceState) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
                 builder.setMessage(Html.fromHtml(getString(R.string.changelog)))
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
+                        .setPositiveButton(android.R.string.ok, (dialog, id) -> {
                         });
                 return builder.create();
             }

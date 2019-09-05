@@ -65,41 +65,35 @@ public class ServerConfigurationActivity extends AppCompatActivity implements Se
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setRippleColor(getResources().getColor(R.color.white));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CharSequence type[] = new CharSequence[] {getString(R.string.connection_type_wifi), getString(R.string.connection_type_mobile), getString(R.string.connection_type_bluetooth)};
+        fab.setOnClickListener(view -> {
+            CharSequence type[] = new CharSequence[] {getString(R.string.connection_type_wifi), getString(R.string.connection_type_mobile), getString(R.string.connection_type_bluetooth)};
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ServerConfigurationActivity.this);
-                builder.setItems(type, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            WifiDialogNew myDialog = new WifiDialogNew();
-                            myDialog.setCancelable(false);
-                            myDialog.show(manager, "wifi");
-                        } else if (which == 1) {
-                            MobileDialogNew myDialog = new MobileDialogNew();
-                            myDialog.setCancelable(false);
-                            myDialog.show(manager, "mobile");
+            AlertDialog.Builder builder = new AlertDialog.Builder(ServerConfigurationActivity.this);
+            builder.setItems(type, (dialog, which) -> {
+                if (which == 0) {
+                    WifiDialogNew myDialog = new WifiDialogNew();
+                    myDialog.setCancelable(false);
+                    myDialog.show(manager, "wifi");
+                } else if (which == 1) {
+                    MobileDialogNew myDialog = new MobileDialogNew();
+                    myDialog.setCancelable(false);
+                    myDialog.show(manager, "mobile");
+                } else {
+                    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (bluetoothAdapter == null) {
+                        Toast.makeText(getApplicationContext(), R.string.bluetooth_not_supported, Toast.LENGTH_LONG).show();
+                    } else {
+                        if (!bluetoothAdapter.isEnabled()) {
+                            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                         } else {
-                            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                            if (bluetoothAdapter == null) {
-                                Toast.makeText(getApplicationContext(), R.string.bluetooth_not_supported, Toast.LENGTH_LONG).show();
-                            } else {
-                                if (!bluetoothAdapter.isEnabled()) {
-                                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                                } else {
-                                    BluetoothPairedListDialog myDialog = new BluetoothPairedListDialog();
-                                    myDialog.show(manager, "bluetooth");
-                                }
-                            }
+                            BluetoothPairedListDialog myDialog = new BluetoothPairedListDialog();
+                            myDialog.show(manager, "bluetooth");
                         }
                     }
-                });
-                builder.show();
-            }
+                }
+            });
+            builder.show();
         });
     }
 

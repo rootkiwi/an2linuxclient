@@ -56,19 +56,16 @@ public abstract class BluetoothDialog extends ServerDialog implements Observer {
     abstract void saveBluetoothServerToDatabase(boolean newCertificate);
 
     private void resetAfterFailedPairingConnection(){
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                initiatePairingButton.setVisibility(View.VISIBLE);
-                initiatePairingButton.setText(R.string.try_again);
-                if (certificateSpinner != null){
-                    certificateSpinner.setVisibility(View.VISIBLE);
-                }
-                saveServerBtn.setEnabled(true);
+        getActivity().runOnUiThread(() -> {
+            initiatePairingButton.setVisibility(View.VISIBLE);
+            initiatePairingButton.setText(R.string.try_again);
+            if (certificateSpinner != null){
+                certificateSpinner.setVisibility(View.VISIBLE);
+            }
+            saveServerBtn.setEnabled(true);
 
-                if (connectionHandler != null){
-                    connectionHandler.cancel();
-                }
+            if (connectionHandler != null){
+                connectionHandler.cancel();
             }
         });
     }
@@ -94,12 +91,7 @@ public abstract class BluetoothDialog extends ServerDialog implements Observer {
                 break;
             case SERVER_ACCEPTED_PAIR:
                 if (clientAcceptedPair){
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            saveBluetoothServerToDatabase(true);
-                        }
-                    });
+                    getActivity().runOnUiThread(() -> saveBluetoothServerToDatabase(true));
                     return;
                 } else {
                     infoText = getString(R.string.server_accepted_pairing) + pairingInfoTextView.getText().toString();
@@ -123,12 +115,7 @@ public abstract class BluetoothDialog extends ServerDialog implements Observer {
                 return;
         }
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                pairingInfoTextView.setText(infoText);
-            }
-        });
+        getActivity().runOnUiThread(() -> pairingInfoTextView.setText(infoText));
     }
 
     private class InitiatePairingOnClickListener implements View.OnClickListener {

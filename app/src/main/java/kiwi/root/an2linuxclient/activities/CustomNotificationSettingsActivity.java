@@ -37,12 +37,9 @@ public class CustomNotificationSettingsActivity extends AppCompatActivity implem
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         final ConstraintLayout emptyView = findViewById(R.id.emptyView);
-        emptyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CustomNotificationSettingsActivity.this, EnabledApplicationsActivity.class);
-                startActivityForResult(intent, RETURNED_FROM_ENABLED_APPS_SETTINGS_REQUEST);
-            }
+        emptyView.setOnClickListener(view -> {
+            Intent intent = new Intent(CustomNotificationSettingsActivity.this, EnabledApplicationsActivity.class);
+            startActivityForResult(intent, RETURNED_FROM_ENABLED_APPS_SETTINGS_REQUEST);
         });
 
         recyclerView.setHasFixedSize(true);
@@ -54,18 +51,15 @@ public class CustomNotificationSettingsActivity extends AppCompatActivity implem
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         viewModel = ViewModelProviders.of(this).get(CustomNotificationSettingsViewModel.class);
-        viewModel.getAppsDataList().observe(this, new Observer<List<CustomSettingsAppData>>() {
-            @Override
-            public void onChanged(List<CustomSettingsAppData> customSettingsAppData) {
-                adapter.setAppDataList(customSettingsAppData);
-                progressDialog.dismiss();
-                if (customSettingsAppData.size() == 0) {
-                    emptyView.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.GONE);
-                } else {
-                    emptyView.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
+        viewModel.getAppsDataList().observe(this, customSettingsAppData -> {
+            adapter.setAppDataList(customSettingsAppData);
+            progressDialog.dismiss();
+            if (customSettingsAppData.size() == 0) {
+                emptyView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            } else {
+                emptyView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
             }
         });
     }

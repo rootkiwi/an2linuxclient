@@ -23,6 +23,10 @@ android {
         // disable errors on lint
         abortOnError false
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 ext {
