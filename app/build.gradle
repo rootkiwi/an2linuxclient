@@ -51,7 +51,7 @@ dependencies {
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
 
     // For Floating Action Button
     implementation "com.google.android.material:material:$materialVersion"
