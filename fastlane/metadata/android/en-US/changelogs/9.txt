@@ -1,0 +1,17 @@
+0.7.0 (Jan 16, 2018)
+- New icon created by conrad-heimbold@github, thank you!
+
+0.6.0 (May 12, 2017)
+- New preference added for minimum notification priority
+
+0.5.1 (Apr 12, 2017)
+- Fix bug that caused AN2Linux to crash when opening individual app settings (affecting Android 4.4-5.1)
+
+0.5.0 (Apr 5, 2017)
+- Replace sha1 with sha256
+
+0.4.0 (Apr 1, 2017)
+- Allow notification settings to be set individually per app
+
+0.3.0 (Feb 6, 2017)
+- New preference added for custom icon size

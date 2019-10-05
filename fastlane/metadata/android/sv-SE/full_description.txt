@@ -1,0 +1,16 @@
+AN2Linux låter dig synkronisera notifikationer på din telefon till din Linux-desktop krypterat med TLS.
+
+Detta är möjligt via WiFi, mobildata eller Bluetooth.
+
+För att AN2Linux ska fungera måste du ha AN2Linux-server körandes på din dator.
+
+För mer information kan du läsa README-filerna från git.
+Om du har några problem kan du skapa ett 'Issue' på GitHub.
+
+AN2Linux är fri programvara med öppen källkod licensierad under GNU GPLv3.
+
+Källkod för denna app:
+https://github.com/rootkiwi/an2linuxclient/
+
+Källkod för AN2Linux-server:
+https://github.com/rootkiwi/an2linuxserver/

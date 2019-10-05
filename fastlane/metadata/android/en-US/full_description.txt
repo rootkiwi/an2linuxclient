@@ -12,5 +12,5 @@ AN2Linux is free and open-source software licensed under GNU GPLv3.
 Source code this app:
 https://github.com/rootkiwi/an2linuxclient/
 
-Source code server:
+Source code AN2Linux-server:
 https://github.com/rootkiwi/an2linuxserver/

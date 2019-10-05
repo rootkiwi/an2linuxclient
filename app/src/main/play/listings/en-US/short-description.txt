@@ -1,1 +1,0 @@
-Sync Android notifications encrypted to a Linux desktop

@@ -1,0 +1,106 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+opt_out_usage
+skip_docs
+
+before_all do
+  ensure_bundle_exec
+  ensure_git_status_clean
+  ensure_git_branch(branch: "master")
+end
+
+desc "Deploy a new version to Google Play, GitHub and eventually F-Droid"
+lane :deploy do
+  set_and_check_environment_variables
+  build_signed_apk_and_aab
+  deploy_to_play_store
+  push_to_github_and_create_release
+end
+
+private_lane :set_and_check_environment_variables do
+  UI.important "-------------------------------------------------------------"
+  UI.important "--- Checking latest tag version and environment variables ---"
+  UI.important "-------------------------------------------------------------"
+  
+  # Set $VERSION to latest tag name example: v0.9.2
+  ENV["VERSION"] = sh(command: "git describe --abbrev=0 | tr -d '\n'", log: false)
+  UI.error ENV["VERSION"]
+
+  if not ENV["KEY_STORE_FILE"]
+      abort "Error: $KEY_STORE_FILE not set"
+  end
+  if not ENV["KEY_STORE_PASSWORD"]
+      abort "Error: $KEY_STORE_PASSWORD not set"
+  end
+  if not ENV["KEY_ALIAS"]
+      abort "Error: $KEY_ALIAS not set"
+  end
+  if not ENV["KEY_PASSWORD"]
+      abort "Error: $KEY_PASSWORD not set"
+  end
+  if not ENV["GITHUB_TOKEN"]
+      abort "Error: $GITHUB_TOKEN not set"
+  end
+  if not ENV["VERSION"]
+      abort "Error: $VERSION not set"
+  end
+  UI.success "Environment variables OK!"
+end
+
+private_lane :build_signed_apk_and_aab do
+  UI.important "-------------------------------------------------------------"
+  UI.important "--- Deleting the build directory, generated APKs and AABs ---"
+  UI.important "-------------------------------------------------------------"
+  gradle(task: "clean")
+  
+  UI.important "-----------------------------------"
+  UI.important "--- Building signed APK and AAB ---"
+  UI.important "-----------------------------------"
+  gradle(
+    task: "bundleRelease assembleRelease",
+    properties: {
+      "android.injected.signing.store.file" => ENV["KEY_STORE_FILE"],
+      "android.injected.signing.store.password" => ENV["KEY_STORE_PASSWORD"],
+      "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
+      "android.injected.signing.key.password" => ENV["KEY_PASSWORD"],
+    }
+  )
+  UI.success "Builds completed successfully!"
+end
+
+private_lane :deploy_to_play_store do
+  UI.important "-------------------------------"
+  UI.important "--- Uploading to Play Store ---"
+  UI.important "-------------------------------"
+  upload_to_play_store(skip_upload_apk: true)
+end
+
+private_lane :push_to_github_and_create_release do
+  UI.important "------------------------------------------"
+  UI.important "--- Pushing to GitHub (including tags) ---"
+  UI.important "------------------------------------------"
+  push_to_git_remote(remote: "github", tags: true)
+  
+  UI.important "-------------------------------"
+  UI.important "--- Creating GitHub release ---"
+  UI.important "-------------------------------"
+  github_release = set_github_release(
+    repository_name: "rootkiwi/an2linuxclient",
+    api_token: ENV["GITHUB_TOKEN"],
+    name: ENV["VERSION"],
+    tag_name: ENV["VERSION"],
+    description: "```\nsha256sum app-release.apk\n" + sh("sha256sum ../app/build/outputs/apk/release/app-release.apk")[0..64] + "\n```",
+    upload_assets: ["app/build/outputs/apk/release/app-release.apk"]
+  )
+end
+

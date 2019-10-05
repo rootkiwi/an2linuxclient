@@ -1,0 +1,13 @@
+0.8.0 (May 26, 2018)
+- From Android 8.1 COARSE_LOCATION permission is needed to access WiFi SSID! Also it seems
+that location services needs to be turned on as well, otherwise the SSID reported will
+be "unknown ssid".
+
+- Setting to run AN2Linux as a foreground service, thank you Eyenseo!
+
+- Dutch translation by Vistaus, thank you!
+
+- Spanish translation by CalebCDE, thank you!
+
+0.7.0 (Jan 16, 2018)
+- New icon created by conrad-heimbold@github, thank you!
