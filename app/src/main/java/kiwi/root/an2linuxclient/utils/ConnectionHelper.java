@@ -58,8 +58,8 @@ public class ConnectionHelper {
         WifiManager wifiManager = (WifiManager) c.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifiManager.getConnectionInfo();
         String connectedToSsid = info.getSSID();
-        for(String ssid : ssidWhitelist.split(",")){
-            if(connectedToSsid.equals("\""+ssid.trim()+"\"")){
+        for (String ssid : ssidWhitelist.split("(?<!\\\\),")){
+            if (connectedToSsid.equals("\"" + ssid.trim().replace("\\,", ",") + "\"")){
                 return true;
             }
         }

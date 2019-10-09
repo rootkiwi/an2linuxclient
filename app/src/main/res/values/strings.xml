@@ -77,7 +77,7 @@
     <string name="dialog_title_bt_mac">MAC address</string>
     <string name="dialog_ip_or_hostname_hint">Enter ip or hostname</string>
     <string name="dialog_port_hint">Enter port number</string>
-    <string name="dialog_title_ssid_hint">Enter one or more SSID comma-separated\nExample: WiFi1, wifi2 (case-sensitive)\nLeave empty to allow any</string>
+    <string name="dialog_title_ssid_hint">Enter one or more SSID comma-separated\nExample: WiFi1, wifi2, ssid\\,with\\,comma\nCase-sensitive, escape comma with \'\\\'\nLeave empty to allow any</string>
     <string name="dialog_pairing_info_text">Need to exchange certificates</string>
     <string name="spinner_choose_certificate">Choose existing certificate…</string>
     <string name="dialog_pairing_button_text">Initiate pairing with server</string>

@@ -88,18 +88,17 @@ public class ServerConfigurationAdapter extends ArrayAdapter<Server> {
                             context.getString(R.string.server_list_ssid_whitelist_colon),
                             context.getString(R.string.server_list_any_ssid)));
                 } else {
-                    String[] allowedSSIDs = wifiServer.getSsidWhitelist().split(",");
-                    String allowedSSIDsString = "";
-
+                    String[] allowedSSIDs = wifiServer.getSsidWhitelist().split("(?<!\\\\),");
+                    StringBuilder allowedSSIDsStringBuilder = new StringBuilder();
                     for (int i = 0; i < allowedSSIDs.length; i++){
-                        allowedSSIDsString += String.format("'%s'", allowedSSIDs[i].trim());
-                        if (i < allowedSSIDs.length - 1){
-                            allowedSSIDsString += ", ";
+                        allowedSSIDsStringBuilder.append(String.format("'%s'", allowedSSIDs[i].trim().replace("\\,", ",")));
+                        if (i < allowedSSIDs.length - 1) {
+                            allowedSSIDsStringBuilder.append(", ");
                         }
                     }
 
                     listItemServerInfo2.setText(String.format("%s %s",
-                            context.getString(R.string.server_list_ssid_whitelist_colon), allowedSSIDsString));
+                            context.getString(R.string.server_list_ssid_whitelist_colon), allowedSSIDsStringBuilder.toString()));
                 }
             } else {
                 MobileServer mobileServer = (MobileServer) server;
