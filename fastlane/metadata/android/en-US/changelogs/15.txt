@@ -1,0 +1,14 @@
+0.10.0 (Oct 9, 2019)
+- Add support for commas in WiFi SSID
+
+0.9.2 (Sep 4, 2019)
+- Add information about battery optimizations (Doze) introduced in Android 6.0.
+
+0.9.0 (Sep 1, 2019)
+- Add support for filtering apps with text search in 'Enabled applications' settings.
+
+- Add quick settings tile for toggle enable/disable AN2Linux.
+
+- Change minimum version required from Android 4.4 (API 19) to Android 4.3 (API 18).
+
+- New setting: don't send notification if phone display is turned on.
