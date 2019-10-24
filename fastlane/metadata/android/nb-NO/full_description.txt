@@ -1,0 +1,16 @@
+AN2Linux lar deg synkronisere varsler på telefonen din til Linux-PCen din kryptert med TLS.
+
+Den kan gjøre dette over WiFi, mobildata eller Bluetooth.
+
+For at AN2Linux skal virke må du ha AN2Linux-serveren kjørende på PCen din.
+
+For mer informasjon les README-filene fra git.
+Hvis du opplever problemer kan du opprette en sak på GitHub.
+
+AN2Linux er fri, åpen-kildekode-programvare lisensiert under GNU GPLv3.
+
+Kildekoden til denne appen:
+https://github.com/rootkiwi/an2linuxclient/
+
+Kildekoden til serveren:
+https://github.com/rootkiwi/an2linuxserver/
