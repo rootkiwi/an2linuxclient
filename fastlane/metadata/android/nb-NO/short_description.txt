@@ -1,0 +1,1 @@
+Synkroniser Android-varsler kryptert til en Linux-PC
