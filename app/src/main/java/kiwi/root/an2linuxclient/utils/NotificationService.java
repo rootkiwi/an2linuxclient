@@ -142,7 +142,7 @@ public class NotificationService extends NotificationListenerService {
         return priority >= minNotificationPriority;
     }
 
-    private String getCorrectPrefKey(String key, String packageName, boolean usingCustomSettings) {
+    private static String getCorrectPrefKey(String key, String packageName, boolean usingCustomSettings) {
         return usingCustomSettings ? packageName + "_" + key : key;
     }
 
