@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        &lt;b&gt;0.12.0 (Mar 25, 2020)&lt;/b&gt;&lt;br&gt;
+        - Add location permissions for Android 10. Android 10 requires fine instead of coarse
+        location permission to access the WiFi SSID. And it need it \'all the time\' to be able
+        to use SSID whitelist while AN2Linux is running in background.&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.11.0 (Oct 25, 2019)&lt;/b&gt;&lt;br&gt;
         - Norwegian (bokmål) translation by bilde2910, thank you!&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.10.0 (Oct 9, 2019)&lt;/b&gt;&lt;br&gt;
