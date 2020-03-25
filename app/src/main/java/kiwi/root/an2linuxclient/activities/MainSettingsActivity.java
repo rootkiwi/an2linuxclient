@@ -18,7 +18,6 @@ import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -37,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -148,19 +148,42 @@ public class MainSettingsActivity extends AppCompatActivity {
             generateKeyIfNotExists();
             showChangeLogIfNotSeen();
 
+            // If Android 10+ upgrade from coarse to fine location permission since it is required now
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                boolean hasCoarseLocationPermission = ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                boolean hasFineLocationPermission = ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                if (hasCoarseLocationPermission && !hasFineLocationPermission) {
+                    new AskFineAndBackgroundLocationAccessDialogFragment().show(getFragmentManager(), "AskFineAndBackgroundLocationAccessDialogFragment");
+                }
+            }
+
             findPreference(getString(R.string.preference_enable_an2linux)).setOnPreferenceChangeListener((preference, newValue) -> {
-                if ((boolean) newValue){
+                if ((boolean) newValue) {
                     boolean isNotificationAccessEnabled = NotificationManagerCompat
                             .getEnabledListenerPackages(getActivity())
                             .contains(getActivity().getPackageName());
-                    boolean hasCoarseLocationPermission = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O ||
-                            ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
                     if (!isNotificationAccessEnabled){
                         new AskNotificationAccessDialogFragment().show(getFragmentManager(), "AskNotificationAccessDialogFragment");
                     }
-                    if (!hasCoarseLocationPermission){
-                        new AskCoarseLocationAccessDialogFragment().show(getFragmentManager(), "AskCoarseLocationAccessDialogFragment");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        boolean hasFineLocationPermission = ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+                        if (hasFineLocationPermission) {
+                            boolean hasBackgroundLocationPermission = ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+                            if (!hasBackgroundLocationPermission) {
+                                new AskBackgroundLocationAccessDialogFragment().show(getFragmentManager(), "AskBackgroundLocationAccessDialogFragment");
+                            }
+                        } else {
+                            new AskFineAndBackgroundLocationAccessDialogFragment().show(getFragmentManager(), "AskFineAndBackgroundLocationAccessDialogFragment");
+                        }
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                        boolean hasCoarseLocationPermission = ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+                        if (!hasCoarseLocationPermission){
+                            new AskCoarseLocationAccessDialogFragment().show(getFragmentManager(), "AskCoarseLocationAccessDialogFragment");
+                        }
                     }
 
                     boolean useForegroundService = preference.getSharedPreferences().getBoolean(getString(R.string.preference_enable_service), false);
@@ -168,7 +191,7 @@ public class MainSettingsActivity extends AppCompatActivity {
                     if (useForegroundService){
                         getActivity().startService(new Intent(getActivity(), AN2LinuxService.class));
                     }
-                } else{
+                } else {
                     getActivity().stopService(new Intent(getActivity(), AN2LinuxService.class));
                 }
                 return true;
@@ -354,7 +377,7 @@ public class MainSettingsActivity extends AppCompatActivity {
         }
 
         public static class AskCoarseLocationAccessDialogFragment extends DialogFragment {
-            static int UNIQUE_COARSE_LOCATION_ID  = 0; // WTF is this not a normal constant?
+            static int UNIQUE_COARSE_LOCATION_ID  = 0;
 
             @Override
             public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -363,6 +386,40 @@ public class MainSettingsActivity extends AppCompatActivity {
                         .setPositiveButton(android.R.string.ok, (dialog, id) -> ActivityCompat.requestPermissions(getActivity(),
                                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                                 UNIQUE_COARSE_LOCATION_ID))
+                        .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
+                        });
+                return builder.create();
+            }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.Q)
+        public static class AskFineAndBackgroundLocationAccessDialogFragment extends DialogFragment {
+            static int UNIQUE_FINE_LOCATION_ID  = 1; // WTF is this not a normal constant?
+
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
+                builder.setMessage(R.string.main_dialog_ask_fine_location_access)
+                        .setPositiveButton(android.R.string.ok, (dialog, id) -> ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+                                UNIQUE_FINE_LOCATION_ID))
+                        .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
+                        });
+                return builder.create();
+            }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.Q)
+        public static class AskBackgroundLocationAccessDialogFragment extends DialogFragment {
+            static int UNIQUE_BACKGROUND_LOCATION_ID  = 2;
+
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom);
+                builder.setMessage(R.string.main_dialog_ask_background_location_access)
+                        .setPositiveButton(android.R.string.ok, (dialog, id) -> ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+                                UNIQUE_BACKGROUND_LOCATION_ID))
                         .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
                         });
                 return builder.create();

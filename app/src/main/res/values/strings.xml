@@ -60,7 +60,9 @@
     <string name="main_source_code_server">Source code server</string>
     <string name="main_source_code_server_link">https://github.com/rootkiwi/an2linuxserver</string>
     <string name="main_dialog_ask_notification_access">AN2Linux requires access to your notifications. When the notification settings will open, enable AN2Linux then hit the back button.</string>
-    <string name="main_dialog_ask_coarse_location_access">AN2Linux requires access to your coarse location to obtain the WiFi SSID. When the permission settings will open, grant the location permission.</string>
+    <string name="main_dialog_ask_coarse_location_access">AN2Linux requires location permission to obtain the WiFi SSID. When the permission settings will open, grant the location permission.</string>
+    <string name="main_dialog_ask_fine_location_access">Since Android 10+ AN2Linux requires fine instead of coarse location permission to obtain the WiFi SSID. It need it \'all the time\' to be able to use SSID whitelist. When the permission settings will open, grant the location permission.</string>
+    <string name="main_dialog_ask_background_location_access">AN2Linux requires location permission \'all the time\' to access WiFi SSID when running in background. When the permission settings will open, grant the location permission.</string>
     <string name="enabled_apps_enable_disable_all">Enable/disable all</string>
     <string name="empty_view_text_server_configuration">There are three different kind of "servers": WiFi, Mobile and Bluetooth.\n\nWhat that means is simply that AN2Linux will only try to send notifications to a server if you are connected to that type.\n\nFor example if you are connected to WiFi it will only try to send to all enabled WiFi servers and not to any mobile servers.\n\nBluetooth is kinda special, here "connected" means that bluetooth is turned on.</string>
     <string name="connection_type_wifi">WiFi</string>
