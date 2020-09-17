@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AN2Linux</string>
     <string name="packagename">kiwi.root.an2linuxclient</string>
@@ -145,4 +146,6 @@
     <string name="enabled_applications_filter_hint_text">Filtrer:</string>
     <string name="dialog_disable_battery_optimizations_not_supported">Enheten din støtter ikke deaktivering av batterioptimalisering</string>
     <string name="dialog_disable_battery_optimizations_restart_info">Omstart av telefonen kan være nødvendig for at denne listen skal oppdatere riktig</string>
+    <string name="main_dialog_ask_background_location_access">AN2Linux krever vedvarende posisjonstilgang for å få tilgang til Wi-Fi-SSID når det kjører i bakgrunnen. Innvilg posisjonstilgangen når tilgangsinnstillingene åpnes.</string>
+    <string name="main_dialog_ask_fine_location_access">Siden Android 10+ krever AN2Linux finmasket istedenfor grov posisjonstilgang for å innhente Wi-Fi-SSID. \"Alltid\" er nødvendig for å bruke SSID-hvitliste. Innvilg posisjonstilgangen når tilgangsinnstillingene åpnes.</string>
 </resources>
