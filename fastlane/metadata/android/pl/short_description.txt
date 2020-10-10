@@ -1,0 +1,1 @@
+Synchronizuj powiadomienia Androida zaszyfrowane z pulpitem Linux

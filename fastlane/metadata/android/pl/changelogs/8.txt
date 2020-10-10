@@ -1,0 +1,14 @@
+0.6.0 (12 maja 2017 r.)
+- Dodano nową preferencję dla minimalnego priorytetu powiadomień
+
+0.5.1 (12 kwi 2017)
+- Naprawić błąd, który spowodował AWARIĘ AN2Linux podczas otwierania poszczególnych ustawień aplikacji (wpływających na Androida 4.4-5.1)
+
+0.5.0 (5 kwi 2017)
+- Wymień sha1 na sha256
+
+0.4.0 (1 kwi 2017)
+- Zezwalaj na ustawienia powiadomień, które mają być ustawiane indywidualnie dla każdej aplikacji
+
+0.3.0 (6 lutego 2017)
+- Dodano nowe preferencje dla niestandardowego rozmiaru ikony

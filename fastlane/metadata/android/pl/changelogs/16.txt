@@ -1,0 +1,8 @@
+0.11.0 (25.02.2019)
+- Norweski (bokmål) tłumaczenie przez bilde2910, dziękuję!
+
+0.10.0 (9 października 2019)
+- Dodaj obsługę przecinków w WiFi SSID
+
+0.9.2 (4 września 2019)
+- Dodaj informacje o optymalizacji baterii (Doze) wprowadzone w Android 6.0.

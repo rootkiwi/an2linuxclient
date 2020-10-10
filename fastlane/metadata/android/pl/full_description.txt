@@ -1,0 +1,16 @@
+AN2Linux pozwala na synchronizację powiadomień w telefonie do pulpitu Linuksa zaszyfrowanych za pomocą TLS.
+
+Może to zrobić przez WiFi, dane komórkowe lub Bluetooth.
+
+Aby AN2Linux działał, musisz mieć serwer AN2Linux uruchomiony na twoim komputerze.
+
+Aby uzyskać więcej informacji, przeczytaj pliki README z repozytoriów git.
+Jeśli masz jakiekolwiek problemy, możesz utworzyć problem w usłudze GitHub.
+
+AN2Linux jest darmowym i otwartym oprogramowaniem licencjonowanym na licencji GNU GPLv3.
+
+Kod źródłowy tej aplikacji:
+https://github.com/rootkiwi/an2linuxclient/
+
+Kod źródłowy AN2Linux-server:
+https://github.com/rootkiwi/an2linuxserver/
