@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="main_enable_service_information_notification_title">Jak ukryć powiadomienie AN2Linux</string>
+    <string name="main_enable_service_information_notification_channel_name">Kanał informacyjny AN2Linux</string>
+    <string name="main_enable_service_notification_channel_name">Usługa pierwszego planu AN2Linux</string>
+    <string name="main_enable_service">Włącz usługę pierwszego planu</string>
+    <string name="main_enable_an2linux">Włącz AN2Linux</string>
+    <string name="main_settings_category_about">O aplikacji</string>
+    <string name="main_settings_category_title">Ustawienia</string>
+    <string name="main_setup_category_title">Instalacja</string>
+    <string name="activity_label_client_certificate">Certyfikat i klucz urządzenia</string>
+    <string name="activity_label_server_configuration">Konfiguracja serwera</string>
+    <string name="activity_label_custom_notification_settings">Własne ustawienia</string>
+    <string name="activity_label_notification_settings">Ustawienia powiadomień</string>
+    <string name="activity_label_enabled_applications">Włączone aplikacje</string>
+    <string name="packagename">kiwi.root.an2linuxclient</string>
+    <string name="app_name">AN2Linux</string>
+</resources>
