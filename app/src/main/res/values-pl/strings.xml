@@ -15,4 +15,19 @@
     <string name="activity_label_enabled_applications">Włączone aplikacje</string>
     <string name="packagename">kiwi.root.an2linuxclient</string>
     <string name="app_name">AN2Linux</string>
+    <string name="main_max_title_dialog_message">Wybierz maksymalny rozmiar tytułu:</string>
+    <string name="main_max_title">Maksymalna liczba znaków do uwzględnienia z tytułu</string>
+    <string name="main_force_title">Wymuś nazwę powiadomienia jako nazwę aplikacji</string>
+    <string name="main_icon_size_dialog_message">Wybierz rozmiar ikony:</string>
+    <string name="main_icon_size_summary">%d pikseli
+\nWiększość demonów powiadamiających skaluje obraz do określonego rozmiaru, tylko po to, abyś wiedział, że</string>
+    <string name="main_icon_size">Rozmiar ikony</string>
+    <string name="main_include_icon">Dołącz ikonę powiadomienia</string>
+    <string name="main_include_message">Dołącz wiadomość z powiadomieniem</string>
+    <string name="main_include_title">Dołącz tytuł powiadomienia</string>
+    <string name="main_display_test_notification">Wyświetl powiadomienie o testach</string>
+    <string name="main_server_configuration_summary">Dodaj serwer, na który mają być wysyłane powiadomienia</string>
+    <string name="main_enabled_apps_summary">Wysyłaj powiadomienia tylko z tych aplikacji</string>
+    <string name="main_ignore_battery_optimization_summary_already_ignored">AN2Linux jest ignorowany przez Doze</string>
+    <string name="main_ignore_battery_optimization_title">Ignoruj optymalizacje baterii (drzemka)</string>
 </resources>
