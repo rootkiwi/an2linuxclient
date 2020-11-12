@@ -1,2 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="main_changelog">Journal des changements</string>
+    <string name="notif_settings_custom_category_title">Paramètres personnalisés</string>
+    <string name="notif_settings_global_category_title">Paramètres globaux</string>
+    <string name="test_notif_message_line_two">ligne de message 2</string>
+    <string name="test_notif_message">message</string>
+    <string name="test_notif_title">titre</string>
+    <string name="test_notif_need_access">Besoin d’accéder aux notifications</string>
+    <string name="server_list_certificate_fingerprint">Empreinte (SHA256) :</string>
+    <string name="server_list_roaming_allowed_no">non</string>
+    <string name="server_list_roaming_allowed_yes">oui</string>
+    <string name="try_again">Réessayez</string>
+    <string name="pairing_connecting">Connexion…</string>
+    <string name="invalid_address">Adresse invalide</string>
+    <string name="bluetooth_new_edit">Modifier</string>
+    <string name="dialog_title_roaming">Itinérance</string>
+    <string name="dialog_title_ssid">Liste blanche SSID</string>
+    <string name="dialog_title_port">Port</string>
+    <string name="dialog_title_address">Adresse</string>
+    <string name="button_delete_text">Supprimer</string>
+    <string name="button_save_text">Enregistrer</string>
+    <string name="connection_type_bluetooth">Bluetooth</string>
+    <string name="connection_type_mobile">Mobile</string>
+    <string name="connection_type_wifi">Wi-Fi</string>
+    <string name="enabled_apps_enable_disable_all">Tout activer/désactiver</string>
+    <string name="main_source_code_server_link">https://github.com/rootkiwi/an2linuxserver</string>
+    <string name="main_source_code_server">Serveur de code source</string>
+    <string name="main_source_code_client_link">https://github.com/rootkiwi/an2linuxclient</string>
+    <string name="main_source_code_client">Code source de cette application</string>
+    <string name="main_block_local_summary">Vous devez aussi bricoler avec ça
+\nIl est probablement préférable de ne pas bloquer, mais c’est ce que dit la référence Android :
+\n« La notification concerne uniquement l’appareil actuel et il n’est pas recommandé de la relier à d’autres appareils »
+\nPar exemple, Google Now Reminders est signalé comme suit</string>
+    <string name="main_icon_size_summary">%d pixels
+\nLa plupart des démons de notification redimensionneront l’image à une taille spécifique, juste pour que vous sachiez</string>
+    <string name="main_icon_size">Taille de l’icône</string>
+    <string name="main_enable_service_information_notification_text">Pour masquer le point de notification de la notification de service, ouvrez les paramètres de notification de cette application, cliquez sur le nom du canal de service et définissez l’importance sur faible.</string>
+    <string name="general_public_license_3">Copyright 2017 rootkiwi
+\n
+\nAN2Linux est un logiciel libre : vous pouvez le redistribuer et / ou le modifier selon les termes de la licence publique générale GNU publiée par la Free Software Foundation, soit la version 3 de la licence, soit (à votre choix) toute version ultérieure.
+\n
+\nCe programme est distribué dans l’espoir qu’il sera utile, mais SANS AUCUNE GARANTIE ; sans même la garantie implicite de QUALITÉ MARCHANDE ou D’ADAPTATION À UN USAGE PARTICULIER. Voir la licence publique générale GNU pour plus de détails.
+\n
+\nVous devriez avoir reçu une copie de la licence publique générale GNU avec ce programme. Sinon, consultez &lt;http://www.gnu.org/licenses/&gt;.</string>
+    <string name="main_license_summary">Licence publique générale GNU 3</string>
+    <string name="main_license">Licence</string>
+    <string name="main_block_group_summary">Ceci est différent pour chaque application, vous devez bricoler avec ce paramètre
+\nAvec Gmail, ce sont des notifications de type :
+\n« 2 nouveaux messages »
+\nApparemment, les messages texte de Viber sont signalés comme suit</string>
+    <string name="main_ignore_battery_optimization_title">Ignorer les optimisations de la batterie (Doze)</string>
+    <string name="main_enable_service">Activer le service d’avant-plan</string>
+    <string name="main_enable_an2linux">Activer AN2Linux</string>
+    <string name="main_settings_category_about">À propos</string>
+    <string name="main_settings_category_title">Paramètres</string>
+    <string name="main_setup_category_title">Configuration</string>
+    <string name="activity_label_client_certificate">Certificat et clé de l’appareil</string>
+    <string name="activity_label_server_configuration">Configuration du serveur</string>
+    <string name="activity_label_custom_notification_settings">Paramètres personnalisés</string>
+    <string name="activity_label_notification_settings">Paramètres de notification</string>
+    <string name="activity_label_enabled_applications">Applications activées</string>
+    <string name="packagename">kiwi.root.an2linuxclient</string>
+    <string name="app_name">AN2Linux</string>
+</resources>
