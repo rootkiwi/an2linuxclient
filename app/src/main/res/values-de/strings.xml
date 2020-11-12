@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="activity_label_notification_settings">Benachrichtigungseinstellungen</string>
-    <string name="activity_label_server_configuration">Server Konfiguration</string>
+    <string name="activity_label_server_configuration">Serverkonfiguration</string>
     <string name="connection_type_bluetooth">Bluetooth</string>
     <string name="button_save_text">Speichern</string>
     <string name="button_delete_text">Löschen</string>
@@ -14,7 +14,7 @@
     <string name="client_certificate_fingerprint">Zertifikatsfingerabdruck (SHA256):</string>
     <string name="client_certificate_button_text">Generiere neuen Schlüssel und neues Zertifikat</string>
     <string name="main_icon_size_dialog_message">Wähle Icon Größe:</string>
-    <string name="main_icon_size">Icon Größe</string>
+    <string name="main_icon_size">Symbolgröße</string>
     <string name="main_include_icon">Zeige das Icon der Benachrichtigung</string>
     <string name="main_include_title">Zeige den Titel der Benachrichtigung</string>
     <string name="main_include_message">Zeige den Inhalt der Benachrichtigung</string>
@@ -25,4 +25,5 @@
     <string name="activity_label_custom_notification_settings">Benutzerdefinierte Einstellungen</string>
     <string name="activity_label_enabled_applications">Aktivierte Apps</string>
     <string name="app_name">AN2Linux</string>
+    <string name="main_changelog">Änderungsprotokoll</string>
 </resources>
