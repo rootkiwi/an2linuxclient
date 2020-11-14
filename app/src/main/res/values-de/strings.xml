@@ -27,4 +27,10 @@
     <string name="app_name">AN2Linux</string>
     <string name="main_changelog">Änderungsprotokoll</string>
     <string name="main_enabled_apps_summary">Sende Benachrichtigungen ausschließlich von diesen Apps</string>
+    <string name="main_enable_service_summary">Android 8.0 hat \'Hintergrundaktivität Einschränkung\' hinzugefügt, um den Akkuverbrauch von im Hintergrund laufende Prozesse zu mindern. Dies bedeutet, dass AN2Linux beendet werden kann. Wenn Sie also Android 8.0+ verwenden und AN2Linux Benachrichtigungen verpasst, können sie versuchen AN2Linux, als Vordergrunddienst zu aktivieren.</string>
+    <string name="packagename">kiwi.root.an2linuxclient</string>
+    <string name="main_enable_service_information_notification_title">Wie man AN2Linux Benachrichtigungen verbirgt</string>
+    <string name="main_enable_service_information_notification_channel_name">AN2Linux Informationskanal</string>
+    <string name="main_enable_service_notification_channel_name">AN2Linux Vordergrunddienst</string>
+    <string name="main_setup_category_title">Einrichten</string>
 </resources>
