@@ -26,4 +26,5 @@
     <string name="activity_label_enabled_applications">Aktivierte Apps</string>
     <string name="app_name">AN2Linux</string>
     <string name="main_changelog">Änderungsprotokoll</string>
+    <string name="main_enabled_apps_summary">Sende Benachrichtigungen ausschließlich von diesen Apps</string>
 </resources>
