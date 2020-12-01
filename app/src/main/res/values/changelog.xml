@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="changelog">
+        &lt;b&gt;0.13.0 (Dec 1, 2020)&lt;/b&gt;&lt;br&gt;
+        - Polish translation added by WaldiS.&lt;br&gt;&lt;br&gt;
+        - French translation added by J. Lavoie.&lt;br&gt;&lt;br&gt;
+        - Norwegian translation updated by Allan Nordhøy.&lt;br&gt;&lt;br&gt;
+        - German translation updated by Simon Kreuzer and J. Lavoie.&lt;br&gt;&lt;br&gt;
+        - Thank you!&lt;br&gt;&lt;br&gt;
         &lt;b&gt;0.12.0 (Mar 25, 2020)&lt;/b&gt;&lt;br&gt;
         - Add location permissions for Android 10. Android 10 requires fine instead of coarse
         location permission to access the WiFi SSID. And it need it \'all the time\' to be able

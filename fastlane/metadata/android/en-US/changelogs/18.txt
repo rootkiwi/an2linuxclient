@@ -1,0 +1,11 @@
+0.13.0 (Dec 1, 2020)
+- Polish translation added by WaldiS.
+- French translation added by J. Lavoie.
+- Norwegian translation updated by Allan Nordhøy.
+- German translation updated by Simon Kreuzer and J. Lavoie.
+- Thank you!
+
+0.12.0 (Mar 25, 2020)
+- Add location permissions for Android 10. Android 10 requires fine instead of coarse location
+permission to access the WiFi SSID. And it need it 'all the time' to be able to use
+SSID whitelist while AN2Linux is running in background.
