@@ -1,0 +1,16 @@
+Mit AN2Linux können Sie die Benachrichtigungen von Ihrem Smartphone auf Ihren Linux-Computer synchronisieren, und zwar TLS-verschlüsselt.
+
+AN2Linux funktioniert über WLAN, Mobile Daten und Bluetooth.
+
+Auf Ihrem Computer muss dazu die Anwendung AN2Linux-server (s. u.) laufen.
+
+Um mehr zu erfahren, lesen Sie die README-Datei auf GitHub.
+Falls Sie Schwierigkeiten haben, können sie ebenso auf Github ein Issue erstellen.
+
+AN2Linux is freie und quelloffene Software, die unter der GNU GPLv3 lizensiert ist.
+
+Quelltext dieser App:
+https://github.com/rootkiwi/an2linuxclient/
+
+Quelltext von AN2Linux-server:
+https://github.com/rootkiwi/an2linuxserver/
