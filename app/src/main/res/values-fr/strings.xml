@@ -62,4 +62,115 @@
     <string name="activity_label_enabled_applications">Applications activées</string>
     <string name="packagename">kiwi.root.an2linuxclient</string>
     <string name="app_name">AN2Linux</string>
+    <string name="dialog_disable_battery_optimizations_restart_info">Un redémarrage du téléphone pourrait être nécessaire pour que cette liste soit mise à jour correctement</string>
+    <string name="dialog_disable_battery_optimizations_not_supported">Votre appareil ne supporte pas la désactivation des optimisations de batterie</string>
+    <string name="enabled_applications_filter_hint_text">Filtre :</string>
+    <string name="pref_force_appname_info_extraction_unsupported">L\'extraction de titre/message requiert Android 4.4+. Donc si un titre est inclu, ce sera toujours le nom de l\'app.</string>
+    <string name="pref_message_info_extraction_unsupported_version">L\'extraction de titre/message requiert Android 4.4+</string>
+    <string name="utils_an2linux_service">Service d\'avant-plan AN2Linux</string>
+    <string name="notif_settings_min_notification_priority_title">Priorité minimum des notifications</string>
+    <string name="notif_settings_custom_no_enabled_summary">Tapper ici pour accéder au réglage des applications activées</string>
+    <string name="notif_settings_custom_no_enabled_title">Aucun app activée pour la synchronisation des notifications</string>
+    <string name="notif_settings_custom_settings_summary">Configurer des réglages par app qui remplaceront les réglages globaux</string>
+    <string name="notif_settings_custom_settings_title">Réglages par app</string>
+    <string name="notif_custom_using_custom_settings">Utilise les réglages personnalisés</string>
+    <string name="notif_custom_use_custom_summary">Remplacer les réglages globaux pour %s</string>
+    <string name="notif_custom_use_custom_title">Utiliser des réglages personnalisés</string>
+    <string name="generate_key_working_notification">Génération d\'une clé RSA 4096 bits…</string>
+    <string name="generate_key_working">On travaille dur…</string>
+    <string name="generate_key_notification_channel_name">Génération de clé AN2Linux</string>
+    <string name="client_certificate_button_text">Générer une nouvelle clé et certificat</string>
+    <string name="client_certificate_fingerprint">Empreinte du certificat (SHA256) :</string>
+    <string name="client_certificate_info">AN2Linux a généré une paire de clés et un certificat RSA 4096 bits lors de la première exécution.
+\n
+\nCela est seulement utilisé pour s\'authentifier avec le serveur (votre ordinateur) et pas pour du chiffrement.
+\n
+\nAprès vous être appairé avec le serveur avec succès, vous devrez pouvoir voir votre empreinte au début d\'une ligne dans le fichier authorized_certs.
+\n
+\nLe fichier authorized_certs se situe dans :
+\n$XDG_CONFIG_HOME/an2linux/
+\nqui par défaut se situe dans :
+\n$HOME/.config/an2linux/</string>
+    <string name="test_notif_testing">Test de %s…</string>
+    <string name="test_notif_found_no_enabled">Aucun serveur %s activé</string>
+    <string name="test_notif_an2linux_not_enabled_in_applications">AN2Linux n\'est pas activée dans les applications autorisées</string>
+    <string name="test_notif_an2linux_not_enabled">AN2Linux n\'est pas complètement activée</string>
+    <string name="main_enable_service_information_notification_channel_name">Canal de notification AN2Linux</string>
+    <string name="main_enable_service_notification_channel_name">Service d\'avant-plan AN2Linux</string>
+    <string name="main_enable_service_summary">À partir de la version 8.0, Android limite l\'exécution en arrière plan des apps afin de limiter la consommation de batterie. Ce qui veut dire qu\'AN2Linux pourrait être coupé par le système. Si vous êtes sous Android 8.0 ou plus et avez des problèmes de notifications manquantes avec AN2Linux, vous pourriez essayer de faire tourner AN2Linux comme service d\'avant-plan.</string>
+    <string name="server_list_roaming_allowed">Itinérance autorisée :</string>
+    <string name="server_list_any_ssid">Tous</string>
+    <string name="server_list_ssid_whitelist_colon">Liste blanche de SSID :</string>
+    <string name="server_list_port_colon">Port :</string>
+    <string name="waiting_for_server_to_accept">En attente que le serveur accepte…
+\n%s</string>
+    <string name="connected_timed_out">Délai de connexion expiré</string>
+    <string name="not_connected_to_wifi">Pas connecté au WiFi</string>
+    <string name="disallowed_ssid">SSID non autorisé</string>
+    <string name="unknown_host">Hôte inconnu</string>
+    <string name="you_are_roaming">Vous êtes en itinérance</string>
+    <string name="not_connected">Pas connecté</string>
+    <string name="connection_closed">Connexion fermée</string>
+    <string name="server_denied_pairing">Le serveur a refusé l\'appairage</string>
+    <string name="server_accepted_pairing">Le serveur a accepté l\'appairage
+\n</string>
+    <string name="verify_hash">Vérifiez le hash :
+\n
+\n</string>
+    <string name="failed_to_connect">La connexion a échoué</string>
+    <string name="bluetooth_is_off">Le bluetooth est éteint</string>
+    <string name="certificate_already_in_database">Le certificat était déjà dans la base de donnée, juste pour votre information</string>
+    <string name="bluetooth_no_paired_found">Aucun ordinateur appairé en bluetooth trouvé</string>
+    <string name="dialog_title_pairing">Appairage</string>
+    <string name="dialog_pairing_button_text_or">Ou initier l\'appairage avec le serveur</string>
+    <string name="dialog_pairing_button_text">Initier l\'appairage avec le serveur</string>
+    <string name="need_to_pair_first">Vous devez d\'abord appairer l\'appareil</string>
+    <string name="invalid_port">Numéro de port invalide</string>
+    <string name="port_range">La plage de ports est 0–65535</string>
+    <string name="bluetooth_not_supported">Votre appareil ne supporte pas le bluetooth</string>
+    <string name="dialog_bt_title_name_hint">Il s\'agit simplement du nom qui sera affiché dans la liste des serveurs de l\'app</string>
+    <string name="dialog_allow_roaming">Autoriser pendant l\'itinérance</string>
+    <string name="spinner_choose_certificate">Choisissez un certificat existant…</string>
+    <string name="dialog_pairing_info_text">Les certificats doivent être échangés</string>
+    <string name="dialog_title_ssid_hint">Entrer un ou plus SSID, séparés par des virgules
+\nExemple : WiFi1, wifi2,ssid\\,avec\\,virgules
+\nSensible à la casse, échappez les virgules avec \'\\,\'
+\nLaisser vide pour tout autoriser</string>
+    <string name="dialog_port_hint">Entrer le numéro de port</string>
+    <string name="dialog_ip_or_hostname_hint">Entrer IP ou hostname</string>
+    <string name="dialog_title_bt_mac">Adresse MAC</string>
+    <string name="dialog_title_bt_name">Nom affiché</string>
+    <string name="empty_view_text_server_configuration">Il y a trois types différents de serveurs : WiFi, Mobile et Bluetooth.
+\n
+\nPar conséquent, AN2Linux essaiera seulement d\'envoyer des notifications vers un serveur dont la connexion correspondante est active.
+\n
+\nPar exemple, si vous êtes connecté⋅e au WiFi, AN2Linux essaiera seulement d\'envoyer vers tous les serveurs WiFi actiffs, mais pas aux serveurs mobiles.
+\n
+\nLe Bluetooth est un peu spécial, dans ce cas \'connecté⋅e\' signifie simplement que le bluetooth est allumé.</string>
+    <string name="main_dialog_ask_background_location_access">AN2Linux a besoin de la permission de localisation \'toujours\' pour accéder au SSID WiFi depuis l\'arrière-plan. Quand les réglages des permissions apparaitront, donnez votre autorisation.</string>
+    <string name="main_dialog_ask_fine_location_access">Depuis Android 10+ AN2Linux a besoin de la localisation précise et pas seulement approximative pour obtenir le SSID WiFi. Elle en a besoin \'toujours\' pour pouvoir utiliser la liste blanche des SSID. Quand les réglages des permissions apparaitront, donnez votre autorisation.</string>
+    <string name="main_dialog_ask_coarse_location_access">AN2Linux a besoin de la permission de localisation pour obtenir le SSID WiFi. Quand les réglages des permissions apparaitront, donnez votre permission à la localisation.</string>
+    <string name="main_dialog_ask_notification_access">AN2Linux a besoin d\'accéder aux notifications. Quand les réglages des notifications apparaitront, autorisez AN2Linux puis appuyez sur le bouton de retour.</string>
+    <string name="main_block_local">Bloquer les notifications locales</string>
+    <string name="main_block_group">Bloquer les notifications groupées</string>
+    <string name="main_block_foreground">Bloquer les notifications des services en cours</string>
+    <string name="main_block_ongoing_summary">Par exemple un appel reçu ou en cours</string>
+    <string name="main_block_ongoing">Bloquer les notifications d\'événements en cours</string>
+    <string name="main_dont_send_if_screen_on_summary">Ne pas envoyer de notifications si l\'écran du téléhone est allumé</string>
+    <string name="main_dont_send_if_screen_on">Ne pas envoyer si l\'écran du téléphone est allumé</string>
+    <string name="main_max_message_dialog_message">Choisir la taille max du message :</string>
+    <string name="main_max_message">Longueur maximum du message</string>
+    <string name="main_max_title_dialog_message">Choisir la taille max du titre :</string>
+    <string name="main_max_title">Longueur maximum du titre</string>
+    <string name="main_force_title">Forcer le nom de l\'app comme titre de la notification</string>
+    <string name="main_icon_size_dialog_message">Selectionner la taille de l\'icône :</string>
+    <string name="main_include_icon">Inclure l\'icône de la notification</string>
+    <string name="main_include_message">Inclure le message de la notification</string>
+    <string name="main_include_title">Inclure le titre de la notification</string>
+    <string name="main_display_test_notification">Afficher une notification de test</string>
+    <string name="main_server_configuration_summary">Ajouter un serveur où envoyer les notifications</string>
+    <string name="main_enabled_apps_summary">Seulement envoyer les notifications de ces apps</string>
+    <string name="main_ignore_battery_optimization_summary_already_ignored">AN2Linux est ignorée par \'Doze\'</string>
+    <string name="main_ignore_battery_optimization_summary">Android 6.0 implémente \'Doze\' qui limite les capacités de apps tournant en arrière-plan, par exemple en bloquant l\'accès au réseau. Il pourrait être nécessaire de désactiver \'Doze\' pour qu\'AN2Linux fonctionne correctement (sauf en cas d\'utilisation du service d\'avant-plan, celui-ci n\'étant pas susceptible au \'Doze\'). Cela peut valoir le coup d\'essayer cette solution avant d\'activer le service d\'avant-plan. Cliquez ici pour le faire.</string>
+    <string name="main_enable_service_information_notification_title">Comment cacher la notification AN2Linux</string>
 </resources>
