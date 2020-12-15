@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="main_include_icon">Отображать иконку уведомления</string>
+    <string name="main_include_message">Отображать текст уведомления</string>
+    <string name="main_include_title">Отображать заголовок уведомления</string>
+    <string name="main_display_test_notification">Отправить тестовое уведомление</string>
+    <string name="main_ignore_battery_optimization_summary_already_ignored">AN2Linux игнорируется Doze</string>
+    <string name="main_enable_an2linux">Включить AN2Linux</string>
+    <string name="main_enable_service">Включить фоновую службу</string>
+    <string name="main_ignore_battery_optimization_title">Игнорировать ограничения использования батареи (Doze)</string>
+    <string name="main_icon_size">Размер иконки</string>
+    <string name="main_enable_service_notification_channel_name">Фоновая служба AN2Linux</string>
+    <string name="main_enable_service_information_notification_title">Как скрыть уведомление от AN2Linux</string>
+    <string name="main_settings_category_about">О приложении</string>
+    <string name="activity_label_client_certificate">Сертификат и ключ устройства</string>
+    <string name="activity_label_server_configuration">Настройки сервера</string>
+    <string name="activity_label_notification_settings">Настройки уведомлений</string>
+    <string name="packagename">kiwi.root.an2linuxclient</string>
+    <string name="app_name">AN2Linux</string>
+</resources>
