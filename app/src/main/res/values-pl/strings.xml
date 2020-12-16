@@ -30,4 +30,13 @@
     <string name="main_enabled_apps_summary">Wysyłaj powiadomienia tylko z tych aplikacji</string>
     <string name="main_ignore_battery_optimization_summary_already_ignored">AN2Linux jest ignorowany przez Doze</string>
     <string name="main_ignore_battery_optimization_title">Ignoruj optymalizacje baterii (drzemka)</string>
+    <string name="dialog_title_roaming">Roaming</string>
+    <string name="dialog_title_pairing">Parowanie</string>
+    <string name="dialog_title_port">Port</string>
+    <string name="dialog_title_address">Adres</string>
+    <string name="main_block_ongoing_summary">Na przykład przychodzące lub aktywne połączenie telefoniczne</string>
+    <string name="main_dont_send_if_screen_on_summary">Nie wysyłaj powiadomień, jeśli ekran telefonu jest włączony</string>
+    <string name="main_dont_send_if_screen_on">Nie wysyłaj, jeśli ekran telefonu jest włączony</string>
+    <string name="main_max_message_dialog_message">Wybierz maksymalny rozmiar wiadomości:</string>
+    <string name="main_max_message">Maksymalna liczba znaków do uwzględnienia z wiadomości</string>
 </resources>
