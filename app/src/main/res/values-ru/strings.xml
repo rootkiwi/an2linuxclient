@@ -17,4 +17,19 @@
     <string name="activity_label_notification_settings">Настройки уведомлений</string>
     <string name="packagename">kiwi.root.an2linuxclient</string>
     <string name="app_name">AN2Linux</string>
+    <string name="main_max_title">Максимальное количество символов из заголовка</string>
+    <string name="main_icon_size_summary">%d пикселей
+\nМногие демоны уведомлений всё равно смасштабируют иконку до определённого размера</string>
+    <string name="main_max_message_dialog_message">Выберите максимальный размер сообщения:</string>
+    <string name="main_ignore_battery_optimization_summary">В Android 6.0 был добавлен режим \'Doze\', чтобы ограничивать фоновые приложения, и он может, например, блокировать доступ к сети. Отключение \'Doze\' для AN2Linux может быть необходимо для корректной работы приложения (только если вы не используете фоновую службу, они не ограничиваются). Возможно, сперва стоит попробовать это, перед тем как включать режим фоновой службы. Нажмите сюда, чтобы это сделать.</string>
+    <string name="main_settings_category_title">Настройки</string>
+    <string name="main_setup_category_title">Настройка</string>
+    <string name="main_block_ongoing_summary">Например, входящий или активный телефонный звонок</string>
+    <string name="main_block_ongoing">Блокировать уведомления о текущих событиях</string>
+    <string name="main_dont_send_if_screen_on_summary">Не присылать уведомления, если телефон разблокирован</string>
+    <string name="main_dont_send_if_screen_on">Не присылать, если включен экран</string>
+    <string name="main_server_configuration_summary">Добавить сервер, на который будут отправляться уведомления</string>
+    <string name="main_max_title_dialog_message">Выберите максимальную длину заголовка:</string>
+    <string name="main_icon_size_dialog_message">Выберите размер иконки:</string>
+    <string name="main_enabled_apps_summary">Присылать уведомления только из следующих приложений</string>
 </resources>
