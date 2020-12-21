@@ -32,4 +32,39 @@
     <string name="main_max_title_dialog_message">Выберите максимальную длину заголовка:</string>
     <string name="main_icon_size_dialog_message">Выберите размер иконки:</string>
     <string name="main_enabled_apps_summary">Присылать уведомления только из следующих приложений</string>
+    <string name="dialog_title_ssid_hint">Введите один или несколько SSID, разделённых запятой
+\nПример: WiFi1, wifi2, ssid\\,с\\,запятой
+\nРегистр учитывается, экранируйте запятые с помощью \'\\\'
+\nОставьте пустым, чтобы разрешить все</string>
+    <string name="dialog_port_hint">Введите номер порта</string>
+    <string name="dialog_ip_or_hostname_hint">Введите IP или имя хоста</string>
+    <string name="dialog_title_bt_mac">MAC-адрес</string>
+    <string name="dialog_title_bt_name">Отображаемое имя</string>
+    <string name="dialog_title_roaming">Роуминг</string>
+    <string name="dialog_title_pairing">Сопряжение</string>
+    <string name="dialog_title_ssid">Белый список SSID</string>
+    <string name="dialog_title_port">Порт</string>
+    <string name="dialog_title_address">Адрес</string>
+    <string name="button_delete_text">Очистить</string>
+    <string name="button_save_text">Сохранить</string>
+    <string name="connection_type_mobile">Мобильная сеть</string>
+    <string name="connection_type_wifi">WiFi</string>
+    <string name="enabled_apps_enable_disable_all">Включить/отключить все</string>
+    <string name="main_dialog_ask_fine_location_access">На Android 10 и выше для AN2Linux требуются точные данные о местоположении, чтобы узнать SSID вашей WiFi-сети. Приложению необходимо постоянно определять его, чтобы проверить наличие вашей сети в белом списке. Когда откроются настройки разрешений, разрешите доступ к местоположению.</string>
+    <string name="main_dialog_ask_coarse_location_access">AN2Linux необходим доступ к местоположению, чтобы получить SSID вашей WiFi-сети. Когда откроются настройки разрешений, разрешите доступ к местоположению.</string>
+    <string name="main_source_code_server">Исходный код сервера</string>
+    <string name="main_source_code_client">Исходный код этого приложения</string>
+    <string name="main_license">Лицензия</string>
+    <string name="main_block_group_summary">Отличается для каждого приложения, поэтому стоит проверять отдельно
+\nДля Gmail это уведомления такого типа:
+\n\"2 новых сообщения\"
+\nСудя по всему, текстовые сообщения из Viber имеют такую пометку</string>
+    <string name="main_block_group">Блокировать сгруппированные уведомления</string>
+    <string name="main_block_foreground">Блокировать уведомления от постоянно работающих служб</string>
+    <string name="main_enable_service_information_notification_text">Чтобы скрыть точку уведомления откройте настройки уведомлений AN2Linux, нажмите на имя канала службы и поставьте низкий приоритет.</string>
+    <string name="main_enable_service_information_notification_channel_name">Канал информации AN2Linux</string>
+    <string name="main_enable_service_summary">В Android 8.0 были добавлены \'Ограничения запуска в фоне\', чтобы уменьшить расход батареи из-за приложений, работающих в фоне. Это значит, что AN2Linux может быть остановлен системой. Если у вас Android 8.0 и выше и вы испытываете проблемы с отсутствующими уведомлениями от AN2Linux, то вы можете попробовать запускать AN2Linux как фоновую службу.</string>
+    <string name="main_max_message">Максимальное количество символов из сообщения</string>
+    <string name="main_force_title">Принудительно менять заголовок уведомления на название приложения</string>
+    <string name="activity_label_enabled_applications">Разрешённые приложения</string>
 </resources>
