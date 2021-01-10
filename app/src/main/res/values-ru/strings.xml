@@ -50,7 +50,7 @@
     <string name="connection_type_mobile">Мобильная сеть</string>
     <string name="connection_type_wifi">WiFi</string>
     <string name="enabled_apps_enable_disable_all">Включить/отключить все</string>
-    <string name="main_dialog_ask_fine_location_access">На Android 10 и выше для AN2Linux требуются точные данные о местоположении, чтобы узнать SSID вашей WiFi-сети. Приложению необходимо постоянно определять его, чтобы проверить наличие вашей сети в белом списке. Когда откроются настройки разрешений, разрешите доступ к местоположению.</string>
+    <string name="main_dialog_ask_fine_location_access">На Android 10+ для AN2Linux требуются точные данные о местоположении, чтобы узнать SSID вашей WiFi-сети. Приложению необходимо постоянно определять его, чтобы проверить наличие вашей сети в белом списке. Когда откроются настройки разрешений, разрешите доступ к местоположению.</string>
     <string name="main_dialog_ask_coarse_location_access">AN2Linux необходим доступ к местоположению, чтобы получить SSID вашей WiFi-сети. Когда откроются настройки разрешений, разрешите доступ к местоположению.</string>
     <string name="main_source_code_server">Исходный код сервера</string>
     <string name="main_source_code_client">Исходный код этого приложения</string>
@@ -67,4 +67,106 @@
     <string name="main_max_message">Максимальное количество символов из сообщения</string>
     <string name="main_force_title">Принудительно менять заголовок уведомления на название приложения</string>
     <string name="activity_label_enabled_applications">Разрешённые приложения</string>
+    <string name="dialog_disable_battery_optimizations_restart_info">Для правильного обновления этого списка может потребоваться перезагрузка телефона</string>
+    <string name="dialog_disable_battery_optimizations_not_supported">Ваше устройство не поддерживает отключение оптимизации заряда батареи</string>
+    <string name="enabled_applications_filter_hint_text">Фильтр:</string>
+    <string name="pref_force_appname_info_extraction_unsupported">Для извлечения заголовка/сообщения требуется Android 4.4+. Если заголовок включен, он всегда будет привязан к имени приложения.</string>
+    <string name="pref_message_info_extraction_unsupported_version">Для извлечения заголовка/сообщения требуется Android 4.4+</string>
+    <string name="utils_an2linux_service">Служба переднего плана AN2Linux</string>
+    <string name="main_changelog">Журнал изменений</string>
+    <string name="notif_settings_min_notification_priority_title">Минимальный приоритет уведомления</string>
+    <string name="notif_settings_custom_no_enabled_summary">Нажмите здесь, чтобы войти в настройки \'Включенных приложений\'</string>
+    <string name="notif_settings_custom_no_enabled_title">Нет приложений для синхронизации уведомлений</string>
+    <string name="notif_settings_custom_settings_summary">Настройте пользовательские настройки для каждого приложения, которые переопределят глобальные настройки</string>
+    <string name="notif_settings_custom_settings_title">Индивидуальные настройки приложения</string>
+    <string name="notif_settings_custom_category_title">Пользовательские настройки</string>
+    <string name="notif_settings_global_category_title">Глобальные настройки</string>
+    <string name="notif_custom_using_custom_settings">Использование собственных настроек</string>
+    <string name="notif_custom_use_custom_summary">Отменить глобальные настройки для %s</string>
+    <string name="notif_custom_use_custom_title">Использовать собственные настройки</string>
+    <string name="general_public_license_3">Авторские права 2017 rootkiwi
+\n
+\nAN2Linux - бесплатное программное обеспечение: вы можете распространять и/или изменять его в соответствии с условиями Стандартной общественной лицензии GNU, опубликованной в Фонде свободного программного обеспечения, либо версии 3 лицензии, либо (по вашему выбору) любой более поздней версии.
+\n
+\nЭта программа распространяется в надежде, что она будет полезной, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ; даже без подразумеваемых гарантий ТОВАРНОЙ ПРИГОДНОСТИ или ПРИГОДНОСТИ ДЛЯ КОНКРЕТНОЙ ЦЕЛИ. Подробнее см. Стандартную общественную лицензию GNU.
+\n
+\nВы должны были получить копию Стандартной общественной лицензии GNU вместе с этой программой. Если нет, см. &lt;http://www.gnu.org/licenses/&gt;.</string>
+    <string name="generate_key_working_notification">Создание 4096-битного ключа RSA…</string>
+    <string name="generate_key_working">Усердно работаю…</string>
+    <string name="generate_key_notification_channel_name">Генерация ключа AN2Linux</string>
+    <string name="client_certificate_button_text">Создать новый ключ и сертификат</string>
+    <string name="client_certificate_fingerprint">Сертификат отпечатка (SHA256):</string>
+    <string name="client_certificate_info">AN2Linux сгенерировал при первом запуске 4096-битный ключ RSA и сертификат.
+\n
+\nЭто используется только для аутентификации на сервере (вашем компьютере), а не для шифрования.
+\n
+\nПосле успешного сопряжения с сервером вы сможете увидеть свой отпечаток пальца в файле authorized_certs в начале строки.
+\n
+\nФайл authorized_certs находится в:
+\n$XDG_CONFIG_HOME/an2linux/
+\nкоторый по умолчанию:
+\n$HOME/.config/an2linux/</string>
+    <string name="test_notif_message_line_two">2 строка сообщения</string>
+    <string name="test_notif_title">заголовок</string>
+    <string name="test_notif_message">сообщение</string>
+    <string name="test_notif_testing">Тестирование %s…</string>
+    <string name="test_notif_found_no_enabled">Не найдено включенного %s сервера</string>
+    <string name="test_notif_an2linux_not_enabled_in_applications">AN2Linux не включен во включенных приложениях</string>
+    <string name="test_notif_an2linux_not_enabled">AN2Linux не включен глобально</string>
+    <string name="test_notif_need_access">Нужен доступ к уведомлениям</string>
+    <string name="server_list_certificate_fingerprint">Отпечаток пальца (SHA256):</string>
+    <string name="server_list_roaming_allowed_no">нет</string>
+    <string name="server_list_roaming_allowed_yes">да</string>
+    <string name="server_list_roaming_allowed">Роуминг разрешен:</string>
+    <string name="server_list_any_ssid">Любой</string>
+    <string name="server_list_ssid_whitelist_colon">Белый список SSID:</string>
+    <string name="server_list_port_colon">Порт:</string>
+    <string name="waiting_for_server_to_accept">Ожидание подтверждения сервером…
+\n%s</string>
+    <string name="connected_timed_out">Время соединения истекло</string>
+    <string name="not_connected_to_wifi">Не подключен к Wi-Fi</string>
+    <string name="disallowed_ssid">Запрещенный SSID</string>
+    <string name="unknown_host">Неизвестный хост</string>
+    <string name="you_are_roaming">Вы в роуминге</string>
+    <string name="not_connected">Не подключено</string>
+    <string name="connection_closed">Соединение закрыто</string>
+    <string name="server_denied_pairing">Сервер отклонил соединение</string>
+    <string name="server_accepted_pairing">Сервер принял сопряжение
+\n</string>
+    <string name="verify_hash">Проверить хеш:
+\n
+\n</string>
+    <string name="failed_to_connect">Не удалось подключиться</string>
+    <string name="bluetooth_is_off">Bluetooth выключен</string>
+    <string name="certificate_already_in_database">Сертификат уже был в базе данных</string>
+    <string name="need_to_pair_first">Нужно сначала соединиться</string>
+    <string name="try_again">Попробуйте снова</string>
+    <string name="pairing_connecting">Подключение…</string>
+    <string name="invalid_port">Неверный номер порта</string>
+    <string name="port_range">Диапазон портов 0–65535</string>
+    <string name="invalid_address">Неверный адрес</string>
+    <string name="bluetooth_new_edit">Редактировать</string>
+    <string name="bluetooth_not_supported">Bluetooth не поддерживается на вашем устройстве</string>
+    <string name="bluetooth_no_paired_found">Сопряженных компьютеров с bluetooth не найдено</string>
+    <string name="dialog_bt_title_name_hint">Это просто имя, которое будет отображаться в списке серверов в этом приложении</string>
+    <string name="dialog_allow_roaming">Разрешить в роуминге</string>
+    <string name="dialog_pairing_button_text_or">Или инициировать сопряжение с сервером</string>
+    <string name="dialog_pairing_button_text">Инициировать сопряжение с сервером</string>
+    <string name="spinner_choose_certificate">Выбрать существующий сертификат…</string>
+    <string name="dialog_pairing_info_text">Необходимо обменять сертификаты</string>
+    <string name="empty_view_text_server_configuration">Существует три типа серверов: WiFi, мобильный и Bluetooth.
+\n
+\nЭто просто означает, что AN2Linux будет пытаться отправлять уведомления на сервер, только если вы подключены к этому типу.
+\n
+\nНапример, если вы подключены к Wi-Fi, он будет пытаться отправить только на все включенные серверы WiFi, а не на какие-либо мобильные серверы.
+\n
+\nБлютуз особенный, здесь подключено означает, что блютуз включен.</string>
+    <string name="main_dialog_ask_background_location_access">AN2Linux требует постоянного разрешения местоположения для доступа к Wi-Fi SSID при работе в фоновом режиме. Когда откроются настройки разрешений, предоставьте разрешение на местоположение.</string>
+    <string name="main_dialog_ask_notification_access">AN2Linux требует доступа к вашим уведомлениям. Когда откроются настройки уведомлений, включите AN2Linux и нажмите кнопку «Назад».</string>
+    <string name="main_block_local_summary">Это тоже нужно стоит проверять отдельно
+\nВероятно, лучше не блокировать, но вот что говорится в справочнике по Android:
+\n\"уведомление относится только к текущему устройству, и его не рекомендуется подключать к другим устройствам\"
+\nНапример, напоминания Google Now помечены как это</string>
+    <string name="main_block_local">Блокировать локальные уведомления</string>
+    <string name="activity_label_custom_notification_settings">Пользовательские настройки</string>
 </resources>
