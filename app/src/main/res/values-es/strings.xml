@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AN2Linux</string>
     <string name="packagename">kiwi.root.an2linuxclient</string>
@@ -32,7 +33,7 @@
     <string name="main_source_code_server_link">https://github.com/rootkiwi/an2linuxserver</string>
     <string name="main_dialog_ask_notification_access">AN2Linux requiere acceder a tus notificaciones. Cuando la opción de notificaciones se abra, activa AN2Linux y pulsa el botón atrás.</string>
     <string name="enabled_apps_enable_disable_all">Activar/Desactivar todo</string>
-        <string name="empty_view_text_server_configuration">Hay 3 tipos diferentes de "servidores": WiFi, Móvil y Bluetooth.\n\nLo que significa que AN2Linux intentará enviar notificaciones sólo al tipo de servidor al que esté conectado. \n\nPor ejemplo, si estás conectado vía WiFi, sólo intentará enviar a los servidores WiFi habilitados y no a ningún servidor móvil. \n\nCon el Bluetooth es algo especial, en este caso "Conectado" significa que el bluetoothe está activado.</string>
+    <string name="empty_view_text_server_configuration">Hay 3 tipos diferentes de "servidores": WiFi, Móvil y Bluetooth.\n\nLo que significa que AN2Linux intentará enviar notificaciones sólo al tipo de servidor al que esté conectado. \n\nPor ejemplo, si estás conectado vía WiFi, sólo intentará enviar a los servidores WiFi habilitados y no a ningún servidor móvil. \n\nCon el Bluetooth es algo especial, en este caso "Conectado" significa que el bluetoothe está activado.</string>
     <string name="connection_type_wifi">WiFi</string>
     <string name="connection_type_mobile">Móvil</string>
     <string name="connection_type_bluetooth">Bluetooth</string>
@@ -97,4 +98,16 @@
     <string name="client_certificate_button_text">Generar nueva clave y certificado</string>
     <string name="generate_key_working">Trabajando duro…</string>
     <string name="general_public_license_3">Copyright 2017 rootkiwi\n\nAN2Linux es software gratuito:Puedes redistribuirlo y/o modificarlo bajo los términos de la licencia GNU General Public License, publicada por la Free Software Foundation, versión 3 o posterior.\n\nEste probgrama se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; sin la garantía implícita de COMERCIABILIDAD o ADECUACIÓN PARA UN PROPÓSITO PARTICULAR. Ve la licencia GNU General Public License para más detalles.\n\nDeberías haber recibido una copia de la licencia GNU General Public License con este programa. Si no es así, consulta &lt;http://www.gnu.org/licenses/&gt;.</string>
+    <string name="main_dont_send_if_screen_on_summary">No enviar notificaciones si la pantalla del teléfono está encendida</string>
+    <string name="main_dont_send_if_screen_on">No enviar si la pantalla del teléfono está encendida</string>
+    <string name="main_icon_size_dialog_message">Selecciona el tamaño del icono:</string>
+    <string name="main_icon_size">Tamaño del icono</string>
+    <string name="main_ignore_battery_optimization_summary_already_ignored">AN2Linux es ignorado por Doze</string>
+    <string name="main_enable_service_information_notification_text">Para ocultar el punto de notificación del servicio de notificaciones, abre las opciones de notificación de esta app, dale al nombre del canal de servicio y cambia la importancia a \'baja\'.</string>
+    <string name="main_enable_service_information_notification_title">Como ocultar notificación de AN2Linux</string>
+    <string name="main_enable_service_information_notification_channel_name">Canal de información de AN2Linux</string>
+    <string name="main_enable_service_notification_channel_name">Servicio en primer plano de AN2Linux</string>
+    <string name="main_enable_service">Activar servicio en primer plano</string>
+    <string name="activity_label_custom_notification_settings">Opciones personales</string>
+    <string name="activity_label_notification_settings">Opciones de notificación</string>
 </resources>
