@@ -124,5 +124,8 @@
     <string name="main_enable_service">Als Vordergrunddienst starten</string>
     <string name="main_server_configuration_summary">Server hinzufügen, zu dem die Benachrichtigungen gesendet werden</string>
     <string name="main_icon_size_summary">%d Pixel
-\nDie meisten Benachrichtigungsdaemonen skalieren das Bild auf eine bestimmte Größe.</string>
+\nDie meisten Benachrichtigungshintergrundprogramme skalieren das Bild auf eine bestimmte Größe.</string>
+    <string name="dialog_disable_battery_optimizations_restart_info">Ein Telefon-Neustart könnte nötig sein, damit diese Liste korrekt aktualisiert werden kann</string>
+    <string name="enabled_applications_filter_hint_text">Filter:</string>
+    <string name="main_source_code_server">Quellcode-Server</string>
 </resources>
