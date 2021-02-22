@@ -122,4 +122,5 @@
     <string name="main_ignore_battery_optimization_title">Batterieoptimierungen („Doze“) ignorieren</string>
     <string name="main_enable_service_information_notification_text">Um den Notification Dot der Dienst-Benachrichtigung auszublenden, öffnen Sie die Benachrichtigungseinstellungen dieser App, klicken Sie auf den Namen des Service-Kanals und stellen Sie die Wichtigkeit auf niedrig.</string>
     <string name="main_enable_service">Als Vordergrunddienst starten</string>
+    <string name="main_server_configuration_summary">Einen Server hinzufügen, zu dem Benachrichtigungen geschickt werden</string>
 </resources>
