@@ -128,4 +128,10 @@
     <string name="dialog_disable_battery_optimizations_restart_info">Ein Telefon-Neustart könnte nötig sein, damit diese Liste korrekt aktualisiert werden kann</string>
     <string name="enabled_applications_filter_hint_text">Filter:</string>
     <string name="main_source_code_server">Quellcode-Server</string>
+    <string name="main_block_local">Lokale Benachrichtigungen vereiteln</string>
+    <string name="main_block_group_summary">Unterschiedlich für jede App; Sie sollten mit dieser Einstellung spielen
+\nBei Gmail sind es Benachrichtigungen des Typs:
+\n„2 neue Nachrichten“
+\nAnscheinend werden Viber-Textnachrichten so markiert</string>
+    <string name="main_max_title_dialog_message">Max. Titelgröße wählen:</string>
 </resources>
