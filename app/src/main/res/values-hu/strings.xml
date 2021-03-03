@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="dialog_disable_battery_optimizations_not_supported">Az eszköz nem támogatja az akkumulátoroptimalizálás kikapsolását</string>
+    <string name="empty_view_text_server_configuration">Három különböző típusú szerver van: WiFi, Mobil és Bluetooth.
+\n
+\nEz azt jelenti, hogy az AN2Linux csak akkor próbálja elküldeni az értesítéseket a szervernek, ha a megfelelő típusúhoz van csatlakozva.
+\n
+\nPéldául ha WiFi-hez van csatlakozva, akkor csak a WiFi szerverekhez próbál csatlakozni, mobilszerverekhez nem.</string>
+</resources>
