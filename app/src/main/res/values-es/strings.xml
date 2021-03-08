@@ -110,4 +110,8 @@
     <string name="main_enable_service">Activar servicio en primer plano</string>
     <string name="activity_label_custom_notification_settings">Opciones personales</string>
     <string name="activity_label_notification_settings">Opciones de notificación</string>
+    <string name="main_block_local">Bloquear notificaciones locales</string>
+    <string name="main_enable_service_summary">Android 8.0 añadió \'Límites de ejecución en segundo plano\' para evitar el gasto de batería causado por aplicaciones corriendo en segundo plano, esto significa que AN2Linux puede ser repentinamente cerrado por el sistema. Sí usas Android 8.0+ y tienes problemas recibiendo notificaciones, deberías intentar correr AN2Linux como un servicio en primer plano.</string>
+    <string name="main_ignore_battery_optimization_title">Ignorar optimización de batería (Doze)</string>
+    <string name="main_ignore_battery_optimization_summary">Android 6.0 añadió \'Doze (Dormitar)\' la cual limita las aplicaciones corriendo en segundo plano en modo dormitar, esto puede causar por ejemplo un bloqueo en el acceso a la red. Deshabilitarlo puede ser necesario para que AN2Linux funcione correctamente (a menos que este habilitada como aplicación en primer plano ya que estos no son \"dormitadas\"). Puede intentar esto antes de probar establecer la aplicación en primer plano.</string>
 </resources>
