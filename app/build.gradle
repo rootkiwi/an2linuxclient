@@ -6,8 +6,8 @@ android {
         applicationId "kiwi.root.an2linuxclient"
         minSdkVersion 18
         targetSdkVersion 29
-        versionCode 18
-        versionName "0.13.0"
+        versionCode 19
+        versionName "0.13.1"
     }
     buildTypes {
         release {

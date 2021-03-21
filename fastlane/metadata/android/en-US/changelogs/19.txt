@@ -1,0 +1,9 @@
+0.13.1 (Mar 21, 2021)
+- Bunch of translations, thank you all!
+- Russian added/updated by: Vlad & Andrey F
+- German updated by: Maximilian H, Translator & Simon Kreuzer
+- French updated by: Aearil
+- Polish updated by: Atrate & Jakub Fabijan
+- Spanish updated by: badlop & Vi-dot1
+- Hungarian added by: SoftwareByRedline
+- Turkish added by: Burak Hüseyin Ekseli
